@@ -7,6 +7,18 @@
             <div class="card">
                 <div class="card-header bg-white">{{ __('Login') }}</div>
 
+                @if ($errors->has('email'))
+                        <div class="alert alert-danger">
+                            <strong>{{ $errors->first('email') }}</strong>
+                        </div>
+                @endif
+
+                 @if ($errors->has('password'))
+                        <div class="alert alert-danger text-center mt-1">
+                            <strong>{{ $errors->first('password') }}</strong>
+                        </div>
+                @endif
+
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -17,11 +29,11 @@
                             <div class="col-md-6">
                                 <input id="email" type="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
 
-                                @if ($errors->has('email'))
+                                {{-- @if ($errors->has('email'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
                                     </span>
-                                @endif
+                                @endif --}}
                             </div>
                         </div>
 
@@ -31,11 +43,11 @@
                             <div class="col-md-6">
                                 <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
-                                @if ($errors->has('password'))
+                                {{-- @if ($errors->has('password'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
-                                @endif
+                                @endif --}}
                             </div>
                         </div>
 
