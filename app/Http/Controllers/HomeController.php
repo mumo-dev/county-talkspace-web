@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class HomeController extends Controller
 {
@@ -32,8 +33,11 @@ class HomeController extends Controller
         return view('admin.home');
     }
 
-    public function showProfile()
+    public function showProfile(User $user)
     {
-       return view('profile');
+        if($user->user_type > 0){
+            $user = null;
+        }
+        return view('profile', compact('user'));
     }
 }
