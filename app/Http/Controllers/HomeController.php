@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Image;
 
 class HomeController extends Controller
 {
@@ -39,5 +40,33 @@ class HomeController extends Controller
             $user = null;
         }
         return view('profile', compact('user'));
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user = User::find($request->id);
+
+        $image  = $request->file('image');
+        $imagename = uniqid(). '.' . $image->getClientOriginalExtension();
+        $destinationPath = public_path('/images/thumbnails');
+        $img = Image::make($image->getRealPath());
+        $img->resize(100, 100, function($constraint){
+            $constraint->aspectRatio();
+        })->save($destinationPath.'/'.$imagename);
+
+
+        $destinationPath = public_path('/images');
+        $image->move($destinationPath, $imagename);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->photo_url = $imagename;
+        $user->save();
+
+        return response()->json([
+            'message'=>'Profile updated successfully'
+        ], 200);
+
+
     }
 }

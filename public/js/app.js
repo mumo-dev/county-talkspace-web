@@ -1823,12 +1823,51 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["userdetails", "currentuserid"],
   data: function data() {
     return {
       user: this.userdetails,
-      editable: false
+      editable: false,
+      file: "",
+      showPreview: false,
+      imagePreview: '',
+      submitting: false,
+      success: false,
+      error: false
     };
   },
   computed: {
@@ -1836,15 +1875,85 @@ __webpack_require__.r(__webpack_exports__);
       return this.userdetails.id == this.currentuserid;
     },
     shouldSubmit: function shouldSubmit() {
-      if (this.userdetails.id !== this.currentuserid || !this.user.name || !this.user.email) {
+      if (this.userdetails.id !== this.currentuserid || !this.user.name || !this.user.email || this.submitting) {
         return false;
       }
 
       return true;
+    },
+    imagePath: function imagePath() {
+      return this.userdetails.photo_url ? "/images/" + this.userdetails.photo_url : "/images/user.png";
     }
   },
   methods: {
-    handleImageUpload: function handleImageUpload() {}
+    submitUpdate: function submitUpdate() {
+      var _this = this;
+
+      //validate
+      var data = new FormData(); // add form data to submit
+
+      data.append('image', this.file);
+      data.append('name', this.user.name);
+      data.append('email', this.user.email);
+      data.append('id', this.user.id);
+      data.append('authId', this.currentuserid);
+      /*
+        Make the request to the POST /single-file URL
+      */
+
+      this.submitting = true;
+      axios.post('/user/profile/update', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (result) {
+        _this.submitting = false;
+        _this.success = true;
+        _this.error = false; // console.log(result);
+      }).catch(function (err) {
+        _this.submitting = false;
+        _this.success = false;
+        _this.error = true; // console.log(err);
+      });
+    },
+    handleImageUpload: function handleImageUpload() {
+      /*
+        Set the local file variable to what the user has selected.
+      */
+      this.file = this.$refs.file.files[0];
+      /*
+        Initialize a File Reader object
+      */
+
+      var reader = new FileReader();
+      /*
+        Add an event listener to the reader that when the file
+        has been loaded, we flag the show preview as true and set the
+        image to be what was read from the reader.
+      */
+
+      reader.addEventListener("load", function () {
+        this.showPreview = true;
+        this.imagePreview = reader.result;
+      }.bind(this), false);
+      /*
+        Check to see if the file is not empty.
+      */
+
+      if (this.file) {
+        /*
+          Ensure the file is an image file.
+        */
+        if (/\.(jpe?g|png|gif)$/i.test(this.file.name)) {
+          /*
+            Fire the readAsDataURL method which will read the file in and
+            upon completion fire a 'load' event which we will listen to and
+            display the image in the preview.
+          */
+          reader.readAsDataURL(this.file);
+        }
+      }
+    }
   }
 });
 
@@ -37540,29 +37649,35 @@ var render = function() {
   return _c("div", { staticClass: "card" }, [
     _c("div", { staticClass: "card-header bg-white" }, [
       _vm._v("\n    Profile\n    "),
-      _vm.shouldEdit
-        ? _c(
-            "a",
+      _c(
+        "a",
+        {
+          directives: [
             {
-              staticClass: "btn btn-primary btn-sm float-right",
-              attrs: { href: "#", title: "EDIT" },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.editable = !_vm.editable
-                }
-              }
-            },
-            [_c("i", { staticClass: "fas fa-pen" })]
-          )
-        : _vm._e()
+              name: "show",
+              rawName: "v-show",
+              value: _vm.shouldEdit,
+              expression: "shouldEdit"
+            }
+          ],
+          staticClass: "btn btn-primary btn-sm float-right",
+          attrs: { href: "#", title: "EDIT" },
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              _vm.editable = !_vm.editable
+            }
+          }
+        },
+        [_c("i", { staticClass: "fas fa-pen" })]
+      )
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "card-body" }, [
-      _c("div", { staticClass: "photo text-center" }, [
+      _c("div", { staticClass: "photo" }, [
         _c("img", {
           staticClass: "img-fluid img-thumbnail",
-          attrs: { src: "/images/user.png", width: "100%" }
+          attrs: { src: _vm.imagePreview ? _vm.imagePreview : _vm.imagePath }
         }),
         _vm._v(" "),
         _c("input", {
@@ -37576,7 +37691,22 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _vm._m(0)
+        _c(
+          "label",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.editable,
+                expression: "editable"
+              }
+            ],
+            staticClass: "btn btn-danger",
+            attrs: { for: "file" }
+          },
+          [_c("i", { staticClass: "fas fa-pen" })]
+        )
       ]),
       _vm._v(" "),
       _c(
@@ -37595,7 +37725,7 @@ var render = function() {
               ),
               _vm._v(" "),
               _c("div", { staticClass: "input-group mb-2" }, [
-                _vm._m(1),
+                _vm._m(0),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -37610,7 +37740,8 @@ var render = function() {
                   attrs: {
                     id: "username",
                     type: "text",
-                    disabled: !_vm.editable
+                    disabled: !_vm.editable,
+                    required: ""
                   },
                   domProps: { value: _vm.user.name },
                   on: {
@@ -37631,7 +37762,7 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "input-group mb-2" }, [
-                _vm._m(2),
+                _vm._m(1),
                 _vm._v(" "),
                 _c("input", {
                   directives: [
@@ -37646,7 +37777,8 @@ var render = function() {
                   attrs: {
                     id: "email",
                     type: "email",
-                    disabled: !_vm.editable
+                    disabled: !_vm.editable,
+                    required: ""
                   },
                   domProps: { value: _vm.user.email },
                   on: {
@@ -37667,29 +37799,57 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-success btn-sm",
-                      attrs: { disabled: !_vm.shouldSubmit }
+                      attrs: { disabled: !_vm.shouldSubmit },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.submitUpdate()
+                        }
+                      }
                     },
-                    [_vm._v("SAVE")]
+                    [_vm._v(_vm._s(_vm.submitting ? "SAVING..." : "SAVE"))]
                   )
                 ])
               : _vm._e()
           ])
         ]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.success,
+              expression: "success"
+            }
+          ],
+          staticClass: "alert alert-success"
+        },
+        [_c("p", [_vm._v("Profile update successful")])]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.error,
+              expression: "error"
+            }
+          ],
+          staticClass: "alert alert-danger"
+        },
+        [_c("p", [_vm._v("Profile update failed")])]
       )
     ])
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "btn btn-danger", attrs: { for: "file" } },
-      [_c("i", { staticClass: "fas fa-pen" })]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
