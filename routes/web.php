@@ -20,6 +20,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home')->middleware('user');
 Route::get('/user/profile/{user}', 'HomeController@showProfile')->name('profile');
 Route::post('/user/profile/update', 'HomeController@updateProfile')->name('update.profile');
+Route::post('/posts', 'PostController@store');
 
 Route::group(['prefix'=>'admin','middleware'=>['admin'] ], function (){
     Route::get('/home', 'HomeController@adminHome')->name('admin.home');

@@ -1840,6 +1840,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['id'],
   data: function data() {
@@ -1863,16 +1864,25 @@ __webpack_require__.r(__webpack_exports__);
       //validate 
       if (!this.post) return;
       var data = new FormData();
-      data.append('images', this.uploadFileArray);
       data.append('message', this.post);
       data.append('tag', this.tag);
       data.append('userId', this.id);
+
+      if (this.uploadFileArray) {
+        for (var i = 0; i < this.uploadFileArray.length; i++) {
+          data.append('images[]', this.uploadFileArray[i]);
+        }
+      }
+
       this.submitting = true;
       axios.post('/posts/', data, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       }).then(function (result) {
+        _this.files = null;
+        _this.imgSrc = [];
+        _this.post = '';
         _this.submitting = false;
         _this.success = true;
         _this.error = false;
@@ -1887,17 +1897,17 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     handleImageUpload: function handleImageUpload() {
+      if (this.$refs.file.files.length > 4) {
+        this.error = true;
+        this.errorMessage = " You can only upload a maximum of 4 images";
+        return;
+      }
+
       this.files = this.$refs.file.files;
       this.uploadFileArray = Array.from(this.files);
       this.error = false;
 
       for (var i = 0; i < this.files.length; i++) {
-        if (i == 4) {
-          this.error = true;
-          this.errorMessage = " You can only upload a maximum of 4 images";
-          break;
-        }
-
         this.imgSrc[i] = URL.createObjectURL(this.files[i]);
       }
     },
@@ -38075,12 +38085,18 @@ var render = function() {
           }
         }),
         _vm._v(" "),
-        _vm.submitting
+        !_vm.submitting
           ? _c(
               "button",
               {
                 staticClass: "btn btn-primary btn-sm float-right",
-                attrs: { disabled: !_vm.post }
+                attrs: { disabled: !_vm.post },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.submitPost($event)
+                  }
+                }
               },
               [_vm._v("Post")]
             )

@@ -64,7 +64,8 @@
           accept="image/*" multiple 
           v-on:change="handleImageUpload()" >
         
-        <button class="btn btn-primary btn-sm float-right" :disabled="!post" v-if="submitting">Post</button>
+        <button class="btn btn-primary btn-sm float-right" 
+        :disabled="!post" v-if="!submitting" @click.prevent="submitPost">Post</button>
         <button class="btn btn-primary btn-sm float-right" type="button" disabled  v-else>
           <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
           Posting...
@@ -103,10 +104,16 @@ export default {
         if(!this.post) return;
 
         let data = new FormData();
-        data.append('images', this.uploadFileArray);
+       
         data.append('message', this.post );
         data.append('tag', this.tag);
         data.append('userId', this.id);
+
+        if(this.uploadFileArray){
+           for(let i=0; i<this.uploadFileArray.length;i++){
+               data.append('images[]',this.uploadFileArray[i]);
+            }
+        }
 
         this.submitting = true;
         axios.post('/posts/',data,
@@ -115,6 +122,10 @@ export default {
                 'Content-Type': 'multipart/form-data'
                 }
         }).then((result)=>{
+            this.files = null;
+            this.imgSrc =[];
+            this.post = '';
+            
             this.submitting = false;
             this.success = true;
             this.error = false;
@@ -132,18 +143,17 @@ export default {
 
     },
     handleImageUpload(){
-     
+     if(this.$refs.file.files.length > 4){
+            this.error= true;
+            this.errorMessage =" You can only upload a maximum of 4 images";
+            return;
+      }
       this.files = this.$refs.file.files;
       this.uploadFileArray = Array.from(this.files);
       this.error = false;
 
 
       for (let i = 0; i < this.files.length; i++) {
-          if(i == 4){
-            this.error= true;
-            this.errorMessage =" You can only upload a maximum of 4 images";
-            break;
-          }
           this.imgSrc[i] = URL.createObjectURL(this.files[i]);  
       }  
     },
