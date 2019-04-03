@@ -45,7 +45,13 @@ class HomeController extends Controller
     public function updateProfile(Request $request)
     {
         $user = User::find($request->id);
-
+        $photoUrl = $request->photo_url;
+        if($photoUrl != null){
+            //delete the file
+            unlink(public_path('/images/thumbnails/'). $photoUrl);
+            unlink(public_path('/images/'). $photoUrl);
+        }
+        
         $image  = $request->file('image');
         $imagename = uniqid(). '.' . $image->getClientOriginalExtension();
         $destinationPath = public_path('/images/thumbnails');

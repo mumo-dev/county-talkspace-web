@@ -6,6 +6,7 @@
  */
 
 require('./bootstrap');
+require('./autoexpandtextarea')
 
 window.Vue = require('vue');
 
@@ -21,6 +22,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('app-profile', require('./components/Profile.vue').default);
+Vue.component('app-create-post', require('./components/CreatePost.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -28,6 +30,11 @@ Vue.component('app-profile', require('./components/Profile.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
+
 const app = new Vue({
     el: '#app'
 });
+
+
+

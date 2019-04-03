@@ -4,9 +4,13 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
+            <app-create-post v-bind:id="{{Auth::id()}}"></app-create-post>
+        </div>
+    </div>
 
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
@@ -14,10 +18,13 @@
                         </div>
                     @endif
 
-                    You are logged in!
+                    
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 @endsection
+
+
