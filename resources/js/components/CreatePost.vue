@@ -130,6 +130,7 @@ export default {
             this.success = true;
             this.error = false;
             this.successMessage= "Post saved successfully"
+            
             console.log(result);
         }).catch((err)=>{ 
             this.submitting = false;

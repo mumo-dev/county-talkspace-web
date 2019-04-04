@@ -48,9 +48,16 @@ class PostController extends Controller
            }
        }
 
-       $post = $post::with('images')->get();
+       $postAdded = $post::with('images')->where('id',$post->id)->get();
        return response()->json([
-           'post'=>$post
+           'post'=>$postAdded
        ],200);
+    }
+
+
+    public function index()
+    {
+        $posts = Post::with(['user','images'])->latest()->paginate(50);
+        return response()->json([$posts], 200);
     }
 }

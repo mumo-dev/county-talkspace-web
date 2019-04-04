@@ -23,6 +23,7 @@ window.Vue = require('vue');
 
 Vue.component('app-profile', require('./components/Profile.vue').default);
 Vue.component('app-create-post', require('./components/CreatePost.vue').default);
+Vue.component('app-posts', require('./components/Posts.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
