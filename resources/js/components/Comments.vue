@@ -19,7 +19,7 @@
 <script>
 import Post from './Post.vue';
 export default {
-  props:['postid'],
+  props:['postid','iscomment'],
   components:{
     'app-post':Post
   },
@@ -44,7 +44,11 @@ export default {
 
     fetchComments(page=1){
       this.loading = true;
-      axios.get('/comments/post/'+ this.postid)
+      let url = '/comments/post/'+ this.postid;
+      if(this.iscomment){
+        url += '?comment=true'
+      }
+      axios.get(url)
       .then((result) => {
         // console.log(result.data);
         let data = result.data[0];

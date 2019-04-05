@@ -1784,7 +1784,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['postid'],
+  props: ['postid', 'iscomment'],
   components: {
     'app-post': _Post_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -1807,7 +1807,13 @@ __webpack_require__.r(__webpack_exports__);
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       this.loading = true;
-      axios.get('/comments/post/' + this.postid).then(function (result) {
+      var url = '/comments/post/' + this.postid;
+
+      if (this.iscomment) {
+        url += '?comment=true';
+      }
+
+      axios.get(url).then(function (result) {
         // console.log(result.data);
         var data = result.data[0];
 
@@ -1887,7 +1893,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['post_id'],
+  props: ['post_id', 'iscomment'],
   data: function data() {
     return {
       files: [],
@@ -1910,6 +1916,10 @@ __webpack_require__.r(__webpack_exports__);
       var data = new FormData();
       data.append('comment', this.comment);
       data.append('post_id', this.post_id);
+
+      if (this.iscomment) {
+        data.append('is_comment', true);
+      }
 
       if (this.uploadFileArray) {
         for (var i = 0; i < this.uploadFileArray.length; i++) {

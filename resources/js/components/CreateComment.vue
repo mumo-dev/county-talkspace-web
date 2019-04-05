@@ -54,7 +54,7 @@
 </template>
 <script>
 export default {
-  props:['post_id'],
+  props:['post_id', 'iscomment'],
   data(){
     return {
         files:[],
@@ -78,6 +78,10 @@ export default {
        
         data.append('comment', this.comment );
         data.append('post_id', this.post_id );
+        
+        if(this.iscomment){
+          data.append('is_comment', true);
+        }
     
         if(this.uploadFileArray){
            for(let i=0; i<this.uploadFileArray.length;i++){
@@ -86,6 +90,7 @@ export default {
         }
 
         this.submitting = true;
+
         axios.post('/comments/',data,
                 {
                 headers: {

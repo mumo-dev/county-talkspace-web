@@ -19,13 +19,30 @@ class CommentController extends Controller
     public function index($id)
     {
         $post = Post::with(['images','user'])->where('id',$id)->get();
-        return view('comment', compact('post'));
+        return view('comments.post', compact('post'));
     }
+
+    public function displayComments($id)
+    {
+        $comment = Comment::with(['images','user'])->where('id',$id)->get();
+        return view('comments.comment', compact('comment'));
+    }
+
+
+    
 
     public function store(Request $request)
     {
         $postId= $request->post_id;
-        $post = Post::find($postId);
+
+        if($request->has('is_comment')){
+            $post = Comment::find($postId);
+        }else{
+
+            $post = Post::find($postId);
+        }
+      
+      
         $msg = $request->comment;
 
         $comment = new Comment();
@@ -67,10 +84,15 @@ class CommentController extends Controller
     }
 
 
-    public function getPostComments($id)
+    public function getPostComments(Request $request,$id)
     {
-        $post = Post::find($id);
-        $comments =$post->comments()->with(['user', 'images'])->latest()->get();
+       if($request->query('comment')==true){
+           $post = Comment::find($id);
+       }else{
+         $post = Post::find($id);
+       }
+      
+        $comments = $post->comments()->with(['user', 'images'])->latest()->get();
         return response()->json([$comments], 200);
     }
 }

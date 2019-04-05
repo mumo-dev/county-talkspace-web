@@ -26,6 +26,7 @@ Route::get('/posts', 'PostController@index');
 Route::get('posts/{id}/comments/', 'CommentController@index');
 Route::get('comments/post/{id}', 'CommentController@getPostComments');
 Route::post('comments', 'CommentController@store');
+Route::get('comments/{id}', 'CommentController@displayComments');
 
 Route::group(['prefix'=>'admin','middleware'=>['admin'] ], function (){
     Route::get('/home', 'HomeController@adminHome')->name('admin.home');
