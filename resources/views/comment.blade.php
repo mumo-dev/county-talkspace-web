@@ -19,9 +19,12 @@
               <div class="media-body">
                 <app-create-comment v-bind:post_id="{{ $post[0]->id}}"></app-create-comment>
               </div>
+              
             </li>
-
+          
+            <hr/>
             {{-- comments for this post here --}}
+            <app-comments v-bind:postid="{{$post[0]->id }}"></app-comments>
           </ul>
          
 

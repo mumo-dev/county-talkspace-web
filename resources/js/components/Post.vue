@@ -46,7 +46,12 @@
         <div class="row">
           <div class="col-6 post-btns mr-md-20">
             <i class="far fa-comment-alt text-primary mr-1"></i>
-              <a :href="'/posts/'+ post.id+'/comments'" class="text-secondary">Comments 21</a>
+              <template v-if="!iscomment">
+                  <a :href="'/posts/'+ post.id+'/comments'" class="text-secondary">Comments 21</a>
+              </template>
+              <template v-else>
+                <a :href="'/comments/'+ post.id" class="text-secondary">Comments 21</a>
+              </template>
             </div>
           <div class="col-6 text-center post-btns"> 
             <i class="far fa-heart mr-1 text-primary"></i>
@@ -69,7 +74,7 @@ import moment from 'moment'
 
 export default {
 
-  props:['post'],
+  props:['post', 'iscomment'],
 
   data(){
     return{

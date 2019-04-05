@@ -65,4 +65,12 @@ class CommentController extends Controller
         ],200);
 
     }
+
+
+    public function getPostComments($id)
+    {
+        $post = Post::find($id);
+        $comments =$post->comments()->with(['user', 'images'])->latest()->get();
+        return response()->json([$comments], 200);
+    }
 }

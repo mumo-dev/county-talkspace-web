@@ -34,6 +34,8 @@ Vue.component('app-create-comment', require('./components/CreateComment.vue').de
 Vue.component('app-posts', require('./components/Posts.vue').default);
 Vue.component('app-post', require('./components/Post.vue').default);
 
+Vue.component('app-comments', require('./components/Comments.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

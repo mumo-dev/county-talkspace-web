@@ -102,9 +102,9 @@ export default {
             this.successMessage= "Comment saved successfully"
 
             console.log(result.data);
-            //  const data = result.data.post[0]
-            // this.$store.commit('addPost', data);
-            console.log(result);
+            const data = result.data.comment[0]
+            this.$store.commit('addComment', data);
+            // console.log(result);
         }).catch((err)=>{ 
             this.submitting = false;
             this.success = false;

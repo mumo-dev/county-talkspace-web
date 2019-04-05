@@ -24,6 +24,7 @@ Route::post('/posts', 'PostController@store');
 Route::get('/posts', 'PostController@index');
 
 Route::get('posts/{id}/comments/', 'CommentController@index');
+Route::get('comments/post/{id}', 'CommentController@getPostComments');
 Route::post('comments', 'CommentController@store');
 
 Route::group(['prefix'=>'admin','middleware'=>['admin'] ], function (){
