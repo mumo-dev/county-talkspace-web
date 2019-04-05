@@ -25,9 +25,12 @@ class CommentController extends Controller
 
     public function displayComments($id)
     {
-        //TODO -- fetch the count of comments manually
+        $post = Comment::find($id);
+        $count =  $post->comments()->get()->count();
+        //TOD fetch the count of comments manually
         $comment = Comment::withCount(['comments','likes'])
                         ->with(['images','user'])->where('id',$id)->get();
+        $comment['comments_count'] = $count;
         return view('comments.comment', compact('comment'));
     }
 

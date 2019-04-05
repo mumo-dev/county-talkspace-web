@@ -12,23 +12,28 @@
               <li class="breadcrumb-item active" aria-current="page">Comments</li>
             </ol>
           </nav>
-          <app-post v-bind:post="{{$post[0]}}"></app-post>
 
-          <ul class="list-unstyled"  style="margin-left:64px;">
-            <li class="media">
-              <div class="media-body">
-                <app-create-comment v-bind:post_id="{{ $post[0]->id}}"></app-create-comment>
+          <div class="card">
+              <div class="card-body">
+
+                 <app-post v-bind:post="{{$post[0]}}"></app-post>
+
+                  <ul class="list-unstyled"  style="margin-left:64px;">
+                    <li class="media">
+                      <div class="media-body">
+                        <app-create-comment v-bind:post_id="{{ $post[0]->id}}"></app-create-comment>
+                      </div>
+                      
+                    </li>
+                  
+                    <hr/>
+                    {{-- comments for this post here --}}
+                    <app-comments v-bind:postid="{{$post[0]->id }}"></app-comments>
+                  </ul>
               </div>
-              
-            </li>
-          
-            <hr/>
-            {{-- comments for this post here --}}
-            <app-comments v-bind:postid="{{$post[0]->id }}"></app-comments>
-          </ul>
-         
+          </div>
 
-
+        
       </div>
   </div>
 </div>
