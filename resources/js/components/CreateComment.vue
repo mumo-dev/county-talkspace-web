@@ -1,44 +1,11 @@
 <template>
-  <div class="row post-bg">
-    <div class="col-12 justify-content-center">
-      
-      <div class="alert alert-danger text-center" v-show="error">
-          {{ errorMessage }}
-      </div>
-      <div class="alert alert-success text-center" v-show="success">
-        {{ successMessage }}
-      </div>
-    </div>
-    <div class="col-2">
-      <img src="/images/user.png" class="rounded-circle" width="50px" height="50px"/>
-    </div>
-
-    <div class="col-10 ">
+  <div class>
       <div class="form-group m-0 p-0">
-        <textarea class="form-control autoExpand" placeholder="Create a post.."
-         rows='3' data-min-rows='3' v-model="post">
+        <textarea class="form-control autoExpand" placeholder="comment... "
+            rows='1' data-min-rows='0' v-model="comment">
         </textarea>
-      </div>
-      <div class="form-group m-0 mt-1">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio"  id="opinion" 
-          v-model="tag" name="type" value="opinion">
-          <label class="form-check-label" for="opinion" >Opinion</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" id="enquiry" 
-           v-model="tag" name="type" value="enquiry" >
-          <label class="form-check-label" for="enquiry">Enquiry</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio"  id="complain"
-           v-model="tag" name="type" value="complain">
-          <label class="form-check-label" for="complain" >Complain</label>
-        </div>
-        
-      </div>
 
-      <div class="photos-area">
+        <div class="photos-area">
           <div class="row mt-0 pt-0" v-if="files">
 
             <div class="col-3 img-preview" v-for="(img, index) in imgSrc" :key="index" 
@@ -58,30 +25,26 @@
       <div class="mt-1">
         
         <label class="text-primary" for="file" style="cursor:pointer">
-          <i class="far fa-file-image fa-2x"></i>
+          <!-- <i class="far fa-file-image fa-2x"></i> -->
+          <img src="/images/gallery.svg" width="20px" height="20px">
         </label>
         <input type="file" class="d-none overflow-hidden" id="file" ref="file"  
           accept="image/*" multiple 
           v-on:change="handleImageUpload()" >
         
         <button class="btn btn-primary btn-sm float-right" 
-        :disabled="!post" v-if="!submitting" @click.prevent="submitPost">Post</button>
+        :disabled="!comment" v-if="!submitting" @click.prevent="submitComment">Comment</button>
         <button class="btn btn-primary btn-sm float-right" type="button" disabled  v-else>
           <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
-          Posting...
+          Sending...
         </button>
       </div>
-
-    </div>
-
+      </div>
   </div>
 </template>
 <script>
-
 export default {
-
-  props:['id'],
-
+  props:['post_id'],
   data(){
     return {
         files:[],
@@ -91,24 +54,21 @@ export default {
         success:false,
         errorMessage:'',
         successMessage:'',
-        post:'',
-        tag:'opinion',
+        comment:'',
         submitting:false
-        
     }
   },
 
-  methods:{
-    submitPost(){
+    methods:{
+    submitComment(){
         //validate 
-        if(!this.post) return;
+        if(!this.comment) return;
 
         let data = new FormData();
        
-        data.append('message', this.post );
-        data.append('tag', this.tag);
-        data.append('userId', this.id);
-
+        data.append('comment', this.comment );
+        data.append('post_id', this.post_id );
+    
         if(this.uploadFileArray){
            for(let i=0; i<this.uploadFileArray.length;i++){
                data.append('images[]',this.uploadFileArray[i]);
@@ -116,7 +76,7 @@ export default {
         }
 
         this.submitting = true;
-        axios.post('/posts/',data,
+        axios.post('/comments/',data,
                 {
                 headers: {
                 'Content-Type': 'multipart/form-data'
@@ -124,16 +84,16 @@ export default {
         }).then((result)=>{
             this.files = null;
             this.imgSrc =[];
-            this.post = '';
+            this.comment = '';
             
             this.submitting = false;
             this.success = true;
             this.error = false;
-            this.successMessage= "Post saved successfully"
+            this.successMessage= "Comment saved successfully"
 
-             console.log(result.data.post[0]);
-             const data = result.data.post[0]
-            this.$store.commit('addPost', data);
+            console.log(result.data);
+            //  const data = result.data.post[0]
+            // this.$store.commit('addPost', data);
             console.log(result);
         }).catch((err)=>{ 
             this.submitting = false;
@@ -167,18 +127,12 @@ export default {
       this.imgSrc.splice(index, 1);
     }
   }
-};
+
+
+}
 </script>
 
 <style scoped>
-.post-bg{
-  background: #f2f2f2;
-  border: none;
-  border-radius: 4px;
-  margin: 15px auto;
-  padding: 16px 0;
-}
-
 .img-preview {
   position: relative;
 }
@@ -196,8 +150,7 @@ export default {
   opacity: 0.7;
   background-color: red;
 }
-
-
 </style>
+
 
 

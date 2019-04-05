@@ -13,13 +13,7 @@
             </ol>
           </nav>
           <app-post v-bind:post="{{$post[0]}}"></app-post>
-          <div class>
-              <div class="form-group m-0 p-0">
-                <textarea class="form-control autoExpand" placeholder="comment... "
-                   rows='1' data-min-rows='0' v-model="post">
-                </textarea>
-              </div>
-          </div>
+          <app-create-comment v-bind:post_id="{{ $post[0]->id}}"></app-create-comment>
 
 
       </div>
