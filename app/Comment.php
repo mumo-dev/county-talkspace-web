@@ -31,6 +31,14 @@ class Comment extends Model
         return $this->morphMany('App\Image', 'imageable');
     }
 
+     /**
+     * Get all of the post's comments.
+     */
+    public function likes()
+    {
+        return $this->morphMany('App\Like', 'likeable');
+    }
+
 
     public function user()
     {

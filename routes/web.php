@@ -28,6 +28,10 @@ Route::get('comments/post/{id}', 'CommentController@getPostComments');
 Route::post('comments', 'CommentController@store');
 Route::get('comments/{id}', 'CommentController@displayComments');
 
+Route::post('/like/{id}', 'LikeController@like');
+Route::post('/unlike/{id}', 'LikeController@unlike');
+Route::get('/isliked/{id}', 'LikeController@isLiked');
+
 Route::group(['prefix'=>'admin','middleware'=>['admin'] ], function (){
     Route::get('/home', 'HomeController@adminHome')->name('admin.home');
 });

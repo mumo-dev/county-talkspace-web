@@ -2229,12 +2229,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['post', 'iscomment'],
+  mounted: function mounted() {
+    var _this = this;
+
+    var url = '/isliked/' + this.post.id;
+
+    if (this.iscomment) {
+      url += '?comment=true';
+    }
+
+    axios.get(url).then(function (result) {
+      _this.postIsLiked = result.data.liked;
+    }).catch(function (err) {});
+  },
   data: function data() {
     return {
-      noOfImages: this.post.images.length
+      noOfImages: this.post.images.length,
+      postIsLiked: false,
+      myPost: this.post
     };
   },
   computed: {
@@ -2272,6 +2305,37 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return {};
+    }
+  },
+  methods: {
+    unlikePost: function unlikePost() {
+      var _this2 = this;
+
+      var url = '/unlike/' + this.post.id;
+
+      if (this.iscomment) {
+        url += '?comment=true';
+      }
+
+      axios.post(url).then(function (result) {
+        //add p
+        _this2.postIsLiked = false;
+        _this2.myPost.likes_count--;
+      });
+    },
+    likePost: function likePost() {
+      var _this3 = this;
+
+      var url = '/like/' + this.post.id;
+
+      if (this.iscomment) {
+        url += '?comment=true';
+      }
+
+      axios.post(url).then(function (result) {
+        _this3.postIsLiked = true;
+        _this3.myPost.likes_count++;
+      });
     }
   }
 });
@@ -56641,7 +56705,13 @@ var render = function() {
                           staticClass: "text-secondary",
                           attrs: { href: "/posts/" + _vm.post.id + "/comments" }
                         },
-                        [_vm._v("Comments 21")]
+                        [
+                          _vm._v(
+                            "\r\n                  " +
+                              _vm._s(_vm.post.comments_count) +
+                              " Comments \r\n                  "
+                          )
+                        ]
                       )
                     ]
                   : [
@@ -56651,14 +56721,77 @@ var render = function() {
                           staticClass: "text-secondary",
                           attrs: { href: "/comments/" + _vm.post.id }
                         },
-                        [_vm._v("Comments 21")]
+                        [
+                          _vm._v(
+                            "\r\n                " +
+                              _vm._s(_vm.post.comments_count) +
+                              " Comments \r\n                "
+                          )
+                        ]
                       )
                     ]
               ],
               2
             ),
             _vm._v(" "),
-            _vm._m(0)
+            _c(
+              "div",
+              { staticClass: "col-6 text-center post-btns" },
+              [
+                _vm.postIsLiked
+                  ? [
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.unlikePost($event)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "fas fa-heart mr-1 text-danger"
+                          }),
+                          _vm._v(" "),
+                          _c("span", [
+                            _vm._v(
+                              " " + _vm._s(_vm.myPost.likes_count) + " Likes "
+                            )
+                          ])
+                        ]
+                      )
+                    ]
+                  : [
+                      _c(
+                        "a",
+                        {
+                          attrs: { href: "#" },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.likePost($event)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "far fa-heart mr-1 text-primary"
+                          }),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "text-secondary" }, [
+                            _vm._v(
+                              " " + _vm._s(_vm.myPost.likes_count) + " Likes "
+                            )
+                          ])
+                        ]
+                      )
+                    ]
+              ],
+              2
+            )
           ])
         ])
       ])
@@ -56667,17 +56800,7 @@ var render = function() {
     _c("hr")
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-6 text-center post-btns" }, [
-      _c("i", { staticClass: "far fa-heart mr-1 text-primary" }),
-      _vm._v("\r\n             Likes 21\r\n             \r\n          ")
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -70789,12 +70912,35 @@ __webpack_require__.r(__webpack_exports__);
     },
     addPost: function addPost(state, payload) {
       state.posts.unshift(payload);
+      state.posts.comments_count += 1;
     },
     loadComments: function loadComments(state, payload) {
       state.comments = payload;
     },
     addComment: function addComment(state, payload) {
       state.comments.unshift(payload);
+      state.comments.comments_count += 1;
+    },
+    addLikeToComment: function addLikeToComment(state, payload) {
+      state.comments = state.comments.map(function (element) {
+        if (element.id == payload) {
+          element.likes_count += 1;
+        }
+      });
+    },
+    addLikeToPost: function addLikeToPost(state) {
+      // state.posts.likes_count += 1;
+      state.posts = state.posts.map(function (element) {
+        if (element.id == payload) {
+          element.likes_count += 1;
+        }
+      });
+    },
+    removeLikeToComment: function removeLikeToComment(state) {
+      state.comments.likes_count -= 1;
+    },
+    removeLikeToPost: function removeLikeToPost(state) {
+      state.posts.likes_count--;
     }
   },
   getters: {

@@ -18,13 +18,16 @@ class CommentController extends Controller
    
     public function index($id)
     {
-        $post = Post::with(['images','user'])->where('id',$id)->get();
+        $post = Post::withCount(['comments','likes'])
+                        ->with(['images','user'])->where('id',$id)->get();
         return view('comments.post', compact('post'));
     }
 
     public function displayComments($id)
     {
-        $comment = Comment::with(['images','user'])->where('id',$id)->get();
+        //TODO -- fetch the count of comments manually
+        $comment = Comment::withCount(['comments','likes'])
+                        ->with(['images','user'])->where('id',$id)->get();
         return view('comments.comment', compact('comment'));
     }
 
@@ -76,7 +79,8 @@ class CommentController extends Controller
             }
         }
  
-        $commentAdded = $comment::with(['images','user'])->where('id',$comment->id)->get();
+        $commentAdded = $comment::withCount(['comments','likes'])
+                        ->with(['images','user'])->where('id',$comment->id)->get();
         return response()->json([
             'comment'=>$commentAdded
         ],200);
@@ -92,7 +96,8 @@ class CommentController extends Controller
          $post = Post::find($id);
        }
       
-        $comments = $post->comments()->with(['user', 'images'])->latest()->get();
+        $comments = $post->comments()->withCount(['comments','likes'])
+                    ->with(['user', 'images'])->latest()->get();
         return response()->json([$comments], 200);
     }
 }

@@ -47,15 +47,33 @@
           <div class="col-6 post-btns mr-md-20">
             <i class="far fa-comment-alt text-primary mr-1"></i>
               <template v-if="!iscomment">
-                  <a :href="'/posts/'+ post.id+'/comments'" class="text-secondary">Comments 21</a>
+                  <a :href="'/posts/'+ post.id+'/comments'" class="text-secondary">
+                  {{ post.comments_count}} Comments 
+                  </a>
               </template>
               <template v-else>
-                <a :href="'/comments/'+ post.id" class="text-secondary">Comments 21</a>
+                <a :href="'/comments/'+ post.id" class="text-secondary">
+                {{ post.comments_count}} Comments 
+                </a>
               </template>
             </div>
           <div class="col-6 text-center post-btns"> 
-            <i class="far fa-heart mr-1 text-primary"></i>
-             Likes 21
+            
+              <template v-if="postIsLiked">
+          
+                  <a href="#" @click.prevent="unlikePost"> 
+                    <i class="fas fa-heart mr-1 text-danger"></i> 
+                    <span> {{ myPost.likes_count}} Likes </span>
+                  </a>
+              </template>
+              <template v-else>
+                  
+                   <a href="#" @click.prevent="likePost"> 
+                     <i class="far fa-heart mr-1 text-primary"></i>
+                     <span class="text-secondary"> {{ myPost.likes_count}} Likes </span>
+                  </a>
+              </template>
+              
              
           </div>
         </div>
@@ -76,9 +94,24 @@ export default {
 
   props:['post', 'iscomment'],
 
+  mounted(){
+    let url = '/isliked/'+this.post.id;
+    if(this.iscomment){
+      url += '?comment=true'
+    }
+    axios.get(url)
+    .then((result) => {
+      this.postIsLiked = result.data.liked
+    }).catch((err) => {
+      
+    });
+  },
+
   data(){
     return{
-        noOfImages: this.post.images.length
+        noOfImages: this.post.images.length,
+        postIsLiked: false,
+        myPost: this.post
     }
   },
   computed: {
@@ -116,6 +149,37 @@ export default {
 
       return {};
     }
+  },
+
+  methods: {
+    unlikePost(){
+      let url = '/unlike/'+ this.post.id;
+      if(this.iscomment){
+        url += '?comment=true'
+      }
+      axios.post(url).then(result=>{
+        //add p
+         this.postIsLiked = false; 
+
+        this.myPost.likes_count--;
+     
+      });
+    }
+    ,
+
+    likePost(){
+      let url = '/like/'+ this.post.id;
+      if(this.iscomment){
+        url += '?comment=true'
+      }
+      axios.post(url).then(result=>{
+
+         this.postIsLiked = true; 
+     
+        this.myPost.likes_count++;
+      });
+    },
+
   }
 
 };

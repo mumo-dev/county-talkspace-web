@@ -51,7 +51,8 @@ class PostController extends Controller
            }
        }
 
-       $postAdded = $post::with(['images','user'])->where('id',$post->id)->get();
+       $postAdded = $post::withCount(['comments','likes'])
+                    ->with(['images','user'])->where('id',$post->id)->get();
        return response()->json([
            'post'=>$postAdded
        ],200);
@@ -60,7 +61,7 @@ class PostController extends Controller
 
     public function index()
     {
-        $posts = Post::with(['user','images'])->latest()->paginate(50);
+        $posts = Post::withCount(['comments','likes'])->with(['user','images'])->latest()->paginate(50);
         return response()->json([$posts], 200);
     }
 }
