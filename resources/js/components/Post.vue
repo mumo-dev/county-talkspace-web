@@ -21,7 +21,7 @@
            <div class="photos-wrapper">
               <div :class="imageClasses" class="p-1" v-for="(imageUrl, index) in imagesUrls" :key="index">
                 <img :src="'/images/thumbnails/'+imageUrl"  
-                  style="max-width:100%; height:auto;object-fit:contain">
+                  style="max-width:100%; height:auto;object-fit:contain" data-target="#imageModal">
               </div>
 
               
@@ -44,10 +44,11 @@
 
       <div class="media-footer mt-2">
         <div class="row">
-          <div class="col-6">Comments 21</div>
-          <div class="col-6 text-right">Likes 21</div>
+          <div class="col-6 post-btns text-center">Comments 21</div>
+          <div class="col-6 text-center post-btns"> <i class="fas fa-heart mr-1 text-primary"></i> Likes 21</div>
         </div>
       </div>
+
 
     </div>
     
@@ -74,7 +75,7 @@ export default {
     },
     user_icon(){
       if(this.post.user.photo_url){
-        return 'images/thumbnails/'+ this.post.user.photo_url
+        return 'images/thumbnails/'+ this.post.user.photo_url;
       }else{
         return '/images/user.png';
       }
@@ -128,6 +129,15 @@ export default {
   grid-column-start: 1;
   grid-column-end: 3;
   max-height: 300px;
+}
+
+.post-btns{
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 4px;
+}
+.post-btns:hover, .post-btns:focus {
+    background-color: #f2f2f2;
 }
 </style>
 

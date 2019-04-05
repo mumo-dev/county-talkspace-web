@@ -48,7 +48,7 @@ class PostController extends Controller
            }
        }
 
-       $postAdded = $post::with('images')->where('id',$post->id)->get();
+       $postAdded = $post::with(['images','user'])->where('id',$post->id)->get();
        return response()->json([
            'post'=>$postAdded
        ],200);

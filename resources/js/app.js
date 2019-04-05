@@ -8,7 +8,14 @@
 require('./bootstrap');
 require('./autoexpandtextarea')
 
-window.Vue = require('vue');
+import Vue from 'vue'
+import Vuex from 'vuex'
+import storeData from './store'
+
+Vue.use(Vuex);
+
+const store = new Vuex.Store(storeData);
+
 
 /**
  * The following block of code may be used to automatically register your
@@ -34,7 +41,9 @@ Vue.component('app-posts', require('./components/Posts.vue').default);
 
 
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    store
+
 });
 
 

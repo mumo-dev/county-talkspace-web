@@ -130,7 +130,10 @@ export default {
             this.success = true;
             this.error = false;
             this.successMessage= "Post saved successfully"
-            
+
+             console.log(result.data.post[0]);
+             const data = result.data.post[0]
+            this.$store.commit('addPost', data);
             console.log(result);
         }).catch((err)=>{ 
             this.submitting = false;

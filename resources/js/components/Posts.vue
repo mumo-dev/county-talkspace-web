@@ -1,7 +1,18 @@
 <template>
 <ul class="list-unstyled">
-    <app-post v-for="(post, index) in posts" :key="index"
-    v-bind:post="post"></app-post>
+    <template v-if="!loading">
+      <app-post v-for="(post, index) in posts" :key="index"
+          v-bind:post="post"></app-post>
+    </template>
+    <template v-else>
+      <div  class="text-center">
+        <span class="spinner-grow spinner-grow bg-primary" role="status" aria-hidden="true"></span>
+        <span class="spinner-grow spinner-grow bg-warning" role="status" aria-hidden="true"></span>
+        <span class="spinner-grow spinner-grow bg-danger" role="status" aria-hidden="true"></span>
+        <span class="spinner-grow spinner-grow " role="status" aria-hidden="true"></span>
+      </div>
+    </template>
+    
 </ul>
   
 </template>
@@ -15,7 +26,7 @@ export default {
 
   data(){
     return {
-        posts:[],
+       loading:false
     }
   },
 
@@ -23,19 +34,30 @@ export default {
     this.fetchPosts();
   },
 
+  computed:{
+    posts(){
+      return this.$store.getters.posts;
+    }
+  },
+
   methods:{
 
     fetchPosts(page=1){
+      this.loading = true;
       axios.get('/posts')
       .then((result) => {
-        this.posts = result.data[0].data;
-        console.log(result.data)
+        let data = result.data[0].data;
+        this.$store.commit('loadPosts', data);
+        this.loading = false;
+        console.log(data)
       })
       .catch((err) => {
-        
+          this.loading = false;
+
       });
     }
-  }
+  },
+
 
 
 }

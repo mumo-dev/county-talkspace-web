@@ -18,7 +18,7 @@
                         </div>
                     @endif
 
-                    <app-posts></app-posts>
+                    <app-posts ></app-posts>
                     {{-- <ul class="list-unstyled">
                         <li class="media">
                             <img src="..." class="mr-3" alt="...">
