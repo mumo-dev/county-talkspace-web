@@ -1807,6 +1807,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['post_id'],
   data: function data() {
@@ -55897,6 +55907,40 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", {}, [
+    _c("div", { staticClass: "col-12 justify-content-center" }, [
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.error,
+              expression: "error"
+            }
+          ],
+          staticClass: "alert alert-danger text-center"
+        },
+        [_vm._v("\n        " + _vm._s(_vm.errorMessage) + "\n    ")]
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.success,
+              expression: "success"
+            }
+          ],
+          staticClass: "alert alert-success text-center"
+        },
+        [_vm._v("\n      " + _vm._s(_vm.successMessage) + "\n    ")]
+      )
+    ]),
+    _vm._v(" "),
     _c("div", { staticClass: "form-group m-0 p-0" }, [
       _c("textarea", {
         directives: [
@@ -56104,8 +56148,8 @@ var render = function() {
           staticClass: "form-control autoExpand",
           attrs: {
             placeholder: "Create a post..",
-            rows: "3",
-            "data-min-rows": "3"
+            rows: "2",
+            "data-min-rows": "0"
           },
           domProps: { value: _vm.post },
           on: {
@@ -56332,7 +56376,11 @@ var staticRenderFns = [
         staticStyle: { cursor: "pointer" },
         attrs: { for: "file" }
       },
-      [_c("i", { staticClass: "far fa-file-image fa-2x" })]
+      [
+        _c("img", {
+          attrs: { src: "/images/gallery.svg", height: "20px", width: "20px" }
+        })
+      ]
     )
   }
 ]

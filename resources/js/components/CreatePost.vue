@@ -16,7 +16,7 @@
     <div class="col-10 ">
       <div class="form-group m-0 p-0">
         <textarea class="form-control autoExpand" placeholder="Create a post.."
-         rows='3' data-min-rows='3' v-model="post">
+         rows='2' data-min-rows='0' v-model="post">
         </textarea>
       </div>
       <div class="form-group m-0 mt-1">
@@ -58,7 +58,7 @@
       <div class="mt-1">
         
         <label class="text-primary" for="file" style="cursor:pointer">
-          <i class="far fa-file-image fa-2x"></i>
+          <img src="/images/gallery.svg" height="20px" width="20px"/>
         </label>
         <input type="file" class="d-none overflow-hidden" id="file" ref="file"  
           accept="image/*" multiple 

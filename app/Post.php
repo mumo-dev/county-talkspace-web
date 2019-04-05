@@ -9,13 +9,24 @@ class Post extends Model
     protected $guarded =[];
 
 
+    /**
+     * Get the post's image.
+     */
     public function images()
     {
-        return $this->hasMany(Image::class);
+        return $this->morphMany('App\Image', 'imageable');
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+     /**
+     * Get all of the post's comments.
+     */
+    public function comments()
+    {
+        return $this->morphMany('App\Comment', 'commentable');
     }
 }

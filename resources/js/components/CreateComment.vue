@@ -1,5 +1,15 @@
 <template>
   <div class>
+    <div class="col-12 justify-content-center">
+      
+      <div class="alert alert-danger text-center" v-show="error">
+          {{ errorMessage }}
+      </div>
+      <div class="alert alert-success text-center" v-show="success">
+        {{ successMessage }}
+      </div>
+      
+    </div>
       <div class="form-group m-0 p-0">
         <textarea class="form-control autoExpand" placeholder="comment... "
             rows='1' data-min-rows='0' v-model="comment">

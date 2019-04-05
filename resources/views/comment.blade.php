@@ -13,7 +13,17 @@
             </ol>
           </nav>
           <app-post v-bind:post="{{$post[0]}}"></app-post>
-          <app-create-comment v-bind:post_id="{{ $post[0]->id}}"></app-create-comment>
+
+          <ul class="list-unstyled"  style="margin-left:64px;">
+            <li class="media">
+              <div class="media-body">
+                <app-create-comment v-bind:post_id="{{ $post[0]->id}}"></app-create-comment>
+              </div>
+            </li>
+
+            {{-- comments for this post here --}}
+          </ul>
+         
 
 
       </div>

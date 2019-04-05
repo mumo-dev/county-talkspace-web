@@ -8,7 +8,13 @@ class Image extends Model
 {
    protected $guarded =[];
 
-   public function post(){
-       return $this->belongsTo(Post::class);
-   }
+ 
+
+    /**
+     * Get all of the owning imageable models.
+    */
+    public function imageable()
+    {
+        return $this->morphTo();
+    }
 }
