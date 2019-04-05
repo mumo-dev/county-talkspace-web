@@ -1994,6 +1994,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['post'],
@@ -2008,7 +2015,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     user_icon: function user_icon() {
       if (this.post.user.photo_url) {
-        return 'images/thumbnails/' + this.post.user.photo_url;
+        return '/images/thumbnails/' + this.post.user.photo_url;
       } else {
         return '/images/user.png';
       }
@@ -56079,7 +56086,24 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _vm._m(0)
+        _c("div", { staticClass: "media-footer mt-2" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-6 post-btns mr-md-20" }, [
+              _c("i", { staticClass: "far fa-comment-alt text-primary mr-1" }),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass: "text-secondary",
+                  attrs: { href: "/posts/" + _vm.post.id + "/comments" }
+                },
+                [_vm._v("Comments 21")]
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(0)
+          ])
+        ])
       ])
     ]),
     _vm._v(" "),
@@ -56091,17 +56115,9 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "media-footer mt-2" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-6 post-btns text-center" }, [
-          _vm._v("Comments 21")
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-6 text-center post-btns" }, [
-          _c("i", { staticClass: "fas fa-heart mr-1 text-primary" }),
-          _vm._v(" Likes 21")
-        ])
-      ])
+    return _c("div", { staticClass: "col-6 text-center post-btns" }, [
+      _c("i", { staticClass: "far fa-heart mr-1 text-primary" }),
+      _vm._v("\r\n             Likes 21\r\n             \r\n          ")
     ])
   }
 ]
@@ -69614,6 +69630,7 @@ var store = new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store(_store__WEBPA
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-profile', __webpack_require__(/*! ./components/Profile.vue */ "./resources/js/components/Profile.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-create-post', __webpack_require__(/*! ./components/CreatePost.vue */ "./resources/js/components/CreatePost.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-posts', __webpack_require__(/*! ./components/Posts.vue */ "./resources/js/components/Posts.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-post', __webpack_require__(/*! ./components/Post.vue */ "./resources/js/components/Post.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -23,6 +23,8 @@ Route::post('/user/profile/update', 'HomeController@updateProfile')->name('updat
 Route::post('/posts', 'PostController@store');
 Route::get('/posts', 'PostController@index');
 
+Route::get('posts/{id}/comments/', 'CommentController@index');
+
 Route::group(['prefix'=>'admin','middleware'=>['admin'] ], function (){
     Route::get('/home', 'HomeController@adminHome')->name('admin.home');
 });

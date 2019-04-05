@@ -44,8 +44,15 @@
 
       <div class="media-footer mt-2">
         <div class="row">
-          <div class="col-6 post-btns text-center">Comments 21</div>
-          <div class="col-6 text-center post-btns"> <i class="fas fa-heart mr-1 text-primary"></i> Likes 21</div>
+          <div class="col-6 post-btns mr-md-20">
+            <i class="far fa-comment-alt text-primary mr-1"></i>
+              <a :href="'/posts/'+ post.id+'/comments'" class="text-secondary">Comments 21</a>
+            </div>
+          <div class="col-6 text-center post-btns"> 
+            <i class="far fa-heart mr-1 text-primary"></i>
+             Likes 21
+             
+          </div>
         </div>
       </div>
 
@@ -75,7 +82,7 @@ export default {
     },
     user_icon(){
       if(this.post.user.photo_url){
-        return 'images/thumbnails/'+ this.post.user.photo_url;
+        return '/images/thumbnails/'+ this.post.user.photo_url;
       }else{
         return '/images/user.png';
       }

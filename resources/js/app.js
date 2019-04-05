@@ -31,6 +31,7 @@ const store = new Vuex.Store(storeData);
 Vue.component('app-profile', require('./components/Profile.vue').default);
 Vue.component('app-create-post', require('./components/CreatePost.vue').default);
 Vue.component('app-posts', require('./components/Posts.vue').default);
+Vue.component('app-post', require('./components/Post.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
