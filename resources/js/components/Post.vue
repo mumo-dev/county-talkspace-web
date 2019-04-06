@@ -6,7 +6,7 @@
     <div class="media-body">
       <h5 class="my-0">{{ post.user.name }}
         <span class="text-secondary font-weight-light my-0 mb-2" style="font-size:14px;">
-           posted: {{ postedOn }}
+        {{ postedOn }}
         </span>
       </h5>
        <p>{{post.message.trim()}}</p>
@@ -37,9 +37,6 @@
   
       </div>
 
-      
-
-     
 
 
       <div class="media-footer mt-2">

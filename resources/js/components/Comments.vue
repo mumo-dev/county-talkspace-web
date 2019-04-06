@@ -32,6 +32,8 @@ export default {
 
   mounted(){
     this.fetchComments();
+    //  this.$store.commit('loadComments', this.posts);
+
   },
 
   computed:{

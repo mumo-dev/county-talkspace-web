@@ -26,7 +26,8 @@
                 
                   <hr/>
                   {{-- comments for this post here --}}
-                  <app-comments v-bind:postid="{{$comment[0]->id }}" v-bind:iscomment="true"></app-comments>
+                  <app-comments v-bind:postid="{{$comment[0]->id }}" 
+                                v-bind:iscomment="true"></app-comments>
                 </ul>
             </div>
           </div>

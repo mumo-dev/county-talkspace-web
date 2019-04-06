@@ -16,7 +16,7 @@ export default {
     },
     addComment(state, payload){
       state.comments.unshift(payload)
-      state.comments.comments_count +=1;
+      // state.posts[0].comments_count +=1;
     },
 
     addLikeToComment(state, payload){

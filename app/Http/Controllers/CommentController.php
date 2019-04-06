@@ -18,19 +18,31 @@ class CommentController extends Controller
    
     public function index($id)
     {
-        $post = Post::withCount(['comments','likes'])
+        $post = Post::withCount(['likes'])
                         ->with(['images','user'])->where('id',$id)->get();
+
+        $post = $post->map(function ($item, $key) {
+            $count = $item->comments()->get()->count();
+            $item['comments_count'] = $count;
+            return $item;
+        });
         return view('comments.post', compact('post'));
     }
 
     public function displayComments($id)
     {
         $post = Comment::find($id);
-        $count =  $post->comments()->get()->count();
+        // $count =  $post->comments()->get()->count();
         //TOD fetch the count of comments manually
-        $comment = Comment::withCount(['comments','likes'])
+        $comment = Comment::withCount(['likes'])
                         ->with(['images','user'])->where('id',$id)->get();
-        $comment['comments_count'] = $count;
+        $comment = $comment->map(function ($item, $key) {
+                        $count = $item->comments()->get()->count();
+                        $item['comments_count'] = $count;
+                        return $item;
+                    });
+        // $comment['comments_count'] = $count;
+
         return view('comments.comment', compact('comment'));
     }
 
@@ -95,12 +107,20 @@ class CommentController extends Controller
     {
        if($request->query('comment')==true){
            $post = Comment::find($id);
+           
        }else{
          $post = Post::find($id);
+         
        }
       
-        $comments = $post->comments()->withCount(['comments','likes'])
+        $comments = $post->comments()->withCount(['likes'])
                     ->with(['user', 'images'])->latest()->get();
+        $comments = $comments->map(function ($item, $key) {
+            $count = $item->comments()->get()->count();
+            $item['comments_count'] = $count;
+            return $item;
+        });
+       
         return response()->json([$comments], 200);
     }
 }

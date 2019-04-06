@@ -1,6 +1,6 @@
 <template>
   <div class>
-    <div class="col-12 justify-content-center">
+    <!-- <div class="col-12 justify-content-center">
       
       <div class="alert alert-danger text-center" v-show="error">
           {{ errorMessage }}
@@ -9,7 +9,7 @@
         {{ successMessage }}
       </div>
       
-    </div>
+    </div> -->
       <div class="form-group m-0 p-0">
         <textarea class="form-control autoExpand" placeholder="comment... "
             rows='1' data-min-rows='0' v-model="comment">
@@ -19,7 +19,7 @@
           <div class="row mt-0 pt-0" v-if="files">
 
             <div class="col-3 img-preview" v-for="(img, index) in imgSrc" :key="index" 
-              style="height=100px!important">
+              style="height=150px!important">
               <div class="card">
                 <div class="card-body p-1">
                 <img :src="imgSrc[index]" class="img-fluid" height="100px" />
@@ -60,10 +60,6 @@ export default {
         files:[],
         uploadFileArray:[],
         imgSrc:[],
-        error:false,
-        success:false,
-        errorMessage:'',
-        successMessage:'',
         comment:'',
         submitting:false
     }
@@ -102,19 +98,19 @@ export default {
             this.comment = '';
             
             this.submitting = false;
-            this.success = true;
-            this.error = false;
-            this.successMessage= "Comment saved successfully"
+            // this.error = false;
+            // this.successMessage= "Comment saved successfully"
 
             console.log(result.data);
             const data = result.data.comment[0]
+
             this.$store.commit('addComment', data);
             // console.log(result);
         }).catch((err)=>{ 
             this.submitting = false;
-            this.success = false;
-            this.error = true;
-            this.errorMessage= err.response.data.message || "An Error occured. Try again later!";
+            // this.success = false;
+            // this.error = true;
+            // this.errorMessage= err.response.data.message || "An Error occured. Try again later!";
             console.log(err);
         });
 

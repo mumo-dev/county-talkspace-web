@@ -1794,7 +1794,7 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.fetchComments();
+    this.fetchComments(); //  this.$store.commit('loadComments', this.posts);
   },
   computed: {
     comments: function comments() {
@@ -1899,10 +1899,6 @@ __webpack_require__.r(__webpack_exports__);
       files: [],
       uploadFileArray: [],
       imgSrc: [],
-      error: false,
-      success: false,
-      errorMessage: '',
-      successMessage: '',
       comment: '',
       submitting: false
     };
@@ -1936,20 +1932,19 @@ __webpack_require__.r(__webpack_exports__);
         _this.files = null;
         _this.imgSrc = [];
         _this.comment = '';
-        _this.submitting = false;
-        _this.success = true;
-        _this.error = false;
-        _this.successMessage = "Comment saved successfully";
+        _this.submitting = false; // this.error = false;
+        // this.successMessage= "Comment saved successfully"
+
         console.log(result.data);
         var data = result.data.comment[0];
 
         _this.$store.commit('addComment', data); // console.log(result);
 
       }).catch(function (err) {
-        _this.submitting = false;
-        _this.success = false;
-        _this.error = true;
-        _this.errorMessage = err.response.data.message || "An Error occured. Try again later!";
+        _this.submitting = false; // this.success = false;
+        // this.error = true;
+        // this.errorMessage= err.response.data.message || "An Error occured. Try again later!";
+
         console.log(err);
       });
     },
@@ -2159,9 +2154,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
-//
 //
 //
 //
@@ -56121,40 +56113,6 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", {}, [
-    _c("div", { staticClass: "col-12 justify-content-center" }, [
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.error,
-              expression: "error"
-            }
-          ],
-          staticClass: "alert alert-danger text-center"
-        },
-        [_vm._v("\n        " + _vm._s(_vm.errorMessage) + "\n    ")]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.success,
-              expression: "success"
-            }
-          ],
-          staticClass: "alert alert-success text-center"
-        },
-        [_vm._v("\n      " + _vm._s(_vm.successMessage) + "\n    ")]
-      )
-    ]),
-    _vm._v(" "),
     _c("div", { staticClass: "form-group m-0 p-0" }, [
       _c("textarea", {
         directives: [
@@ -56640,13 +56598,7 @@ var render = function() {
               staticClass: "text-secondary font-weight-light my-0 mb-2",
               staticStyle: { "font-size": "14px" }
             },
-            [
-              _vm._v(
-                "\r\n           posted: " +
-                  _vm._s(_vm.postedOn) +
-                  "\r\n        "
-              )
-            ]
+            [_vm._v("\r\n        " + _vm._s(_vm.postedOn) + "\r\n        ")]
           )
         ]),
         _vm._v(" "),
@@ -70918,8 +70870,7 @@ __webpack_require__.r(__webpack_exports__);
       state.comments = payload;
     },
     addComment: function addComment(state, payload) {
-      state.comments.unshift(payload);
-      state.comments.comments_count += 1;
+      state.comments.unshift(payload); // state.posts[0].comments_count +=1;
     },
     addLikeToComment: function addLikeToComment(state, payload) {
       state.comments = state.comments.map(function (element) {
