@@ -35,10 +35,12 @@ class CommentController extends Controller
         // $count =  $post->comments()->get()->count();
         //TOD fetch the count of comments manually
         $comment = Comment::withCount(['likes'])
-                        ->with(['images','user'])->where('id',$id)->get();
+                        ->with(['images','user','comments'])->where('id',$id)->get();
         $comment = $comment->map(function ($item, $key) {
-                        $count = $item->comments()->get()->count();
-                        $item['comments_count'] = $count;
+                        // $count = $item->comments()->get()->count();
+                        // $item['comments_count'] = $count;
+                        $item['comments_count'] = count($item['comments']);
+                        unset($item['comments']);
                         return $item;
                     });
         // $comment['comments_count'] = $count;
@@ -114,10 +116,12 @@ class CommentController extends Controller
        }
       
         $comments = $post->comments()->withCount(['likes'])
-                    ->with(['user', 'images'])->latest()->get();
+                    ->with(['user', 'images','comments'])->latest()->get();
         $comments = $comments->map(function ($item, $key) {
-            $count = $item->comments()->get()->count();
-            $item['comments_count'] = $count;
+            // $count = $item->comments()->get()->count();
+
+            $item['comments_count'] = count($item['comments']);
+            unset($item['comments']);
             return $item;
         });
        
