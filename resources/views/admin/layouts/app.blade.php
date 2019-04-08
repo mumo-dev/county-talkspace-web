@@ -9,8 +9,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>County TalkSpace</title>
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <title>{{ config('app.name', 'Laravel') }}</title>
+    
     <!-- Bootstrap core CSS-->
     <link href="/css/app.css" rel="stylesheet">
 

@@ -64,4 +64,20 @@ class PostController extends Controller
         $posts = Post::withCount(['comments','likes'])->with(['user','images'])->latest()->paginate(50);
         return response()->json([$posts], 200);
     }
+
+
+    public function getPostsByTag(Request $request, $tag)
+    {
+        $posts = Post::withCount(['comments','likes'])
+                ->with(['user','images'])->where('tag', $tag)->latest()->paginate(50);
+        return response()->json([$posts], 200);
+    }
+
+    public function markPostAsRead($id)
+    {
+        $post = Post::find($id);
+        $post->read =1;
+        $post->save();
+        return response()->json([], 200);
+    }
 }

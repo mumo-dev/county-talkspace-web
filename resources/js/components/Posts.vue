@@ -2,7 +2,7 @@
 <ul class="list-unstyled">
     <template v-if="!loading">
       <app-post v-for="(post, index) in posts" :key="index"
-          v-bind:post="post"></app-post>
+          v-bind:post="post" v-bind:isadmin="isadmin"></app-post>
     </template>
     <template v-else>
       <div  class="text-center">
@@ -20,6 +20,7 @@
 import Post from './Post.vue';
 export default {
   
+  props:['isadmin'],
   components:{
     'app-post':Post
   },

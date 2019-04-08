@@ -29,6 +29,19 @@ class CommentController extends Controller
         return view('comments.post', compact('post'));
     }
 
+    public function adminPostComments($id)
+    {
+        $post = Post::withCount(['likes'])
+                        ->with(['images','user'])->where('id',$id)->get();
+
+        $post = $post->map(function ($item, $key) {
+            $count = $item->comments()->get()->count();
+            $item['comments_count'] = $count;
+            return $item;
+        });
+        return view('admin.comments.post', compact('post'));
+    }
+
     public function displayComments($id)
     {
         $post = Comment::find($id);
@@ -46,6 +59,25 @@ class CommentController extends Controller
         // $comment['comments_count'] = $count;
 
         return view('comments.comment', compact('comment'));
+    }
+
+    public function displayAdminComments($id)
+    {
+        $post = Comment::find($id);
+        // $count =  $post->comments()->get()->count();
+        //TOD fetch the count of comments manually
+        $comment = Comment::withCount(['likes'])
+                        ->with(['images','user','comments'])->where('id',$id)->get();
+        $comment = $comment->map(function ($item, $key) {
+                        // $count = $item->comments()->get()->count();
+                        // $item['comments_count'] = $count;
+                        $item['comments_count'] = count($item['comments']);
+                        unset($item['comments']);
+                        return $item;
+                    });
+        // $comment['comments_count'] = $count;
+
+        return view('admin.comments.comment', compact('comment'));
     }
 
 

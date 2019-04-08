@@ -1,8 +1,8 @@
 <template>
 <ul class="list-unstyled">
     <template v-if="!loading">
-      <app-post v-for="(comment, index) in comments" :key="index"
-          v-bind:post="comment" v-bind:iscomment="true" v-bind:isadmin="isadmin"></app-post>
+      <app-post v-for="(post, index) in posts" :key="index"
+          v-bind:post="post"></app-post>
     </template>
     <template v-else>
       <div  class="text-center">
@@ -19,7 +19,7 @@
 <script>
 import Post from './Post.vue';
 export default {
-  props:['postid','iscomment','isadmin'],
+  props:['tag'],
   components:{
     'app-post':Post
   },
@@ -31,32 +31,25 @@ export default {
   },
 
   mounted(){
-    this.fetchComments();
-    //  this.$store.commit('loadComments', this.posts);
-
+    this.fetchPosts();
   },
 
   computed:{
-    comments(){
-      return this.$store.getters.comments;
+    posts(){
+      return this.$store.getters.posts;
     }
   },
 
   methods:{
 
-    fetchComments(page=1){
+    fetchPosts(page=1){
       this.loading = true;
-      let url = '/comments/post/'+ this.postid;
-      if(this.iscomment){
-        url += '?comment=true'
-      }
-      axios.get(url)
+      axios.get('/posts/'+this.tag)
       .then((result) => {
-        // console.log(result.data);
-        let data = result.data[0];
-        this.$store.commit('loadComments', data);
+        let data = result.data[0].data;
+        this.$store.commit('loadPosts', data);
         this.loading = false;
-        // console.log(data)
+        console.log(data)
       })
       .catch((err) => {
           this.loading = false;

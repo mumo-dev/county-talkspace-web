@@ -1754,6 +1754,75 @@ module.exports = {
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminPosts.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminPosts.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Post_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Post.vue */ "./resources/js/components/Post.vue");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['tag'],
+  components: {
+    'app-post': _Post_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      loading: false
+    };
+  },
+  mounted: function mounted() {
+    this.fetchPosts();
+  },
+  computed: {
+    posts: function posts() {
+      return this.$store.getters.posts;
+    }
+  },
+  methods: {
+    fetchPosts: function fetchPosts() {
+      var _this = this;
+
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.loading = true;
+      axios.get('/posts/' + this.tag).then(function (result) {
+        var data = result.data[0].data;
+
+        _this.$store.commit('loadPosts', data);
+
+        _this.loading = false;
+        console.log(data);
+      }).catch(function (err) {
+        _this.loading = false;
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Comments.vue?vue&type=script&lang=js&":
 /*!*******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Comments.vue?vue&type=script&lang=js& ***!
@@ -1784,7 +1853,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['postid', 'iscomment'],
+  props: ['postid', 'iscomment', 'isadmin'],
   components: {
     'app-post': _Post_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -2255,9 +2324,48 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['post', 'iscomment'],
+  props: ['post', 'iscomment', 'isadmin'],
   mounted: function mounted() {
     var _this = this;
 
@@ -2374,6 +2482,13 @@ __webpack_require__.r(__webpack_exports__);
 
       this.currentImageIndex--;
       this.currentModalImageUrl = this.imagesUrls[this.currentImageIndex];
+    },
+    markPostAsRead: function markPostAsRead() {
+      var _this4 = this;
+
+      axios.post('/markpostasread/' + this.post.id).then(function () {
+        _this4.myPost.read = 1;
+      });
     }
   }
 });
@@ -2410,6 +2525,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: ['isadmin'],
   components: {
     'app-post': _Post_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -56078,6 +56194,68 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminPosts.vue?vue&type=template&id=e88d2722&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/AdminPosts.vue?vue&type=template&id=e88d2722&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "ul",
+    { staticClass: "list-unstyled" },
+    [
+      !_vm.loading
+        ? _vm._l(_vm.posts, function(post, index) {
+            return _c("app-post", { key: index, attrs: { post: post } })
+          })
+        : [_vm._m(0)]
+    ],
+    2
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "text-center" }, [
+      _c("span", {
+        staticClass: "spinner-grow spinner-grow bg-primary",
+        attrs: { role: "status", "aria-hidden": "true" }
+      }),
+      _vm._v(" "),
+      _c("span", {
+        staticClass: "spinner-grow spinner-grow bg-warning",
+        attrs: { role: "status", "aria-hidden": "true" }
+      }),
+      _vm._v(" "),
+      _c("span", {
+        staticClass: "spinner-grow spinner-grow bg-danger",
+        attrs: { role: "status", "aria-hidden": "true" }
+      }),
+      _vm._v(" "),
+      _c("span", {
+        staticClass: "spinner-grow spinner-grow ",
+        attrs: { role: "status", "aria-hidden": "true" }
+      })
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f&scoped=true&":
 /*!***********************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/Comments.vue?vue&type=template&id=4aa6d95f&scoped=true& ***!
@@ -56101,7 +56279,7 @@ var render = function() {
         ? _vm._l(_vm.comments, function(comment, index) {
             return _c("app-post", {
               key: index,
-              attrs: { post: comment, iscomment: true }
+              attrs: { post: comment, iscomment: true, isadmin: _vm.isadmin }
             })
           })
         : [_vm._m(0)]
@@ -56636,17 +56814,64 @@ var render = function() {
       }),
       _vm._v(" "),
       _c("div", { staticClass: "media-body" }, [
-        _c("h5", { staticClass: "my-0" }, [
-          _vm._v(_vm._s(_vm.post.user.name) + "\r\n        "),
-          _c(
-            "span",
-            {
-              staticClass: "text-secondary font-weight-light my-0 mb-2",
-              staticStyle: { "font-size": "14px" }
-            },
-            [_vm._v("\r\n        " + _vm._s(_vm.postedOn) + "\r\n        ")]
-          )
-        ]),
+        _c(
+          "h5",
+          { staticClass: "my-0" },
+          [
+            _vm.post.user.user_type == 0
+              ? [
+                  _vm._v(
+                    "\r\n          " +
+                      _vm._s(_vm.post.user.name.trim()) +
+                      "\r\n        "
+                  )
+                ]
+              : [_c("strong", [_vm._v("County Government")])],
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                staticClass: "text-secondary font-weight-light my-0 mb-2",
+                staticStyle: { "font-size": "14px" }
+              },
+              [_vm._v("\r\n        " + _vm._s(_vm.postedOn) + "\r\n        ")]
+            ),
+            _vm._v(" "),
+            _vm.isadmin && !_vm.iscomment
+              ? [
+                  !_vm.myPost.read
+                    ? _c(
+                        "span",
+                        { staticClass: "badge badge-danger float-right" },
+                        [_vm._v("\r\n                NEW\r\n            ")]
+                      )
+                    : _vm._e(),
+                  _vm._v(" "),
+                  !_vm.myPost.read
+                    ? _c(
+                        "button",
+                        {
+                          staticClass:
+                            "btn btn-sm py-0 btn-info float-right mr-1",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.markPostAsRead($event)
+                            }
+                          }
+                        },
+                        [
+                          _vm._v(
+                            "\r\n              Mark As Read\r\n            "
+                          )
+                        ]
+                      )
+                    : _vm._e()
+                ]
+              : _vm._e()
+          ],
+          2
+        ),
         _vm._v(" "),
         _c("p", [_vm._v(_vm._s(_vm.post.message.trim()))]),
         _vm._v(" "),
@@ -56753,36 +56978,81 @@ var render = function() {
                 _vm._v(" "),
                 !_vm.iscomment
                   ? [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "text-secondary",
-                          attrs: { href: "/posts/" + _vm.post.id + "/comments" }
-                        },
-                        [
-                          _vm._v(
-                            "\r\n                  " +
-                              _vm._s(_vm.post.comments_count) +
-                              " Comments \r\n                  "
-                          )
-                        ]
-                      )
+                      _vm.isadmin
+                        ? [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "text-secondary",
+                                attrs: {
+                                  href:
+                                    "/admin/posts/" + _vm.post.id + "/comments"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\r\n                        " +
+                                    _vm._s(_vm.post.comments_count) +
+                                    " Comments \r\n                      "
+                                )
+                              ]
+                            )
+                          ]
+                        : [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "text-secondary",
+                                attrs: {
+                                  href: "/posts/" + _vm.post.id + "/comments"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\r\n                        " +
+                                    _vm._s(_vm.post.comments_count) +
+                                    " Comments \r\n                      "
+                                )
+                              ]
+                            )
+                          ]
                     ]
                   : [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "text-secondary",
-                          attrs: { href: "/comments/" + _vm.post.id }
-                        },
-                        [
-                          _vm._v(
-                            "\r\n                " +
-                              _vm._s(_vm.post.comments_count) +
-                              " Comments \r\n                "
-                          )
-                        ]
-                      )
+                      _vm.isadmin
+                        ? [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "text-secondary",
+                                attrs: {
+                                  href: "/admin/comments/" + _vm.post.id
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\r\n                     " +
+                                    _vm._s(_vm.post.comments_count) +
+                                    " Comments \r\n                  "
+                                )
+                              ]
+                            )
+                          ]
+                        : [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "text-secondary",
+                                attrs: { href: "/comments/" + _vm.post.id }
+                              },
+                              [
+                                _vm._v(
+                                  "\r\n                     " +
+                                    _vm._s(_vm.post.comments_count) +
+                                    " Comments \r\n                  "
+                                )
+                              ]
+                            )
+                          ]
                     ]
               ],
               2
@@ -56882,7 +57152,10 @@ var render = function() {
     [
       !_vm.loading
         ? _vm._l(_vm.posts, function(post, index) {
-            return _c("app-post", { key: index, attrs: { post: post } })
+            return _c("app-post", {
+              key: index,
+              attrs: { post: post, isadmin: _vm.isadmin }
+            })
           })
         : [_vm._m(0)]
     ],
@@ -70365,6 +70638,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-profile', __webpack_re
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-create-post', __webpack_require__(/*! ./components/CreatePost.vue */ "./resources/js/components/CreatePost.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-create-comment', __webpack_require__(/*! ./components/CreateComment.vue */ "./resources/js/components/CreateComment.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-posts', __webpack_require__(/*! ./components/Posts.vue */ "./resources/js/components/Posts.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-admin-posts', __webpack_require__(/*! ./components/AdminPosts.vue */ "./resources/js/components/AdminPosts.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-post', __webpack_require__(/*! ./components/Post.vue */ "./resources/js/components/Post.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-comments', __webpack_require__(/*! ./components/Comments.vue */ "./resources/js/components/Comments.vue").default);
 /**
@@ -70457,6 +70731,75 @@ if (token) {
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminPosts.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/AdminPosts.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _AdminPosts_vue_vue_type_template_id_e88d2722_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AdminPosts.vue?vue&type=template&id=e88d2722&scoped=true& */ "./resources/js/components/AdminPosts.vue?vue&type=template&id=e88d2722&scoped=true&");
+/* harmony import */ var _AdminPosts_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AdminPosts.vue?vue&type=script&lang=js& */ "./resources/js/components/AdminPosts.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _AdminPosts_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _AdminPosts_vue_vue_type_template_id_e88d2722_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _AdminPosts_vue_vue_type_template_id_e88d2722_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "e88d2722",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/AdminPosts.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminPosts.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/AdminPosts.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminPosts_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./AdminPosts.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminPosts.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminPosts_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/AdminPosts.vue?vue&type=template&id=e88d2722&scoped=true&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/AdminPosts.vue?vue&type=template&id=e88d2722&scoped=true& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminPosts_vue_vue_type_template_id_e88d2722_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./AdminPosts.vue?vue&type=template&id=e88d2722&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/AdminPosts.vue?vue&type=template&id=e88d2722&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminPosts_vue_vue_type_template_id_e88d2722_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminPosts_vue_vue_type_template_id_e88d2722_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
 
 /***/ }),
 

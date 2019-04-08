@@ -4,10 +4,29 @@
     <img :src="user_icon" 
     class="mr-3 rounded-circle" alt="user photo" width="50px" height="50px">
     <div class="media-body">
-      <h5 class="my-0">{{ post.user.name }}
+      <h5 class="my-0">
+        
+        <template v-if="post.user.user_type == 0">
+          {{post.user.name.trim()}}
+        </template>
+        <template v-else>
+            <strong>County Government</strong> 
+        </template>
+
         <span class="text-secondary font-weight-light my-0 mb-2" style="font-size:14px;">
         {{ postedOn }}
         </span>
+
+        <template v-if="isadmin && !iscomment">
+            <span class="badge badge-danger float-right" v-if="!myPost.read">
+                NEW
+            </span>
+            <button class="btn btn-sm py-0 btn-info float-right mr-1" 
+             v-if="!myPost.read" @click.prevent="markPostAsRead">
+              Mark As Read
+            </button>
+            
+        </template>
       </h5>
        <p>{{post.message.trim()}}</p>
 
@@ -35,6 +54,9 @@
             </div> 
         </div>
       </div>
+       <!-- <div class=""> -->
+                  
+      <!-- </div> -->
 
       <!-- The Modal -->
         <div id="myModal" class="modal" v-bind:class="{'d-block':showModal,'d-none':!showModal}">
@@ -60,14 +82,29 @@
           <div class="col-6 post-btns mr-md-20">
             <i class="far fa-comment-alt text-primary mr-1"></i>
               <template v-if="!iscomment">
-                  <a :href="'/posts/'+ post.id+'/comments'" class="text-secondary">
-                  {{ post.comments_count}} Comments 
-                  </a>
+                  <template v-if="isadmin">
+                     <a :href="'/admin/posts/'+ post.id+'/comments'" class="text-secondary">
+                        {{ post.comments_count}} Comments 
+                      </a>
+                  </template>
+                  <template v-else>
+                     <a :href="'/posts/'+ post.id+'/comments'" class="text-secondary">
+                        {{ post.comments_count}} Comments 
+                      </a>
+                  </template>
               </template>
               <template v-else>
-                <a :href="'/comments/'+ post.id" class="text-secondary">
-                {{ post.comments_count}} Comments 
-                </a>
+                <template v-if="isadmin">
+                   <a :href="'/admin/comments/'+ post.id" class="text-secondary">
+                     {{ post.comments_count}} Comments 
+                  </a>
+                </template>
+                <template v-else>
+                  <a :href="'/comments/'+ post.id" class="text-secondary">
+                     {{ post.comments_count}} Comments 
+                  </a>
+                </template>
+               
               </template>
             </div>
           <div class="col-6 text-center post-btns"> 
@@ -86,6 +123,8 @@
                      <span class="text-secondary"> {{ myPost.likes_count}} Likes </span>
                   </a>
               </template>
+
+             
               
              
           </div>
@@ -105,7 +144,7 @@ import moment from 'moment'
 
 export default {
 
-  props:['post', 'iscomment'],
+  props:['post', 'iscomment', 'isadmin'],
 
   mounted(){
     let url = '/isliked/'+this.post.id;
@@ -228,6 +267,13 @@ export default {
       this.currentImageIndex--
       this.currentModalImageUrl = this.imagesUrls[this.currentImageIndex];
     },
+
+    markPostAsRead(){
+      axios.post('/markpostasread/'+this.post.id)
+      .then(()=>{
+        this.myPost.read =1;
+      })
+    }
 
   }
 
