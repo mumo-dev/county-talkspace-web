@@ -42,10 +42,10 @@
           <div class="row mt-0 pt-0" v-if="files">
 
             <div class="col-3 img-preview" v-for="(img, index) in imgSrc" :key="index" 
-              style="height=150px!important">
+              style="height=100px!important">
               <div class="card">
                 <div class="card-body p-1">
-                <img :src="imgSrc[index]" class="img-fluid" height="100px" />
+                <img :src="imgSrc[index]" height="100px" class="img-fluid"/>
                </div>
               </div>
               <button class="btn btn-sm btn-default" 

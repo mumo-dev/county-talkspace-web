@@ -2239,6 +2239,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['post', 'iscomment'],
@@ -2259,7 +2275,10 @@ __webpack_require__.r(__webpack_exports__);
     return {
       noOfImages: this.post.images.length,
       postIsLiked: false,
-      myPost: this.post
+      myPost: this.post,
+      showModal: false,
+      currentModalImageUrl: '',
+      currentImageIndex: 0
     };
   },
   computed: {
@@ -2328,6 +2347,33 @@ __webpack_require__.r(__webpack_exports__);
         _this3.postIsLiked = true;
         _this3.myPost.likes_count++;
       });
+    },
+    displayModal: function displayModal(index) {
+      //displayModal
+      // var nd = "img";
+      // var imgSrc = this.$refs.nd[0].src;
+      // var modal =  this.$refs.img01;
+      // modal.src = imgSrc
+      this.currentImageIndex = index;
+      this.currentModalImageUrl = this.imagesUrls[index];
+      this.showModal = true;
+    },
+    displayNextImage: function displayNextImage() {
+      this.currentImageIndex++;
+
+      if (this.currentImageIndex == this.imagesUrls.length) {
+        this.currentImageIndex = 0;
+      }
+
+      this.currentModalImageUrl = this.imagesUrls[this.currentImageIndex];
+    },
+    displayPrevImage: function displayPrevImage() {
+      if (this.currentImageIndex == 0) {
+        this.currentImageIndex = this.imagesUrls.length;
+      }
+
+      this.currentImageIndex--;
+      this.currentModalImageUrl = this.imagesUrls[this.currentImageIndex];
     }
   }
 });
@@ -7103,7 +7149,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.photos-wrapper[data-v-5e8280ea] {\r\n  display: grid;\r\n  max-width: 100%;\r\n  grid-template-columns: 50% 50%;\r\n  /* grid-template-rows: 150px 150px; */\n}\n.photos-wrapper .full-height[data-v-5e8280ea] {\r\n  grid-row-start: 1;\r\n  grid-row-end: 3;\r\n  max-height: 300px;\n}\n.photos-wrapper .full-width[data-v-5e8280ea] {\r\n  grid-column-start: 1;\r\n  grid-column-end: 3;\r\n  max-height: 300px;\n}\n.post-btns[data-v-5e8280ea]{\r\n  cursor: pointer;\r\n  padding: 8px;\r\n  border-radius: 4px;\n}\n.post-btns[data-v-5e8280ea]:hover, .post-btns[data-v-5e8280ea]:focus {\r\n    background-color: #f2f2f2;\n}\r\n", ""]);
+exports.push([module.i, "\n.photos-wrapper[data-v-5e8280ea] {\r\n  display: grid;\r\n  max-width: 100%;\r\n  grid-template-columns: 50% 50%;\r\n  /* grid-template-rows: 150px 150px; */\n}\n.photos-wrapper .full-height[data-v-5e8280ea] {\r\n  grid-row-start: 1;\r\n  grid-row-end: 3;\r\n  max-height: 300px;\n}\n.photos-wrapper .full-width[data-v-5e8280ea] {\r\n  grid-column-start: 1;\r\n  grid-column-end: 3;\r\n  max-height: 300px;\n}\n.post-btns[data-v-5e8280ea]{\r\n  cursor: pointer;\r\n  padding: 8px;\r\n  border-radius: 4px;\n}\n.post-btns[data-v-5e8280ea]:hover, .post-btns[data-v-5e8280ea]:focus {\r\n    background-color: #f2f2f2;\n}\r\n\r\n\r\n/* Style the Image Used to Trigger the Modal */\n.myImg[data-v-5e8280ea] {\r\n  border-radius: 5px;\r\n  cursor: pointer;\r\n  transition: 0.3s;\r\n  max-width:100%;\r\n  height:auto;\r\n  -o-object-fit:contain;\r\n     object-fit:contain\n}\n.myImg[data-v-5e8280ea]:hover {opacity: 0.7;}\r\n\r\n/* The Modal (background) */\n.modal[data-v-5e8280ea] {\r\n  display: none; /* Hidden by default */\r\n  position: fixed; /* Stay in place */\r\n  z-index: 1; /* Sit on top */\r\n  padding-top: 100px; /* Location of the box */\r\n  left: 0;\r\n  top: 0;\r\n  width: 100%; /* Full width */\r\n  height: 100%; /* Full height */\r\n  overflow: auto; /* Enable scroll if needed */\r\n  background-color: rgb(0,0,0); /* Fallback color */\r\n  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */\n}\n.modal .next[data-v-5e8280ea] {\r\n  position: absolute;\r\n  top: 45%;\r\n  right: 35px;\r\n  z-index: 2;\r\n  cursor: pointer;\n}\n.modal .prev[data-v-5e8280ea] {\r\n  position: absolute;\r\n  top: 45%;\r\n  left: 35px;\r\n  z-index: 2;\r\n  cursor: pointer;\n}\r\n\r\n/* Modal Content (Image) */\n.modal-content[data-v-5e8280ea] {\r\n  margin: auto;\r\n  display: block;\r\n  width: 80%;\r\n  max-width: 700px;\n}\r\n\r\n/* Caption of Modal Image (Image Text) - Same Width as the Image */\n#caption[data-v-5e8280ea] {\r\n  margin: auto;\r\n  display: block;\r\n  width: 80%;\r\n  max-width: 700px;\r\n  text-align: center;\r\n  color: #ccc;\r\n  padding: 10px 0;\r\n  height: 150px;\n}\r\n\r\n/* Add Animation - Zoom in the Modal */\n.modal-content[data-v-5e8280ea], #caption[data-v-5e8280ea] { \r\n  -webkit-animation-name: zoom-data-v-5e8280ea; \r\n          animation-name: zoom-data-v-5e8280ea;\r\n  -webkit-animation-duration: 0.6s;\r\n          animation-duration: 0.6s;\n}\n@-webkit-keyframes zoom-data-v-5e8280ea {\nfrom {-webkit-transform:scale(0);transform:scale(0)}\nto {-webkit-transform:scale(1);transform:scale(1)}\n}\n@keyframes zoom-data-v-5e8280ea {\nfrom {-webkit-transform:scale(0);transform:scale(0)}\nto {-webkit-transform:scale(1);transform:scale(1)}\n}\r\n\r\n/* The Close Button */\n.close[data-v-5e8280ea] {\r\n  position: absolute;\r\n  top: 15px;\r\n  right: 35px;\r\n  color: #f1f1f1;\r\n  font-size: 40px;\r\n  font-weight: bold;\r\n  transition: 0.3s;\n}\n.close[data-v-5e8280ea]:hover,\r\n.close[data-v-5e8280ea]:focus {\r\n  color: #bbb;\r\n  text-decoration: none;\r\n  cursor: pointer;\n}\r\n\r\n/* 100% Image Width on Smaller Screens */\n@media only screen and (max-width: 700px){\n.modal-content[data-v-5e8280ea] {\r\n    width: 100%;\n}\n.modal .prev[data-v-5e8280ea] {\r\n    top: 30%;\n}\n.modal .next[data-v-5e8280ea] {\r\n    top: 30%;\n}\n}\r\n\r\n\r\n\r\n", ""]);
 
 // exports
 
@@ -56620,14 +56666,13 @@ var render = function() {
                       },
                       [
                         _c("img", {
-                          staticStyle: {
-                            "max-width": "100%",
-                            height: "auto",
-                            "object-fit": "contain"
-                          },
-                          attrs: {
-                            src: "/images/thumbnails/" + imageUrl,
-                            "data-target": "#imageModal"
+                          staticClass: "myImg",
+                          attrs: { src: "/images/thumbnails/" + imageUrl },
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              return _vm.displayModal(index)
+                            }
                           }
                         })
                       ]
@@ -56638,6 +56683,63 @@ var render = function() {
               ])
             ])
           : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "modal",
+            class: { "d-block": _vm.showModal, "d-none": !_vm.showModal },
+            attrs: { id: "myModal" }
+          },
+          [
+            _c(
+              "span",
+              {
+                staticClass: "close",
+                on: {
+                  click: function($event) {
+                    _vm.showModal = false
+                  }
+                }
+              },
+              [_vm._v("×")]
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                staticClass: "next",
+                on: {
+                  click: function($event) {
+                    return _vm.displayNextImage()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-angle-right fa-3x text-white" })]
+            ),
+            _vm._v(" "),
+            _c(
+              "span",
+              {
+                staticClass: "prev",
+                on: {
+                  click: function($event) {
+                    return _vm.displayPrevImage()
+                  }
+                }
+              },
+              [_c("i", { staticClass: "fas fa-angle-left fa-3x text-white" })]
+            ),
+            _vm._v(" "),
+            _c("img", {
+              ref: "img01",
+              staticClass: "modal-content",
+              attrs: { src: "/images/thumbnails/" + _vm.currentModalImageUrl }
+            }),
+            _vm._v(" "),
+            _c("div", { attrs: { id: "caption" } })
+          ]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "media-footer mt-2" }, [
           _c("div", { staticClass: "row" }, [

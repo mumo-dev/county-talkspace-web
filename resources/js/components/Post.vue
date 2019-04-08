@@ -20,8 +20,8 @@
         <div class="col-12">
            <div class="photos-wrapper">
               <div :class="imageClasses" class="p-1" v-for="(imageUrl, index) in imagesUrls" :key="index">
-                <img :src="'/images/thumbnails/'+imageUrl"  
-                  style="max-width:100%; height:auto;object-fit:contain" data-target="#imageModal">
+                <img :src="'/images/thumbnails/'+imageUrl" class="myImg"
+                v-on:click.prevent="displayModal(index)">
               </div>
 
               
@@ -34,8 +34,24 @@
           
             </div> 
         </div>
-  
       </div>
+
+      <!-- The Modal -->
+        <div id="myModal" class="modal" v-bind:class="{'d-block':showModal,'d-none':!showModal}">
+
+          <!-- The Close Button -->
+          <span class="close" @click="showModal = false">&times;</span>
+
+          <span class="next" @click="displayNextImage()"><i class="fas fa-angle-right fa-3x text-white"></i></span>
+
+          <span class="prev" @click="displayPrevImage()"><i class="fas fa-angle-left fa-3x text-white"></i></span>
+          <!-- Modal Content (The Image) -->
+  
+          <img class="modal-content" ref="img01" :src="'/images/thumbnails/'+currentModalImageUrl">
+
+          <!-- Modal Caption (Image Text) -->
+          <div id="caption"></div>
+        </div>
 
 
 
@@ -108,7 +124,10 @@ export default {
     return{
         noOfImages: this.post.images.length,
         postIsLiked: false,
-        myPost: this.post
+        myPost: this.post,
+        showModal:false,
+        currentModalImageUrl:'',
+        currentImageIndex:0
     }
   },
   computed: {
@@ -177,6 +196,39 @@ export default {
       });
     },
 
+    displayModal(index){
+        //displayModal
+        
+        // var nd = "img";
+        // var imgSrc = this.$refs.nd[0].src;
+
+        // var modal =  this.$refs.img01;
+
+        // modal.src = imgSrc
+        this.currentImageIndex = index;
+
+        this.currentModalImageUrl = this.imagesUrls[index];
+
+         this.showModal = true;
+
+    },
+
+    displayNextImage(){
+      this.currentImageIndex++;
+      if(this.currentImageIndex == this.imagesUrls.length){
+        this.currentImageIndex = 0;
+      }
+      
+      this.currentModalImageUrl = this.imagesUrls[this.currentImageIndex];
+    },
+     displayPrevImage(){
+      if(this.currentImageIndex == 0){
+        this.currentImageIndex = this.imagesUrls.length ;
+      }
+      this.currentImageIndex--
+      this.currentModalImageUrl = this.imagesUrls[this.currentImageIndex];
+    },
+
   }
 
 };
@@ -212,5 +264,119 @@ export default {
 .post-btns:hover, .post-btns:focus {
     background-color: #f2f2f2;
 }
+
+
+/* Style the Image Used to Trigger the Modal */
+.myImg {
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s;
+  max-width:100%;
+  height:auto;
+  object-fit:contain
+}
+
+.myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+.modal .next {
+  position: absolute;
+  top: 45%;
+  right: 35px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+.modal .prev {
+  position: absolute;
+  top: 45%;
+  left: 35px;
+  z-index: 2;
+  cursor: pointer;
+}
+
+/* Modal Content (Image) */
+.modal-content {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+}
+
+/* Caption of Modal Image (Image Text) - Same Width as the Image */
+#caption {
+  margin: auto;
+  display: block;
+  width: 80%;
+  max-width: 700px;
+  text-align: center;
+  color: #ccc;
+  padding: 10px 0;
+  height: 150px;
+}
+
+/* Add Animation - Zoom in the Modal */
+.modal-content, #caption { 
+  animation-name: zoom;
+  animation-duration: 0.6s;
+}
+
+@keyframes zoom {
+  from {transform:scale(0)} 
+  to {transform:scale(1)}
+}
+
+/* The Close Button */
+.close {
+  position: absolute;
+  top: 15px;
+  right: 35px;
+  color: #f1f1f1;
+  font-size: 40px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.close:hover,
+.close:focus {
+  color: #bbb;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+  .modal-content {
+    width: 100%;
+  }
+
+  .modal .prev {
+    top: 30%;
+    
+  }
+
+   .modal .next {
+    top: 30%;
+   
+  }
+
+}
+
+
+
 </style>
 

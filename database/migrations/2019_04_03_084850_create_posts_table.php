@@ -18,6 +18,7 @@ class CreatePostsTable extends Migration
             $table->text('message');
             $table->unsignedBigInteger('user_id');
             $table->string('tag');
+            $table->boolean('read')->default(0);
             $table->timestamps();
             $table->foreign('user_id')
                     ->references('id')->on('users')
