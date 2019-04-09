@@ -99,7 +99,7 @@
     <div id="wrapper">
 
       <!-- Sidebar -->
-      <ul class="sidebar navbar-nav bg-primary">
+      <ul class="sidebar navbar-nav bg-primary mt-1">
         <li class="nav-item">
           <a class="nav-link" href="{{route('admin.home')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
@@ -123,9 +123,9 @@
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="charts.html">
-            <i class="fas fa-fw fa-chart-area"></i>
-            <span>Charts</span></a>
+          <a class="nav-link" href="{{ route('admin.polls')}}">
+            <i class="fas fa-fw fa-poll"></i>
+            <span>Polls </span></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="tables.html">

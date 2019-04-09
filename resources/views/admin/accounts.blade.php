@@ -2,9 +2,18 @@
 @section('content')
 <div class="container-fluid">
 
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ route('admin.home') }}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Manage Accounts</li>
+    </ol>
+
     <div class="">
        <a class="btn btn-success" href="{{ route('admin.account.create')}}">Create Account</a>
     </div>
+
+    {{-- <i class="far fa-id-card"></i> --}}
 
     <div class="card mt-3">
       <div class="card-body">

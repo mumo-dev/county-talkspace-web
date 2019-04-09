@@ -2041,6 +2041,108 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreatePoll.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreatePoll.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      question: '',
+      choices: [],
+      noOfchoices: 2,
+      days: 1,
+      hours: 0,
+      minutes: 0
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreatePost.vue?vue&type=script&lang=js&":
 /*!*********************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreatePost.vue?vue&type=script&lang=js& ***!
@@ -56478,6 +56580,305 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreatePoll.vue?vue&type=template&id=3948d3f4&scoped=true&":
+/*!*************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreatePoll.vue?vue&type=template&id=3948d3f4&scoped=true& ***!
+  \*************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "card" }, [
+    _c("div", { staticClass: "card-header bg-white" }, [
+      _vm._v(" Create a New Poll ")
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "card-body" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "question" } }, [_vm._v("Question:")]),
+        _vm._v(" "),
+        _c("textarea", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.question,
+              expression: "question"
+            }
+          ],
+          staticClass: "form-control autoExpand",
+          attrs: {
+            placeholder: "question... ",
+            rows: "1",
+            "data-min-rows": "0"
+          },
+          domProps: { value: _vm.question },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.question = $event.target.value
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "form-group row ml-0" },
+        [
+          _vm._m(0),
+          _vm._v(" "),
+          _vm._l(_vm.noOfchoices, function(choice) {
+            return [
+              _c("div", { key: choice, staticClass: "col-10 p-0 m-0" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.choices[choice],
+                      expression: "choices[choice]"
+                    }
+                  ],
+                  staticClass: "form-control mb-1",
+                  attrs: { type: "text", placeholder: "Choice " + choice },
+                  domProps: { value: _vm.choices[choice] },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.choices, choice, $event.target.value)
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: choice > 2,
+                      expression: "choice > 2"
+                    }
+                  ],
+                  key: "k" + choice,
+                  staticClass: "col-2  p-1 m-0",
+                  staticStyle: { cursor: "pointer" }
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "float-left",
+                      on: {
+                        click: function($event) {
+                          _vm.noOfchoices--
+                        }
+                      }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "far fa-times-circle fa-2x",
+                        staticStyle: { color: "#DCDCDC" }
+                      })
+                    ]
+                  )
+                ]
+              )
+            ]
+          }),
+          _vm._v(" "),
+          _c("p", { staticClass: "p-0 mb-0" }, [
+            _c(
+              "a",
+              {
+                staticClass: "text-info",
+                attrs: { href: "#" },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.noOfchoices++
+                  }
+                }
+              },
+              [_vm._v("Add More choices")]
+            )
+          ])
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group d-flex pt-0" }, [
+        _c("label", { staticClass: "m-2" }, [_vm._v("Poll Length:")]),
+        _vm._v(" "),
+        _c("label", { staticClass: "m-2" }, [_vm._v("Days:")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-1" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.days,
+                  expression: "days"
+                }
+              ],
+              staticClass: "form-control-sm",
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.days = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            _vm._l(7, function(i) {
+              return _c("option", { key: i }, [_vm._v(" " + _vm._s(i))])
+            }),
+            0
+          )
+        ]),
+        _vm._v(" "),
+        _c("label", { staticClass: "m-2" }, [_vm._v("Hours:")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-1" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.hours,
+                  expression: "hours"
+                }
+              ],
+              staticClass: "form-control-sm",
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.hours = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "0" } }, [_vm._v("0")]),
+              _vm._v(" "),
+              _vm._l(23, function(i) {
+                return _c("option", { key: i, domProps: { value: i } }, [
+                  _vm._v(" " + _vm._s(i))
+                ])
+              })
+            ],
+            2
+          )
+        ]),
+        _vm._v(" "),
+        _c("label", { staticClass: "m-2" }, [_vm._v("Min:")]),
+        _vm._v(" "),
+        _c("div", { staticClass: "mt-1" }, [
+          _c(
+            "select",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.minutes,
+                  expression: "minutes"
+                }
+              ],
+              staticClass: "form-control-sm",
+              on: {
+                change: function($event) {
+                  var $$selectedVal = Array.prototype.filter
+                    .call($event.target.options, function(o) {
+                      return o.selected
+                    })
+                    .map(function(o) {
+                      var val = "_value" in o ? o._value : o.value
+                      return val
+                    })
+                  _vm.minutes = $event.target.multiple
+                    ? $$selectedVal
+                    : $$selectedVal[0]
+                }
+              }
+            },
+            [
+              _c("option", { attrs: { value: "0" } }, [_vm._v("0")]),
+              _vm._v(" "),
+              _vm._l(59, function(i) {
+                return _c("option", { key: i, domProps: { value: i } }, [
+                  _vm._v(" " + _vm._s(i))
+                ])
+              })
+            ],
+            2
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(1)
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-11 ml-0 pl-0" }, [
+      _c("label", { attrs: { for: "question" } }, [_vm._v("Choices:")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("button", { staticClass: "btn btn-info" }, [_vm._v("Create")])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreatePost.vue?vue&type=template&id=20838332&scoped=true&":
 /*!*************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/CreatePost.vue?vue&type=template&id=20838332&scoped=true& ***!
@@ -70640,6 +71041,7 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-create-comment', __web
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-posts', __webpack_require__(/*! ./components/Posts.vue */ "./resources/js/components/Posts.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-admin-posts', __webpack_require__(/*! ./components/AdminPosts.vue */ "./resources/js/components/AdminPosts.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-post', __webpack_require__(/*! ./components/Post.vue */ "./resources/js/components/Post.vue").default);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-create-poll', __webpack_require__(/*! ./components/CreatePoll.vue */ "./resources/js/components/CreatePoll.vue").default);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('app-comments', __webpack_require__(/*! ./components/Comments.vue */ "./resources/js/components/Comments.vue").default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -70954,6 +71356,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateComment_vue_vue_type_template_id_c9aad830_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateComment_vue_vue_type_template_id_c9aad830_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/CreatePoll.vue":
+/*!************************************************!*\
+  !*** ./resources/js/components/CreatePoll.vue ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _CreatePoll_vue_vue_type_template_id_3948d3f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./CreatePoll.vue?vue&type=template&id=3948d3f4&scoped=true& */ "./resources/js/components/CreatePoll.vue?vue&type=template&id=3948d3f4&scoped=true&");
+/* harmony import */ var _CreatePoll_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./CreatePoll.vue?vue&type=script&lang=js& */ "./resources/js/components/CreatePoll.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _CreatePoll_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _CreatePoll_vue_vue_type_template_id_3948d3f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _CreatePoll_vue_vue_type_template_id_3948d3f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "3948d3f4",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/CreatePoll.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/CreatePoll.vue?vue&type=script&lang=js&":
+/*!*************************************************************************!*\
+  !*** ./resources/js/components/CreatePoll.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreatePoll_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./CreatePoll.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreatePoll.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_CreatePoll_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/CreatePoll.vue?vue&type=template&id=3948d3f4&scoped=true&":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/CreatePoll.vue?vue&type=template&id=3948d3f4&scoped=true& ***!
+  \*******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreatePoll_vue_vue_type_template_id_3948d3f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./CreatePoll.vue?vue&type=template&id=3948d3f4&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/CreatePoll.vue?vue&type=template&id=3948d3f4&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreatePoll_vue_vue_type_template_id_3948d3f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreatePoll_vue_vue_type_template_id_3948d3f4_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

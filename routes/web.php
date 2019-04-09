@@ -37,7 +37,7 @@ Route::get('/isliked/{id}', 'LikeController@isLiked');
 
 
 
-Route::group(['prefix'=>'admin','middleware'=>['admin'] ], function (){
+Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
     Route::get('/home', 'HomeController@adminHome')->name('admin.home');
     Route::get('/posts/{id}/comments/', 'CommentController@adminPostComments');
     // Route::get('/comments/post/{id}', 'CommentController@getAdminPostComments');
@@ -46,4 +46,7 @@ Route::group(['prefix'=>'admin','middleware'=>['admin'] ], function (){
     Route::get('/accounts', 'AdminController@getAccounts')->name('admin.accounts');
     Route::get('/accounts/create', 'AdminController@createAccount')->name('admin.account.create');
     Route::post('/accounts', 'AdminController@storeAccount')->name('admin.newaccount');
+
+    Route::get('/polls', 'PollsController@index')->name('admin.polls');
+
 });
