@@ -1,5 +1,11 @@
 <template>
   <div class="card">
+      <div class="alert alert-success m-2" v-show="success">
+          Poll has been created
+      </div>
+      <div class="alert alert-danger m-2" v-show="error">
+        {{ errorMessage }}
+      </div>
      <div class="card-header bg-white"> Create a New Poll </div>
 
       <div class="card-body">
@@ -67,7 +73,14 @@
               </div>
 
               <div class="form-group">
-                <button class="btn btn-info">Create</button>
+                <button class="btn btn-info"  v-if="!submitting"
+                    @click="submitPoll"
+                    :disabled="!allFieldsValid">Create</button>
+
+                <button class="btn btn-primary btn-sm float-right" type="button" disabled  v-else>
+                  <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                  Saving...
+                </button>
               </div>
 
         </div>
@@ -77,7 +90,7 @@
 </template>
 
 <script>
-
+import moment from 'moment'
 export default {
 
   
@@ -89,10 +102,62 @@ export default {
         noOfchoices:2,
         days:1,
         hours:0,
-        minutes:0
-        
+        minutes:0,
+        submitting:false,
+        success: false,
+        error: false,
+        errorMessage:''
+      }
+    },
+     
+    computed:{
+        allFieldsValid() {
+          if(!this.question){
+            return false;
+          }
+          if(this.choices.length < 3){
+              return false;
+          }
+          for(let i =1 ; i <= this.noOfchoices;i++){
+            if(!this.choices[i]){
+              return false;
+            }
+          }
+
+          return true;
+        },
+        date() {
+            return moment().add(this.days,'days')
+                .add(this.hours,'hours').add(this.minutes,'minutes').format('YYYY-MM-DD HH:mm:ss');
+        }
+    },
+    methods: {
+      submitPoll(){
+
+        // let choices = []
+          const data =  {
+            question: this.question,
+            choices : this.choices.slice(1, this.noOfchoices+1),
+            expiry_date: this.date
+          }
+
+          this.submitting = true;
+          axios.post('/admin/polls/create', data).then((result) => {
+             this.submitting = false;
+             this.error = false;
+             this.success = true;
+            // console.log(result.data)
+          }).catch((err) => {
+            // console.log(err)
+             this.submitting = false;
+             this.success = false;
+             this.error = true;
+             this.errorMessage = err.response.data.message || "Error saving the poll";
+          });
+
       }
     }
+
 }
 </script>
 

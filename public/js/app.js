@@ -2050,6 +2050,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2128,6 +2130,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2136,8 +2152,58 @@ __webpack_require__.r(__webpack_exports__);
       noOfchoices: 2,
       days: 1,
       hours: 0,
-      minutes: 0
+      minutes: 0,
+      submitting: false,
+      success: false,
+      error: false,
+      errorMessage: ''
     };
+  },
+  computed: {
+    allFieldsValid: function allFieldsValid() {
+      if (!this.question) {
+        return false;
+      }
+
+      if (this.choices.length < 3) {
+        return false;
+      }
+
+      for (var i = 1; i <= this.noOfchoices; i++) {
+        if (!this.choices[i]) {
+          return false;
+        }
+      }
+
+      return true;
+    },
+    date: function date() {
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()().add(this.days, 'days').add(this.hours, 'hours').add(this.minutes, 'minutes').format('YYYY-MM-DD HH:mm:ss');
+    }
+  },
+  methods: {
+    submitPoll: function submitPoll() {
+      var _this = this;
+
+      // let choices = []
+      var data = {
+        question: this.question,
+        choices: this.choices.slice(1, this.noOfchoices + 1),
+        expiry_date: this.date
+      };
+      this.submitting = true;
+      axios.post('/admin/polls/create', data).then(function (result) {
+        _this.submitting = false;
+        _this.error = false;
+        _this.success = true; // console.log(result.data)
+      }).catch(function (err) {
+        // console.log(err)
+        _this.submitting = false;
+        _this.success = false;
+        _this.error = true;
+        _this.errorMessage = err.response.data.message || "Error saving the poll";
+      });
+    }
   }
 });
 
@@ -56596,6 +56662,38 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "card" }, [
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.success,
+            expression: "success"
+          }
+        ],
+        staticClass: "alert alert-success m-2"
+      },
+      [_vm._v("\n        Poll has been created\n    ")]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.error,
+            expression: "error"
+          }
+        ],
+        staticClass: "alert alert-danger m-2"
+      },
+      [_vm._v("\n      " + _vm._s(_vm.errorMessage) + "\n    ")]
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "card-header bg-white" }, [
       _vm._v(" Create a New Poll ")
     ]),
@@ -56851,7 +56949,32 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(1)
+      _c("div", { staticClass: "form-group" }, [
+        !_vm.submitting
+          ? _c(
+              "button",
+              {
+                staticClass: "btn btn-info",
+                attrs: { disabled: !_vm.allFieldsValid },
+                on: { click: _vm.submitPoll }
+              },
+              [_vm._v("Create")]
+            )
+          : _c(
+              "button",
+              {
+                staticClass: "btn btn-primary btn-sm float-right",
+                attrs: { type: "button", disabled: "" }
+              },
+              [
+                _c("span", {
+                  staticClass: "spinner-grow spinner-grow-sm",
+                  attrs: { role: "status", "aria-hidden": "true" }
+                }),
+                _vm._v("\n                Saving...\n              ")
+              ]
+            )
+      ])
     ])
   ])
 }
@@ -56862,14 +56985,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-11 ml-0 pl-0" }, [
       _c("label", { attrs: { for: "question" } }, [_vm._v("Choices:")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group" }, [
-      _c("button", { staticClass: "btn btn-info" }, [_vm._v("Create")])
     ])
   }
 ]

@@ -48,5 +48,6 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
     Route::post('/accounts', 'AdminController@storeAccount')->name('admin.newaccount');
 
     Route::get('/polls', 'PollsController@index')->name('admin.polls');
+    Route::post('/polls/create', 'PollsController@store');
 
 });
