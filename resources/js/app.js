@@ -36,6 +36,7 @@ Vue.component('app-posts', require('./components/Posts.vue').default);
 Vue.component('app-admin-posts', require('./components/AdminPosts.vue').default);
 Vue.component('app-post', require('./components/Post.vue').default);
 Vue.component('app-create-poll', require('./components/CreatePoll.vue').default);
+Vue.component('app-polls', require('./components/Polls.vue').default);
 
 Vue.component('app-comments', require('./components/Comments.vue').default);
 

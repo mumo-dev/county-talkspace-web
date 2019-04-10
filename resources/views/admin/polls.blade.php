@@ -13,6 +13,9 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
           <app-create-poll></app-create-poll>
+          <hr>
+
+          <app-polls v-bind:polls ="{{ $polls }}"></app-polls>
       </div>
     </div>
     
