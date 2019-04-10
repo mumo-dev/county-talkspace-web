@@ -47,4 +47,12 @@ class User extends Authenticatable
     {
        return $this->hasMany(Like::class);
     }
+
+    public function hasVoted($poll_id)
+    {
+        $has_voted = Vote::where('user_id', $this->id)
+                            ->where('poll_id', $poll_id)
+                            ->first();
+        return (bool) $has_voted;
+    }
 }

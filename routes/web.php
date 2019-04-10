@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home')->middleware('user');
+Route::get('/home', 'HomeController@index')->name('home')->middleware(['user']);
 Route::get('/user/profile/{user}', 'HomeController@showProfile')->name('profile');
 Route::post('/user/profile/update', 'HomeController@updateProfile')->name('update.profile');
 Route::post('/posts', 'PostController@store');
@@ -34,6 +34,9 @@ Route::get('comments/{id}', 'CommentController@displayComments');
 Route::post('/like/{id}', 'LikeController@like');
 Route::post('/unlike/{id}', 'LikeController@unlike');
 Route::get('/isliked/{id}', 'LikeController@isLiked');
+
+Route::get('/polls', 'PollsController@displayPolls')->name('polls')->middleware(['auth','user']);
+Route::post('/vote', 'VoteController@addVote')->middleware(['user']);
 
 
 

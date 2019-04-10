@@ -5,14 +5,45 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Choice;
 use App\Poll;
+use App\Vote;
 
 class PollsController extends Controller
 {
     public function index()
     {
-        $polls = Poll::with('choices')->latest()->get();
-        // return $polls;
+        $polls = Poll::withCount(['votes'])->with(['choices'])->latest()->get();
+
+        $polls = $polls->map(function($item, $key){
+                    $item['has_voted'] = auth()->user()->hasVoted($item->id);
+                    foreach($item['choices'] as $index=>$choice){
+                        $item['choices'][$index]['votes'] = $item->votes()
+                                           ->where('choice_id',$choice->id)->count();
+                    }
+                    
+                    return $item;
+                });
         return view('admin.polls', compact('polls'));
+    }
+
+    
+    public function displayPolls()
+    {
+        
+        $polls = Poll::withCount(['votes'])->with(['choices'])->latest()->get();
+
+        $polls = $polls->map(function($item, $key){
+                    $item['has_voted'] = auth()->user()->hasVoted($item->id);
+                    foreach($item['choices'] as $index=>$choice){
+                        $item['choices'][$index]['votes'] = $item->votes()
+                                           ->where('choice_id',$choice->id)->count();
+                    }
+                    
+                    return $item;
+                });
+        //count votes foreach choice//
+       
+      
+        return view('polls', compact('polls'));
     }
 
     public function store(Request $request){

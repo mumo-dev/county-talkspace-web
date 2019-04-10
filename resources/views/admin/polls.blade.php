@@ -14,8 +14,8 @@
       <div class="col-md-8">
           <app-create-poll></app-create-poll>
           <hr>
-
-          <app-polls v-bind:polls ="{{ $polls }}"></app-polls>
+        <h5 class="text-center"> Poll Results</h5>
+         <app-polls v-bind:polls ="{{ $polls }}" :isadmin="true"></app-polls>
       </div>
     </div>
     

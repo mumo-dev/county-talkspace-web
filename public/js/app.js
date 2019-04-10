@@ -2143,6 +2143,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2156,7 +2164,8 @@ __webpack_require__.r(__webpack_exports__);
       submitting: false,
       success: false,
       error: false,
-      errorMessage: ''
+      errorMessage: '',
+      showCreateView: false
     };
   },
   computed: {
@@ -2198,6 +2207,12 @@ __webpack_require__.r(__webpack_exports__);
         _this.success = true; // console.log(result.data)
       }).catch(function (err) {
         // console.log(err)
+        _this.question = '';
+        showCreateView = false;
+        _this.choices = [];
+        _this.days = 1;
+        _this.hours = 0;
+        _this.minutes = 0;
         _this.submitting = false;
         _this.success = false;
         _this.error = true;
@@ -2389,6 +2404,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 //
 //
 //
@@ -2403,8 +2420,102 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['poll']
+  props: ['poll', 'isadmin'],
+  data: function data() {
+    return {
+      currentPoll: this.poll,
+      hasVoted: this.poll.has_voted,
+      submitting: false
+    };
+  },
+  computed: {
+    timeRemaining: function timeRemaining() {
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(this.poll.expiry_date).diff(moment__WEBPACK_IMPORTED_MODULE_0___default()(), 'hours');
+    },
+    pollIsValid: function pollIsValid() {
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()(this.poll.expiry_date).diff(moment__WEBPACK_IMPORTED_MODULE_0___default()()) > 0;
+    },
+    orderedChoices: function orderedChoices() {
+      //sorted them by votes
+      var choices = [];
+      this.currentPoll.choices.forEach(function (choice) {
+        var data = {
+          id: choice.id,
+          value: choice.value,
+          votes: choice.votes
+        };
+        choices.push(data);
+      });
+      return choices.sort(function (a, b) {
+        return b.votes - a.votes;
+      });
+    }
+  },
+  methods: {
+    submitVote: function submitVote(choiceId) {
+      var _this = this;
+
+      if (this.pollIsValid) {
+        var data = {
+          choice_id: choiceId,
+          poll_id: this.poll.id
+        };
+        this.submitting = true;
+        axios.post('/vote', data).then(function (result) {
+          _this.hasVoted = true;
+          _this.submitting = false;
+          _this.currentPoll.votes_count++;
+          _this.currentPoll.has_voted = true;
+
+          _this.currentPoll.choices.forEach(function (element) {
+            if (element.id == choiceId) {
+              element.votes++;
+            }
+          });
+        }).catch(function (err) {
+          _this.submitting = false;
+        });
+      } else {
+        alert("Polling period is over");
+      }
+    },
+    calculateVotePercentage: function calculateVotePercentage(votes) {
+      if (this.currentPoll.votes_count == 0) {
+        return 0;
+      }
+
+      return votes / this.currentPoll.votes_count * 100;
+    }
+  }
 });
 
 /***/ }),
@@ -2430,7 +2541,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['polls'],
+  props: ['polls', 'isadmin'],
   components: {
     'app-poll': _Poll_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
@@ -7491,7 +7602,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.btn[data-v-7747d1ac] {\r\n  border-radius: 4rem;\n}\r\n", ""]);
+exports.push([module.i, "\n.btn[data-v-7747d1ac] {\r\n  border-radius: 4rem;\n}\n.my-progress[data-v-7747d1ac] {\r\n  display: flex;\r\n  width: 100%;\r\n  height: 30px;\r\n  border-radius: 4rem;\r\n  background-color: #f2f2f2;\n}\n.my-progress-bar[data-v-7747d1ac] {\r\n  display: flex-item;\r\n  width: 100%;\r\n  height: 30px;\r\n  border-radius: 4rem;\r\n\r\n  /* background-color: #f2f2f2; */\n}\r\n", ""]);
 
 // exports
 
@@ -56768,21 +56879,24 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
+  return _c("div", [
     _c(
-      "div",
+      "button",
       {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.success,
-            expression: "success"
+        staticClass: "btn btn-success mb-1",
+        on: {
+          click: function($event) {
+            _vm.showCreateView = !_vm.showCreateView
           }
-        ],
-        staticClass: "alert alert-success m-2"
+        }
       },
-      [_vm._v("\n        Poll has been created\n    ")]
+      [
+        _vm._v(
+          "\n    " +
+            _vm._s(_vm.showCreateView ? "Close " : "Create A Poll") +
+            "\n  "
+        )
+      ]
     ),
     _vm._v(" "),
     _c(
@@ -56792,297 +56906,333 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value: _vm.error,
-            expression: "error"
+            value: _vm.showCreateView,
+            expression: "showCreateView"
           }
         ],
-        staticClass: "alert alert-danger m-2"
+        staticClass: "card"
       },
-      [_vm._v("\n      " + _vm._s(_vm.errorMessage) + "\n    ")]
-    ),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-header bg-white" }, [
-      _vm._v(" Create a New Poll ")
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "card-body" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("label", { attrs: { for: "question" } }, [_vm._v("Question:")]),
-        _vm._v(" "),
-        _c("textarea", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.question,
-              expression: "question"
-            }
-          ],
-          staticClass: "form-control autoExpand",
-          attrs: {
-            placeholder: "question... ",
-            rows: "1",
-            "data-min-rows": "0"
-          },
-          domProps: { value: _vm.question },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
+      [
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.success,
+                expression: "success"
               }
-              _vm.question = $event.target.value
-            }
-          }
-        })
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "form-group row ml-0" },
-        [
-          _vm._m(0),
+            ],
+            staticClass: "alert alert-success m-2"
+          },
+          [_vm._v("\n        Poll has been created\n    ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.error,
+                expression: "error"
+              }
+            ],
+            staticClass: "alert alert-danger m-2"
+          },
+          [_vm._v("\n      " + _vm._s(_vm.errorMessage) + "\n    ")]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-header bg-white" }, [
+          _vm._v(" Create a New Poll ")
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { attrs: { for: "question" } }, [_vm._v("Question:")]),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.question,
+                  expression: "question"
+                }
+              ],
+              staticClass: "form-control autoExpand",
+              attrs: {
+                placeholder: "question... ",
+                rows: "1",
+                "data-min-rows": "0"
+              },
+              domProps: { value: _vm.question },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.question = $event.target.value
+                }
+              }
+            })
+          ]),
           _vm._v(" "),
-          _vm._l(_vm.noOfchoices, function(choice) {
-            return [
-              _c("div", { key: choice, staticClass: "col-10 p-0 m-0" }, [
-                _c("input", {
+          _c(
+            "div",
+            { staticClass: "form-group row ml-0" },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._l(_vm.noOfchoices, function(choice) {
+                return [
+                  _c("div", { key: choice, staticClass: "col-10 p-0 m-0" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.choices[choice],
+                          expression: "choices[choice]"
+                        }
+                      ],
+                      staticClass: "form-control mb-1",
+                      attrs: { type: "text", placeholder: "Choice " + choice },
+                      domProps: { value: _vm.choices[choice] },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.$set(_vm.choices, choice, $event.target.value)
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: choice > 2,
+                          expression: "choice > 2"
+                        }
+                      ],
+                      key: "k" + choice,
+                      staticClass: "col-2  p-1 m-0",
+                      staticStyle: { cursor: "pointer" }
+                    },
+                    [
+                      _c(
+                        "span",
+                        {
+                          staticClass: "float-left",
+                          on: {
+                            click: function($event) {
+                              _vm.noOfchoices--
+                            }
+                          }
+                        },
+                        [
+                          _c("i", {
+                            staticClass: "far fa-times-circle fa-2x",
+                            staticStyle: { color: "#DCDCDC" }
+                          })
+                        ]
+                      )
+                    ]
+                  )
+                ]
+              }),
+              _vm._v(" "),
+              _c("p", { staticClass: "p-0 mb-0" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "text-info",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.noOfchoices++
+                      }
+                    }
+                  },
+                  [_vm._v("Add More choices")]
+                )
+              ])
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group d-flex pt-0" }, [
+            _c("label", { staticClass: "m-2" }, [_vm._v("Poll Length:")]),
+            _vm._v(" "),
+            _c("label", { staticClass: "m-2" }, [_vm._v("Days:")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mt-1" }, [
+              _c(
+                "select",
+                {
                   directives: [
                     {
                       name: "model",
                       rawName: "v-model",
-                      value: _vm.choices[choice],
-                      expression: "choices[choice]"
+                      value: _vm.days,
+                      expression: "days"
                     }
                   ],
-                  staticClass: "form-control mb-1",
-                  attrs: { type: "text", placeholder: "Choice " + choice },
-                  domProps: { value: _vm.choices[choice] },
+                  staticClass: "form-control-sm",
                   on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.choices, choice, $event.target.value)
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.days = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
                     }
                   }
-                })
-              ]),
-              _vm._v(" "),
+                },
+                [
+                  _c("option", { attrs: { value: "0" } }, [_vm._v("0")]),
+                  _vm._v(" "),
+                  _vm._l(7, function(i) {
+                    return _c("option", { key: i }, [_vm._v(" " + _vm._s(i))])
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _c("label", { staticClass: "m-2" }, [_vm._v("Hours:")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mt-1" }, [
               _c(
-                "div",
+                "select",
                 {
                   directives: [
                     {
-                      name: "show",
-                      rawName: "v-show",
-                      value: choice > 2,
-                      expression: "choice > 2"
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.hours,
+                      expression: "hours"
                     }
                   ],
-                  key: "k" + choice,
-                  staticClass: "col-2  p-1 m-0",
-                  staticStyle: { cursor: "pointer" }
+                  staticClass: "form-control-sm",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.hours = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
                 },
                 [
-                  _c(
-                    "span",
-                    {
-                      staticClass: "float-left",
-                      on: {
-                        click: function($event) {
-                          _vm.noOfchoices--
-                        }
-                      }
-                    },
-                    [
-                      _c("i", {
-                        staticClass: "far fa-times-circle fa-2x",
-                        staticStyle: { color: "#DCDCDC" }
-                      })
-                    ]
-                  )
-                ]
+                  _c("option", { attrs: { value: "0" } }, [_vm._v("0")]),
+                  _vm._v(" "),
+                  _vm._l(23, function(i) {
+                    return _c("option", { key: i, domProps: { value: i } }, [
+                      _vm._v(" " + _vm._s(i))
+                    ])
+                  })
+                ],
+                2
               )
-            ]
-          }),
-          _vm._v(" "),
-          _c("p", { staticClass: "p-0 mb-0" }, [
-            _c(
-              "a",
-              {
-                staticClass: "text-info",
-                attrs: { href: "#" },
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.noOfchoices++
+            ]),
+            _vm._v(" "),
+            _c("label", { staticClass: "m-2" }, [_vm._v("Min:")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "mt-1" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.minutes,
+                      expression: "minutes"
+                    }
+                  ],
+                  staticClass: "form-control-sm",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.minutes = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
                   }
-                }
-              },
-              [_vm._v("Add More choices")]
-            )
+                },
+                [
+                  _c("option", { attrs: { value: "0" } }, [_vm._v("0")]),
+                  _vm._v(" "),
+                  _vm._l(59, function(i) {
+                    return _c("option", { key: i, domProps: { value: i } }, [
+                      _vm._v(" " + _vm._s(i))
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "form-group" }, [
+            !_vm.submitting
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-info",
+                    attrs: { disabled: !_vm.allFieldsValid },
+                    on: { click: _vm.submitPoll }
+                  },
+                  [_vm._v("Create")]
+                )
+              : _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary btn-sm float-right",
+                    attrs: { type: "button", disabled: "" }
+                  },
+                  [
+                    _c("span", {
+                      staticClass: "spinner-grow spinner-grow-sm",
+                      attrs: { role: "status", "aria-hidden": "true" }
+                    }),
+                    _vm._v("\n                Saving...\n              ")
+                  ]
+                )
           ])
-        ],
-        2
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group d-flex pt-0" }, [
-        _c("label", { staticClass: "m-2" }, [_vm._v("Poll Length:")]),
-        _vm._v(" "),
-        _c("label", { staticClass: "m-2" }, [_vm._v("Days:")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mt-1" }, [
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.days,
-                  expression: "days"
-                }
-              ],
-              staticClass: "form-control-sm",
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.days = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            _vm._l(7, function(i) {
-              return _c("option", { key: i }, [_vm._v(" " + _vm._s(i))])
-            }),
-            0
-          )
-        ]),
-        _vm._v(" "),
-        _c("label", { staticClass: "m-2" }, [_vm._v("Hours:")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mt-1" }, [
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.hours,
-                  expression: "hours"
-                }
-              ],
-              staticClass: "form-control-sm",
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.hours = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            [
-              _c("option", { attrs: { value: "0" } }, [_vm._v("0")]),
-              _vm._v(" "),
-              _vm._l(23, function(i) {
-                return _c("option", { key: i, domProps: { value: i } }, [
-                  _vm._v(" " + _vm._s(i))
-                ])
-              })
-            ],
-            2
-          )
-        ]),
-        _vm._v(" "),
-        _c("label", { staticClass: "m-2" }, [_vm._v("Min:")]),
-        _vm._v(" "),
-        _c("div", { staticClass: "mt-1" }, [
-          _c(
-            "select",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.minutes,
-                  expression: "minutes"
-                }
-              ],
-              staticClass: "form-control-sm",
-              on: {
-                change: function($event) {
-                  var $$selectedVal = Array.prototype.filter
-                    .call($event.target.options, function(o) {
-                      return o.selected
-                    })
-                    .map(function(o) {
-                      var val = "_value" in o ? o._value : o.value
-                      return val
-                    })
-                  _vm.minutes = $event.target.multiple
-                    ? $$selectedVal
-                    : $$selectedVal[0]
-                }
-              }
-            },
-            [
-              _c("option", { attrs: { value: "0" } }, [_vm._v("0")]),
-              _vm._v(" "),
-              _vm._l(59, function(i) {
-                return _c("option", { key: i, domProps: { value: i } }, [
-                  _vm._v(" " + _vm._s(i))
-                ])
-              })
-            ],
-            2
-          )
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "form-group" }, [
-        !_vm.submitting
-          ? _c(
-              "button",
-              {
-                staticClass: "btn btn-info",
-                attrs: { disabled: !_vm.allFieldsValid },
-                on: { click: _vm.submitPoll }
-              },
-              [_vm._v("Create")]
-            )
-          : _c(
-              "button",
-              {
-                staticClass: "btn btn-primary btn-sm float-right",
-                attrs: { type: "button", disabled: "" }
-              },
-              [
-                _c("span", {
-                  staticClass: "spinner-grow spinner-grow-sm",
-                  attrs: { role: "status", "aria-hidden": "true" }
-                }),
-                _vm._v("\n                Saving...\n              ")
-              ]
-            )
-      ])
-    ])
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -57424,30 +57574,116 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "card" }, [
-    _c(
-      "div",
-      { staticClass: "card-body" },
-      [
-        _c("p", [_vm._v(" \n      " + _vm._s(_vm.poll.question) + "\n    ")]),
-        _vm._v(" "),
-        _vm._l(_vm.poll.choices, function(choice) {
-          return _c("div", { key: choice.id }, [
+  return _c(
+    "div",
+    { staticClass: "card" },
+    [
+      !_vm.hasVoted && _vm.pollIsValid && !_vm.isadmin
+        ? [
             _c(
-              "button",
-              { staticClass: "btn btn-outline-primary w-100 mt-1" },
-              [_vm._v(_vm._s(choice.value))]
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c("p", [
+                  _vm._v(" \n        " + _vm._s(_vm.poll.question) + "\n      ")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.poll.choices, function(choice) {
+                  return _c("div", { key: choice.id }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-primary w-100 mt-1",
+                        attrs: { disabled: _vm.submitting },
+                        on: {
+                          click: function($event) {
+                            return _vm.submitVote(choice.id)
+                          }
+                        }
+                      },
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(choice.value) +
+                            "\n          "
+                        )
+                      ]
+                    )
+                  ])
+                }),
+                _vm._v(" "),
+                _c("p", { staticClass: "text-secondary mt-1 ml-1" }, [
+                  _vm._v(
+                    _vm._s(_vm.currentPoll.votes_count) +
+                      " votes - " +
+                      _vm._s(_vm.timeRemaining) +
+                      " hours left"
+                  )
+                ])
+              ],
+              2
             )
-          ])
-        }),
-        _vm._v(" "),
-        _c("p", { staticClass: "text-secondary mt-1 ml-1" }, [
-          _vm._v("4675 votes - 3 days left")
-        ])
-      ],
-      2
-    )
-  ])
+          ]
+        : [
+            _c(
+              "div",
+              { staticClass: "card-body" },
+              [
+                _c("p", [
+                  _vm._v(
+                    " \n        " +
+                      _vm._s(_vm.currentPoll.question) +
+                      "\n      "
+                  )
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.orderedChoices, function(choice) {
+                  return _c("div", { key: choice.id }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-outline-secondary w-100 mt-1",
+                        attrs: { disabled: "" }
+                      },
+                      [
+                        _vm._v(
+                          "\n            " +
+                            _vm._s(choice.value) +
+                            " - " +
+                            _vm._s(
+                              _vm.calculateVotePercentage(choice.votes) + "%"
+                            ) +
+                            " \n          "
+                        )
+                      ]
+                    )
+                  ])
+                }),
+                _vm._v(" "),
+                _vm.pollIsValid
+                  ? _c("p", { staticClass: "text-secondary mt-1 ml-1" }, [
+                      _vm._v(
+                        "\n        " +
+                          _vm._s(_vm.currentPoll.votes_count) +
+                          " votes - " +
+                          _vm._s(_vm.timeRemaining) +
+                          " hours left\n\n      "
+                      )
+                    ])
+                  : _c("p", { staticClass: "text-secondary mt-1 ml-1" }, [
+                      _vm._v(
+                        "\n        Final Results: " +
+                          _vm._s(_vm.currentPoll.votes_count) +
+                          " votes \n      "
+                      )
+                    ])
+              ],
+              2
+            )
+          ]
+    ],
+    2
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -57476,8 +57712,8 @@ var render = function() {
     _vm._l(_vm.polls, function(poll) {
       return _c(
         "ul",
-        { key: poll.id, staticClass: "list-group" },
-        [_c("app-poll", { attrs: { poll: poll } })],
+        { key: poll.id, staticClass: "list-group mb-2" },
+        [_c("app-poll", { attrs: { poll: poll, isadmin: _vm.isadmin } })],
         1
       )
     }),

@@ -1,5 +1,9 @@
 <template>
-  <div class="card">
+  <div>
+    <button class="btn btn-success mb-1" @click="showCreateView =!showCreateView">
+      {{ showCreateView ? 'Close ':'Create A Poll' }}
+    </button>
+  <div class="card" v-show="showCreateView">
       <div class="alert alert-success m-2" v-show="success">
           Poll has been created
       </div>
@@ -49,6 +53,7 @@
                 <label class="m-2">Days:</label>
                 <div class="mt-1">
                   <select class="form-control-sm" v-model="days">
+                    <option value="0">0</option>  
                     <option v-for="i in 7" :key="i"> {{ i }}</option>
                   </select>
                 </div>
@@ -86,13 +91,16 @@
         </div>
     
     </div>
-  
+
+    </div>
+ 
+
 </template>
 
 <script>
 import moment from 'moment'
 export default {
-  
+
     data(){
       return {
         question:'',
@@ -104,7 +112,8 @@ export default {
         submitting:false,
         success: false,
         error: false,
-        errorMessage:''
+        errorMessage:'',
+        showCreateView: false
       }
     },
      
@@ -147,10 +156,16 @@ export default {
             // console.log(result.data)
           }).catch((err) => {
             // console.log(err)
-             this.submitting = false;
-             this.success = false;
-             this.error = true;
-             this.errorMessage = err.response.data.message || "Error saving the poll";
+            this.question ='';
+            showCreateView = false;
+            this.choices =[];
+            this.days = 1;
+            this.hours = 0;
+            this.minutes =0;
+            this.submitting = false;
+            this.success = false;
+            this.error = true;
+            this.errorMessage = err.response.data.message || "Error saving the poll";
           });
 
       }
