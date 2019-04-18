@@ -53,4 +53,8 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
     Route::get('/polls', 'PollsController@index')->name('admin.polls');
     Route::post('/polls/create', 'PollsController@store');
 
+    Route::get('/events', 'EventController@index')->name('admin.events');
+    Route::post('/events', 'EventController@store')->name('admin.event.store');
+    Route::get('/events/create', 'EventController@create')->name('admin.event.create');
+
 });

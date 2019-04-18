@@ -127,11 +127,18 @@
             <i class="fas fa-fw fa-poll"></i>
             <span>Polls </span></a>
         </li>
+
+         <li class="nav-item">
+          <a class="nav-link" href="{{ route('admin.events')}}">
+            <i class="fas fa-fw fa-poll"></i>
+            <span>Events </span></a>
+        </li>
+{{--         
         <li class="nav-item">
           <a class="nav-link" href="tables.html">
             <i class="fas fa-fw fa-table"></i>
             <span>Tables</span></a>
-        </li>
+        </li> --}}
 
         <li class="nav-item">
           <a class="nav-link" href="{{ route('admin.accounts')}}">
