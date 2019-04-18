@@ -1782,24 +1782,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['tag'],
+  props: ['isadmin', 'tag'],
   components: {
     'app-post': _Post_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
+      posts: [],
       loading: false
     };
   },
   mounted: function mounted() {
     this.fetchPosts();
+    console.log(this.tag);
   },
-  computed: {
-    posts: function posts() {
-      return this.$store.getters.posts;
-    }
+  computed: {// posts(){
+    //   return this.$store.getters.posts;
+    // }
   },
   methods: {
     fetchPosts: function fetchPosts() {
@@ -1808,10 +1814,9 @@ __webpack_require__.r(__webpack_exports__);
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       this.loading = true;
       axios.get('/posts/' + this.tag).then(function (result) {
-        var data = result.data[0].data;
+        var data = result.data[0].data; // this.$store.commit('loadPosts', data);
 
-        _this.$store.commit('loadPosts', data);
-
+        _this.posts = data;
         _this.loading = false;
         console.log(data);
       }).catch(function (err) {
@@ -56601,9 +56606,18 @@ var render = function() {
     [
       !_vm.loading
         ? _vm._l(_vm.posts, function(post, index) {
-            return _c("app-post", { key: index, attrs: { post: post } })
+            return _c("app-post", {
+              key: index,
+              attrs: { post: post, isadmin: _vm.isadmin }
+            })
           })
-        : [_vm._m(0)]
+        : [_vm._m(0)],
+      _vm._v(" "),
+      _vm.posts.length == 0 && !_vm.loading
+        ? _c("div", { staticClass: "text-center" }, [
+            _c("p", [_vm._v(" NO POSTS YET ON THIS THREAD")])
+          ])
+        : _vm._e()
     ],
     2
   )

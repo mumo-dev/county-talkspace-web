@@ -12,7 +12,7 @@
 
     <!-- <app-create-post v-bind:id="{{Auth::id()}}"></app-create-post> -->
 
-    <!--
+    
     <ul class="nav nav-tabs " id="myTab" role="tablist"  >
         <li class="nav-item">
             <a
@@ -53,33 +53,35 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div
-            class="tab-pane fade show active"
+            class="tab-pane fade show mt-5 active"
             id="opinions"
             role="tabpanel"
             aria-labelledby="home-tab">
 
-            <app-admin-posts v-bind:tag="'opinion'"></app-admin-posts>
+            <app-admin-posts v-bind:tag="'opinion'" v-bind:isadmin="'true'"></app-admin-posts>
         </div>
         <div
-            class="tab-pane fade"
+            class="tab-pane fade mt-5"
             id="enquiries"
             role="tabpanel"
             aria-labelledby="profile-tab">
 
-            <app-admin-posts v-bind:tag="'enquiry'"></app-admin-posts>
+            {{-- <app-admin-posts v-bind:tag="'enquiry'"></app-admin-posts> --}}
+             <app-admin-posts v-bind:tag="'complain'" v-bind:isadmin="'true'"></app-admin-posts>
         </div>
         <div
-            class="tab-pane fade"
+            class="tab-pane fade mt-5"
             id="complains"
             role="tabpanel"
             aria-labelledby="contact-tab">
 
-            <app-admin-posts v-bind:tag="'complain'"></app-admin-posts>
+             <app-admin-posts v-bind:tag="'enquiry'" v-bind:isadmin="'true'"></app-admin-posts>
+            {{-- <app-admin-posts v-bind:tag="'complain'"></app-admin-posts> --}}
         </div>
     </div>
 
-    -->
-    <app-posts v-bind:tag="'opinion'" v-bind:isadmin="'true'"></app-posts>
+{{--   
+    <app-posts v-bind:tag="'complains'" v-bind:isadmin="'true'"></app-posts> --}}
 
 </div>
 <!-- /.container-fluid -->
