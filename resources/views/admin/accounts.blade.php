@@ -35,7 +35,7 @@
               <td>{{$user->name}}</td>
               <td>{{$user->email}}</td>
               <td>
-                  <button class="btn btn-success"
+                  <button class="btn btn-danger"
                   data-toggle="modal" data-target="#deleteUserModal"
                   >Delete</button>
               </td>

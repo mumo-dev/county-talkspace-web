@@ -1,5 +1,5 @@
 @extends('admin.layouts.app') @section('content')
-<div class="container-fluid">
+<div class="container">
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
@@ -51,9 +51,9 @@
             >
         </li>
     </ul>
-    <div class="tab-content" id="myTabContent">
+    <div class="tab-content row " id="myTabContent">
         <div
-            class="tab-pane fade show mt-5 active"
+            class="tab-pane fade show mt-5 active col-md-8"
             id="opinions"
             role="tabpanel"
             aria-labelledby="home-tab">
@@ -61,7 +61,7 @@
             <app-admin-posts v-bind:tag="'opinion'" v-bind:isadmin="'true'"></app-admin-posts>
         </div>
         <div
-            class="tab-pane fade mt-5"
+            class="tab-pane fade mt-5 col-md-8"
             id="enquiries"
             role="tabpanel"
             aria-labelledby="profile-tab">
@@ -70,7 +70,7 @@
              <app-admin-posts v-bind:tag="'complain'" v-bind:isadmin="'true'"></app-admin-posts>
         </div>
         <div
-            class="tab-pane fade mt-5"
+            class="tab-pane fade mt-5 col-md-8"
             id="complains"
             role="tabpanel"
             aria-labelledby="contact-tab">

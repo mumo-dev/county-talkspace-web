@@ -27,6 +27,7 @@
     <!-- Styles -->
     <!-- Custom styles for this template-->
     <link href="/admin/css/sb-admin.css" rel="stylesheet">
+    <link href="/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet">
 
   </head>
 
@@ -154,13 +155,13 @@
           </div>
 
         <!-- Sticky Footer -->
-        <footer class="sticky-footer">
+        {{-- <footer class="sticky-footer">
           <div class="container my-auto">
             <div class="copyright text-center my-auto">
               <span>Copyright © County TalkSpace 2019</span>
             </div>
           </div>
-        </footer>
+        </footer> --}}
 
       </div>
       <!-- /.content-wrapper -->
@@ -215,6 +216,21 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/admin/js/sb-admin.min.js"></script>
+    <script src="/js/moment.min.js"></script>
+   
+    <script src="/js/tempusdominus-bootstrap-4.min.js"></script>
+
+
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker4').datetimepicker({
+              minDate: new Date(),
+              format:'YYYY-MM-DD HH:mm:ss',
+              sideBySide: true
+            });
+        });
+
+    </script>
 
   </body>
 

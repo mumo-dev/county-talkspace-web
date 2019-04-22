@@ -8,5 +8,4 @@ class Event extends Model
 {
     protected $guarded =[];
 
-
 }

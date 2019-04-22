@@ -38,10 +38,18 @@
                        <label for="start_time" class=" col-form-label">{{ __('Start (date and time)') }}</label>
 
                         <div class="form-group">
-                            <input id="start_time" type="date" class="form-control{{ $errors->has('start_time') ? ' is-invalid' : '' }}" name="name" value="{{ old('start_time') }}" required autofocus>
+
+                            <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input
+                                    {{ $errors->has('start_time') ? ' is-invalid' : '' }}" data-target="#datetimepicker4"
+                                    name="start_time" value="{{old('start_time')}}" required  autofocus/>
+                                <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
 
                             @if ($errors->has('start_time'))
-                                <span class="invalid-feedback" role="alert">
+                                <span class="invalid-feedback d-block" role="alert">
                                     <strong>{{ $errors->first('start_time') }}</strong>
                                 </span>
                             @endif
@@ -63,7 +71,7 @@
                         <label for="description" class=" col-form-label">{{ __('Description') }}</label>
 
                         <div class="form-group">
-                            <textarea id="description" type="text" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description"  required autofocus>
+                            <textarea id="description" type="text" class="form-control{{ $errors->has('description') ? ' is-invalid' : '' }}" name="description" required  autofocus>
                               {{ old('description') }}
                            </textarea>
                             @if ($errors->has('description'))
@@ -73,11 +81,11 @@
                             @endif
                         </div>
 
-                        <label for="guests" class=" col-form-label">{{ __('Guests ') }}</label>
+                        <label for="guests" class=" col-form-label">{{ __('Guests (Optional)') }}</label>
 
                         <div class="form-group">
                            <input id="guests" type="text" class="form-control{{ $errors->has('guests') ? ' is-invalid' : '' }}" 
-                           name="guests" value="{{ old('guests') }}" placeholder="Guest 1, Guest 2, Guest 3" required autofocus>
+                           name="guests" value="{{ old('guests') }}" placeholder="Guest 1, Guest 2, Guest 3"  autofocus>
 
                             @if ($errors->has('guests'))
                                 <span class="invalid-feedback" role="alert">
@@ -102,10 +110,7 @@
         </div>
         
       </div>
-    </div>
-    
-
-
-    
+    </div>  
 </div>
+
 @endsection
