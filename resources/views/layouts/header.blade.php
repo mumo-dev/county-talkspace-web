@@ -27,8 +27,38 @@
                             @endif
                         @else
 
+
                              <li class="nav-item">
-                                <a class="nav-link" href="{{ route('polls') }}">{{ __('Polls') }}</a>
+                               
+                                <a class="nav-link" href="{{ route('polls') }}">
+                                <i class="fab fa-servicestack"></i>
+                                {{ __('Services') }}
+                                </a>
+                            </li>
+
+                             <li class="nav-item">
+                               
+                                <a class="nav-link" href="{{ route('polls') }}">
+                                 <i class="fas fa-poll"></i>
+                                {{ __('Polls') }}
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                               
+                                <a class="nav-link" href="{{ route('polls') }}">
+                                 <i class="far fa-calendar-alt"></i>
+                                {{ __('Events') }}
+                                </a>
+                            </li>
+
+                            
+                            <li class="nav-item">
+                               
+                                <a class="nav-link" href="{{ route('polls') }}">
+                                 <i class="fas fa-blog"></i>
+                                {{ __('News') }}
+                                </a>
                             </li>
 
                             <li class="nav-item dropdown">

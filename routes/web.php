@@ -60,5 +60,10 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
     Route::post('/event/update', 'EventController@update')->name('admin.event.update');
     Route::get('/events/new/create', 'EventController@create')->name('admin.event.create');
     Route::post('/event/delete', 'EventController@delete')->name('admin.event.delete');
+    // admin.news
+
+    Route::get('/news', 'NewsController@index')->name('admin.news');
+    Route::post('/news', 'NewsController@store')->name('admin.news.store');
+    Route::get('/news/create', 'NewsController@create')->name('admin.news.create');
 
 });
