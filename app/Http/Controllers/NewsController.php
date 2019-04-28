@@ -21,6 +21,12 @@ class NewsController extends Controller
         return view('admin.news.news-show', compact('news'));
     }
 
+    public function edit($id)
+    {
+        $news = News::find($id);
+        return view('admin.news.news-edit', compact('news'));
+    }
+
 
     public function create()
     {
@@ -58,6 +64,16 @@ class NewsController extends Controller
         return redirect()->route('admin.news')->withMessage('The news have been published successfully');
 
 
+    }
+
+    public function delete(Request $request)
+    {
+      
+        $news = News::find($request->id);
+        $news->delete();
+
+        return redirect()->route('admin.news')
+                        ->withMessage('News Item deleted successfully');
     }
 
 }
