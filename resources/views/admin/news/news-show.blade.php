@@ -13,14 +13,17 @@
 
     </ol>
 
-    @if (session('message'))
-        <div class="alert alert-success" role="alert">
-            {{ session('message') }}
-        </div>
-    @endif
+    
 
     <div class="row justify-content-center">
       <div class="col-md-8">
+      
+        @if (session('message'))
+          <div class="alert alert-success" role="alert">
+              {{ session('message') }}
+          </div>
+        @endif
+
         <div class="card">
           <div class="card-header bg-white">
            <h5 class="m-0 p-0 text-uppercase font-weight-bold"> {{ $news->title}}</h5>

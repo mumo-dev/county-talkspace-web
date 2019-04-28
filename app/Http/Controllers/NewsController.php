@@ -95,7 +95,6 @@ class NewsController extends Controller
         }else{
             $news->title = $request->title;
             $news->description = $request->description;
-            $news->photo_url = $imagename;
             $news->save();
         }
         

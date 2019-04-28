@@ -56,7 +56,10 @@
                         <div class="form-group">
 
                           <label for="photo" class=" col-form-label">Upload Photo 
-                            <span class="font-weight-bold"> (to update the existing)</span> 
+                            @if ($news->photo_url != null)
+                                <span class="font-weight-bold"> (to update the existing)</span>  
+                            @endif
+                           
                           </label>
                           <input id="guests" type="file"
                               accept="image/*"
