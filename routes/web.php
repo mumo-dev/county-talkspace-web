@@ -49,6 +49,8 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
     Route::get('/accounts', 'AdminController@getAccounts')->name('admin.accounts');
     Route::get('/accounts/create', 'AdminController@createAccount')->name('admin.account.create');
     Route::post('/accounts', 'AdminController@storeAccount')->name('admin.newaccount');
+    Route::post('/accounts/delete', 'AdminController@deleteAccount')->name('admin.account.delete');
+    // admin.account.delete
 
     Route::get('/polls', 'PollsController@index')->name('admin.polls');
     Route::post('/polls/create', 'PollsController@store');

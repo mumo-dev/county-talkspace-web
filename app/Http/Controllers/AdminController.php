@@ -27,6 +27,13 @@ class AdminController extends Controller
        return view('admin.create-account');
     }
 
+    public function deleteAccount(Request $request)
+    {
+        $user = User::find($request->userId);
+        $user->delete();
+        return redirect()->back()->withMessage('User deleted successfully');
+    }
+
     public function storeAccount(Request $request){
         $this->validate($request, [
             'name'=>'required|unique:users',

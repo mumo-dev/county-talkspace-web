@@ -14,7 +14,11 @@
     </div>
 
     {{-- <i class="far fa-id-card"></i> --}}
-
+     @if (session('message'))
+          <div class="alert alert-success mt-2" role="alert">
+              {{ session('message') }}
+          </div>
+    @endif
     <div class="card mt-3">
       <div class="card-body">
       
@@ -62,15 +66,21 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
-              Once deleted. You won't be able to recover this account.<br>
-              To proceed click 'Delete'.
+          <form method="post" action="{{ route('admin.account.delete')}}">
+          @csrf
+           <input type="hidden" name="userId" value="{{$user->id}}"/>
 
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-danger">Delete</button>
-          </div>
+            <div class="modal-body">
+                Once deleted. You won't be able to recover this account.<br>
+                To proceed click 'Delete'.
+
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-danger">Delete</button>
+            </div>
+          </form>
+          
         </div>
       </div>
     </div>
