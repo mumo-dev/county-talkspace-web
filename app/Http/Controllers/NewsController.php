@@ -33,6 +33,8 @@ class NewsController extends Controller
         return view('admin.news.news-create');
     }
 
+ 
+
     public function store(Request $request) 
     {
         $this->validate($request, [
@@ -63,6 +65,41 @@ class NewsController extends Controller
 
         return redirect()->route('admin.news')->withMessage('The news have been published successfully');
 
+
+    }
+
+
+    public function update(Request $request)
+    {
+        $this->validate($request, [
+            'title'=>'required|min:3',
+            'description'=> 'required'
+        ]);
+
+        $news = News::find($request->id);
+
+        if($request->hasFile('photo')) {
+            if($news->photo_url != null) {
+                unlink(public_path('/images/'). $news->photo_url);
+            }
+            $photo = $request->file('photo');
+            $imagename ='NEWS_'. uniqid(). '.' . $photo->getClientOriginalExtension();
+            $destinationPath = public_path('/images');
+            $photo->move($destinationPath, $imagename); 
+           
+            $news->title=$request->title;
+            $news->description = $request->description;
+            $news->photo_url = $imagename;
+            $news->save();
+           
+        }else{
+            $news->title = $request->title;
+            $news->description = $request->description;
+            $news->photo_url = $imagename;
+            $news->save();
+        }
+        
+        return redirect()->route('admin.news.show', $news->id)->withMessage('The news have been updated successfully');
 
     }
 
