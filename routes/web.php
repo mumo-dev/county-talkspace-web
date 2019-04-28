@@ -63,6 +63,7 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
     // admin.news
 
     Route::get('/news', 'NewsController@index')->name('admin.news');
+    Route::get('/news/{id}', 'NewsController@show')->name('admin.news.show');
     Route::post('/news', 'NewsController@store')->name('admin.news.store');
     Route::get('/news/create', 'NewsController@create')->name('admin.news.create');
 
