@@ -1,16 +1,5 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -43,14 +32,14 @@ Route::post('/vote', 'VoteController@addVote')->middleware(['user']);
 Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
     Route::get('/home', 'HomeController@adminHome')->name('admin.home');
     Route::get('/posts/{id}/comments/', 'CommentController@adminPostComments');
-    // Route::get('/comments/post/{id}', 'CommentController@getAdminPostComments');
+
     Route::get('comments/{id}', 'CommentController@displayAdminComments');
 
     Route::get('/accounts', 'AdminController@getAccounts')->name('admin.accounts');
     Route::get('/accounts/create', 'AdminController@createAccount')->name('admin.account.create');
     Route::post('/accounts', 'AdminController@storeAccount')->name('admin.newaccount');
     Route::post('/accounts/delete', 'AdminController@deleteAccount')->name('admin.account.delete');
-    // admin.account.delete
+  
 
     Route::get('/polls', 'PollsController@index')->name('admin.polls');
     Route::post('/polls/create', 'PollsController@store');
@@ -62,7 +51,6 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
     Route::post('/event/update', 'EventController@update')->name('admin.event.update');
     Route::get('/events/new/create', 'EventController@create')->name('admin.event.create');
     Route::post('/event/delete', 'EventController@delete')->name('admin.event.delete');
-    // admin.news
 
     Route::get('/news', 'NewsController@index')->name('admin.news');
     Route::get('/news/{id}', 'NewsController@show')->name('admin.news.show');
