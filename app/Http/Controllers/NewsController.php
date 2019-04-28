@@ -11,12 +11,12 @@ class NewsController extends Controller
 
     public function index()
     {
-        return view('admin.news');
+        return view('admin.news.news');
     }
 
     public function create()
     {
-        return view('admin.news-create');
+        return view('admin.news.news-create');
     }
 
     public function store(Request $request) 

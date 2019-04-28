@@ -17,23 +17,23 @@ class EventController extends Controller
     {
         $events = Event::paginate(20);
      
-        return view('admin.events', compact('events'));
+        return view('admin.events.events', compact('events'));
     }
 
     public function show(Event $event)
     {
-        return view('admin.event-show', compact('event'));
+        return view('admin.events.event-show', compact('event'));
     }
 
     public function edit(Event $event)
     {
-        return view('admin.event-edit', compact('event'));
+        return view('admin.events.event-edit', compact('event'));
     }
 
     public function create()
     {
      
-        return view('admin.events-create');
+        return view('admin.events.events-create');
     }
 
     public function update(Request $request)

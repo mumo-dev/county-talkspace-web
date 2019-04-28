@@ -40,7 +40,7 @@
 
                         <div class="form-group">
 
-                            <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                            <div class="input-group date" id="datetimepickereditevent" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input
                                     {{ $errors->has('start_time') ? ' is-invalid' : '' }}" data-target="#datetimepicker4"
                                     name="start_time" value="{{ $event->start_time}}" required  autofocus/>
