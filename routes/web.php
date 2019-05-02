@@ -29,6 +29,7 @@ Route::post('/vote', 'VoteController@addVote')->middleware(['user']);
 
 Route::get('/news', 'NewsController@showNews')->name('news')->middleware(['auth','user']);
 Route::get('/news/{id}', 'NewsController@showNewsDetails')->name('news.show')->middleware(['auth','user']);
+Route::get('/events', 'EventController@showEvents')->name('events');
 
 
 

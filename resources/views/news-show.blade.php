@@ -24,7 +24,7 @@
            <img class="card-img-top rounded-0" src="/images/{{$news->photo_url}}">
           @endif  
           <div class="card-body pt-0">
-           <small class="text-secondary mb-1">Posted on: {{ $news->created_at}}</small>
+           <small class="text-secondary mb-1">Posted on: {{ $news->created_at->toFormattedDateString()}}</small>
             <p class="card-text"> {{ $news->description}}</p>
             {{-- <a href="#" class="btn btn-primary">Go somewhere</a> --}}
           </div>

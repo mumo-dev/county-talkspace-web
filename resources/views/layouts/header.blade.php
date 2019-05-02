@@ -39,7 +39,7 @@
 
                             <li class="nav-item">
                                
-                                <a class="nav-link" href="{{ route('polls') }}">
+                                <a class="nav-link" href="{{ route('events') }}">
                                  <i class="far fa-calendar-alt"></i>
                                 {{ __('Events') }}
                                 </a>

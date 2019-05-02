@@ -15,11 +15,19 @@ class EventController extends Controller
 
     public function index()
     {
-        $events = Event::paginate(20);
+        $upcomingEvents = Event::where('start_time', '>=', date('Y-m-d').' 00:00:00')->paginate(20);
+        $pastEvents = Event::where('start_time', '<', date('Y-m-d').' 00:00:00')->paginate(20);
      
-        return view('admin.events.events', compact('events'));
+        return view('admin.events.events', compact('upcomingEvents', 'pastEvents'));
     }
 
+
+    public function showEvents()
+    {
+        $events = Event::paginate(20);
+     
+        return view('events', compact('events'));
+    }
     public function show(Event $event)
     {
         return view('admin.events.event-show', compact('event'));

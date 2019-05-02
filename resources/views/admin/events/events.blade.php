@@ -18,12 +18,12 @@
     <div class="row ">
       <div class="col-md-12">
           {{-- <app-create-poll></app-create-poll> --}}
-          <a class="btn btn-success" href="{{ route('admin.event.create')}}">CREATE EVENT</a>
+          <a class="btn btn-success btn-sm" href="{{ route('admin.event.create')}}">CREATE EVENT</a>
           <hr>
-        <h5 class=""> Current Events</h5>
+        <h5 class=" p-2 " style="background-color:#d3f6df"> Current Events</h5>
          {{-- <app-polls v-bind:polls ="{{ $polls }}" :isadmin="true"></app-polls> --}}
          <div class="list-group">
-         @foreach ($events as $event)
+         @forelse ($upcomingEvents as $event)
             
             <a href="{{ route('admin.event.show', $event->id)}}" class="list-group-item list-group-item-action">
                 <div class="row">
@@ -35,19 +35,50 @@
                     </div>
                     <div class="col-sm-4">
                         <i class="fa fa-calendar mx-2 text-info"></i>
-                        {{$event->start_time }}
+                        {{\Carbon\Carbon::parse($event->start_time)->toDayDateTimeString()}}
                     </div> 
                 </div>
             </a>
         
-         @endforeach   
+        @empty
+            <p> No Events posted</p>
+        @endforelse  
         </div>
 
         <div class="mt-3">
-         {{ $events->links()}}
+         {{ $upcomingEvents->links()}}
         </div>
 
         {{-- past events --}}
+
+        <h5 class="p-2" style="background-color:#d3f6df"> Past Events</h5>
+         {{-- <app-polls v-bind:polls ="{{ $polls }}" :isadmin="true"></app-polls> --}}
+         <div class="list-group">
+         @forelse ($pastEvents as $event)
+            
+            <a href="{{ route('admin.event.show', $event->id)}}" class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-sm-5 ">
+                        {{ $event->name }}
+                    </div>   
+                    <div  class="col-sm-3">
+                        <i class="fa fa-clock-o mx-2 text-info"></i> {{ $event->location }}
+                    </div>
+                    <div class="col-sm-4">
+                        <i class="fa fa-calendar mx-2 text-info"></i>
+                        {{\Carbon\Carbon::parse($event->start_time)->toDayDateTimeString()}}
+                    </div> 
+                </div>
+            </a>
+        
+        @empty
+            <p> No Events posted</p>
+        @endforelse  
+        </div>
+
+        <div class="mt-3">
+         {{ $pastEvents->links()}}
+        </div>
 
       </div>
     </div>

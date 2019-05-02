@@ -19,7 +19,7 @@
               <div class="card-body">
                 <div class="card-title m-0 p-0 text-info"> <h5 class="m-0 p-0"> {{ $newsDetails->title }}</h5></div>
                 <div class="card-text">
-                <div><small class="text-muted"> Posted on : {{ $newsDetails->created_at}}</small></div>
+                <div><small class="text-muted"> Posted on : {{ $newsDetails->created_at->toFormattedDateString()}}</small></div>
                 {{ substr($newsDetails->description,0, mt_rand(80, 200))  }}...
 
                 <br>

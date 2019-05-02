@@ -30,7 +30,7 @@
                 <div class="">
                   <span class="text-primary text-uppercase " style="font-weight:500"> Date: </span> 
                    <i class="fa fa-calendar mx-2 text-info">
-                    </i>{{ $event->start_time }}
+                    </i> {{\Carbon\Carbon::parse($event->start_time)->toDayDateTimeString()}}
                 </div>
               </div>
             <div class="mt-2">
@@ -50,7 +50,10 @@
           </button>
           </div>
         </div>
+
       </div>
+
+
     </div>
 
 </div>
