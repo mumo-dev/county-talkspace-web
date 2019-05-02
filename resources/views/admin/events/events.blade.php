@@ -20,7 +20,7 @@
           {{-- <app-create-poll></app-create-poll> --}}
           <a class="btn btn-success btn-sm" href="{{ route('admin.event.create')}}">CREATE EVENT</a>
           <hr>
-        <h5 class=" p-2 " style="background-color:#d3f6df"> Current Events</h5>
+        <h5 class=" p-2 " style="background-color:#d3f6df"> Upcoming Events</h5>
          {{-- <app-polls v-bind:polls ="{{ $polls }}" :isadmin="true"></app-polls> --}}
          <div class="list-group">
          @forelse ($upcomingEvents as $event)

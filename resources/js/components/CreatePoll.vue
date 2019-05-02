@@ -42,7 +42,7 @@
                     </div>
                   
               </template>
-
+              <div class="w-100"></div>
               <p class="p-0 mb-0"> <a href="#" class="text-info" @click.prevent="noOfchoices++">Add More choices</a></p>
               
             </div>

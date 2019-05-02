@@ -57065,6 +57065,8 @@ var render = function() {
                 ]
               }),
               _vm._v(" "),
+              _c("div", { staticClass: "w-100" }),
+              _vm._v(" "),
               _c("p", { staticClass: "p-0 mb-0" }, [
                 _c(
                   "a",
