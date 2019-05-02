@@ -112,4 +112,19 @@ class NewsController extends Controller
                         ->withMessage('News Item deleted successfully');
     }
 
+
+    public function showNews()
+    {
+        $news = News::latest()->paginate(30);
+
+        return view('news', compact('news'));
+    }
+
+    
+    public function showNewsDetails($id)
+    {
+        $news = News::find($id);
+        return view('news-show', compact('news'));
+    }
+
 }

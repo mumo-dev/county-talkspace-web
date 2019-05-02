@@ -2707,14 +2707,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['post', 'iscomment', 'isadmin'],
+  props: ["post", "iscomment", "isadmin"],
   mounted: function mounted() {
     var _this = this;
 
-    var url = '/isliked/' + this.post.id;
+    var url = "/isliked/" + this.post.id;
 
     if (this.iscomment) {
-      url += '?comment=true';
+      url += "?comment=true";
     }
 
     axios.get(url).then(function (result) {
@@ -2727,7 +2727,7 @@ __webpack_require__.r(__webpack_exports__);
       postIsLiked: false,
       myPost: this.post,
       showModal: false,
-      currentModalImageUrl: '',
+      currentModalImageUrl: "",
       currentImageIndex: 0
     };
   },
@@ -2737,9 +2737,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     user_icon: function user_icon() {
       if (this.post.user.photo_url) {
-        return '/images/thumbnails/' + this.post.user.photo_url;
+        return "/images/thumbnails/" + this.post.user.photo_url;
       } else {
-        return '/images/user.png';
+        return "/images/user.png";
       }
     },
     imagesUrls: function imagesUrls() {
@@ -2754,14 +2754,14 @@ __webpack_require__.r(__webpack_exports__);
     imageClasses: function imageClasses() {
       if (this.noOfImages == 1) {
         return {
-          'full-height': true,
-          'full-width': true
+          "full-height": true,
+          "full-width": true
         };
       }
 
       if (this.noOfImages == 2) {
         return {
-          'full-height': true
+          "full-height": true
         };
       }
 
@@ -2772,10 +2772,10 @@ __webpack_require__.r(__webpack_exports__);
     unlikePost: function unlikePost() {
       var _this2 = this;
 
-      var url = '/unlike/' + this.post.id;
+      var url = "/unlike/" + this.post.id;
 
       if (this.iscomment) {
-        url += '?comment=true';
+        url += "?comment=true";
       }
 
       axios.post(url).then(function (result) {
@@ -2787,10 +2787,10 @@ __webpack_require__.r(__webpack_exports__);
     likePost: function likePost() {
       var _this3 = this;
 
-      var url = '/like/' + this.post.id;
+      var url = "/like/" + this.post.id;
 
       if (this.iscomment) {
-        url += '?comment=true';
+        url += "?comment=true";
       }
 
       axios.post(url).then(function (result) {
@@ -2828,7 +2828,7 @@ __webpack_require__.r(__webpack_exports__);
     markPostAsRead: function markPostAsRead() {
       var _this4 = this;
 
-      axios.post('/markpostasread/' + this.post.id).then(function () {
+      axios.post("/markpostasread/" + this.post.id).then(function () {
         _this4.myPost.read = 1;
       });
     }
@@ -2865,11 +2865,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['isadmin'],
+  props: ["isadmin"],
   components: {
-    'app-post': _Post_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    "app-post": _Post_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
     return {
@@ -2890,13 +2892,12 @@ __webpack_require__.r(__webpack_exports__);
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       this.loading = true;
-      axios.get('/posts').then(function (result) {
+      axios.get("/posts").then(function (result) {
         var data = result.data[0].data;
 
-        _this.$store.commit('loadPosts', data);
+        _this.$store.commit("loadPosts", data);
 
-        _this.loading = false;
-        console.log(data);
+        _this.loading = false; // console.log(data)
       }).catch(function (err) {
         _this.loading = false;
       });
@@ -7626,7 +7627,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.photos-wrapper[data-v-5e8280ea] {\r\n  display: grid;\r\n  max-width: 100%;\r\n  grid-template-columns: 50% 50%;\r\n  /* grid-template-rows: 150px 150px; */\n}\n.photos-wrapper .full-height[data-v-5e8280ea] {\r\n  grid-row-start: 1;\r\n  grid-row-end: 3;\r\n  max-height: 300px;\n}\n.photos-wrapper .full-width[data-v-5e8280ea] {\r\n  grid-column-start: 1;\r\n  grid-column-end: 3;\r\n  max-height: 300px;\n}\n.post-btns[data-v-5e8280ea]{\r\n  cursor: pointer;\r\n  padding: 8px;\r\n  border-radius: 4px;\n}\n.post-btns[data-v-5e8280ea]:hover, .post-btns[data-v-5e8280ea]:focus {\r\n    background-color: #f2f2f2;\n}\r\n\r\n\r\n/* Style the Image Used to Trigger the Modal */\n.myImg[data-v-5e8280ea] {\r\n  border-radius: 5px;\r\n  cursor: pointer;\r\n  transition: 0.3s;\r\n  max-width:100%;\r\n  height:auto;\r\n  -o-object-fit:contain;\r\n     object-fit:contain\n}\n.myImg[data-v-5e8280ea]:hover {opacity: 0.7;}\r\n\r\n/* The Modal (background) */\n.modal[data-v-5e8280ea] {\r\n  display: none; /* Hidden by default */\r\n  position: fixed; /* Stay in place */\r\n  z-index: 1; /* Sit on top */\r\n  padding-top: 100px; /* Location of the box */\r\n  left: 0;\r\n  top: 0;\r\n  width: 100%; /* Full width */\r\n  height: 100%; /* Full height */\r\n  overflow: auto; /* Enable scroll if needed */\r\n  background-color: rgb(0,0,0); /* Fallback color */\r\n  background-color: rgba(0,0,0,0.9); /* Black w/ opacity */\n}\n.modal .next[data-v-5e8280ea] {\r\n  position: absolute;\r\n  top: 45%;\r\n  right: 35px;\r\n  z-index: 2;\r\n  cursor: pointer;\n}\n.modal .prev[data-v-5e8280ea] {\r\n  position: absolute;\r\n  top: 45%;\r\n  left: 35px;\r\n  z-index: 2;\r\n  cursor: pointer;\n}\r\n\r\n/* Modal Content (Image) */\n.modal-content[data-v-5e8280ea] {\r\n  margin: auto;\r\n  display: block;\r\n  width: 80%;\r\n  max-width: 700px;\n}\r\n\r\n/* Caption of Modal Image (Image Text) - Same Width as the Image */\n#caption[data-v-5e8280ea] {\r\n  margin: auto;\r\n  display: block;\r\n  width: 80%;\r\n  max-width: 700px;\r\n  text-align: center;\r\n  color: #ccc;\r\n  padding: 10px 0;\r\n  height: 150px;\n}\r\n\r\n/* Add Animation - Zoom in the Modal */\n.modal-content[data-v-5e8280ea], #caption[data-v-5e8280ea] { \r\n  -webkit-animation-name: zoom-data-v-5e8280ea; \r\n          animation-name: zoom-data-v-5e8280ea;\r\n  -webkit-animation-duration: 0.6s;\r\n          animation-duration: 0.6s;\n}\n@-webkit-keyframes zoom-data-v-5e8280ea {\nfrom {-webkit-transform:scale(0);transform:scale(0)}\nto {-webkit-transform:scale(1);transform:scale(1)}\n}\n@keyframes zoom-data-v-5e8280ea {\nfrom {-webkit-transform:scale(0);transform:scale(0)}\nto {-webkit-transform:scale(1);transform:scale(1)}\n}\r\n\r\n/* The Close Button */\n.close[data-v-5e8280ea] {\r\n  position: absolute;\r\n  top: 15px;\r\n  right: 35px;\r\n  color: #f1f1f1;\r\n  font-size: 40px;\r\n  font-weight: bold;\r\n  transition: 0.3s;\n}\n.close[data-v-5e8280ea]:hover,\r\n.close[data-v-5e8280ea]:focus {\r\n  color: #bbb;\r\n  text-decoration: none;\r\n  cursor: pointer;\n}\r\n\r\n/* 100% Image Width on Smaller Screens */\n@media only screen and (max-width: 700px){\n.modal-content[data-v-5e8280ea] {\r\n    width: 100%;\n}\n.modal .prev[data-v-5e8280ea] {\r\n    top: 30%;\n}\n.modal .next[data-v-5e8280ea] {\r\n    top: 30%;\n}\n}\r\n\r\n\r\n\r\n", ""]);
+exports.push([module.i, "\n.photos-wrapper[data-v-5e8280ea] {\r\n  display: grid;\r\n  max-width: 100%;\r\n  grid-template-columns: 50% 50%;\r\n  /* grid-template-rows: 150px 150px; */\n}\n.photos-wrapper .full-height[data-v-5e8280ea] {\r\n  grid-row-start: 1;\r\n  grid-row-end: 3;\r\n  max-height: 300px;\n}\n.photos-wrapper .full-width[data-v-5e8280ea] {\r\n  grid-column-start: 1;\r\n  grid-column-end: 3;\r\n  max-height: 300px;\n}\n.post-btns[data-v-5e8280ea] {\r\n  cursor: pointer;\r\n  padding: 8px;\r\n  border-radius: 4px;\n}\n.post-btns[data-v-5e8280ea]:hover,\r\n.post-btns[data-v-5e8280ea]:focus {\r\n  background-color: #f2f2f2;\n}\r\n\r\n/* Style the Image Used to Trigger the Modal */\n.myImg[data-v-5e8280ea] {\r\n  border-radius: 5px;\r\n  cursor: pointer;\r\n  transition: 0.3s;\r\n  max-width: 100%;\r\n  height: auto;\r\n  -o-object-fit: contain;\r\n     object-fit: contain;\n}\n.myImg[data-v-5e8280ea]:hover {\r\n  opacity: 0.7;\n}\r\n\r\n/* The Modal (background) */\n.modal[data-v-5e8280ea] {\r\n  display: none; /* Hidden by default */\r\n  position: fixed; /* Stay in place */\r\n  z-index: 1; /* Sit on top */\r\n  padding-top: 100px; /* Location of the box */\r\n  left: 0;\r\n  top: 0;\r\n  width: 100%; /* Full width */\r\n  height: 100%; /* Full height */\r\n  overflow: auto; /* Enable scroll if needed */\r\n  background-color: rgb(0, 0, 0); /* Fallback color */\r\n  background-color: rgba(0, 0, 0, 0.9); /* Black w/ opacity */\n}\n.modal .next[data-v-5e8280ea] {\r\n  position: absolute;\r\n  top: 45%;\r\n  right: 35px;\r\n  z-index: 2;\r\n  cursor: pointer;\n}\n.modal .prev[data-v-5e8280ea] {\r\n  position: absolute;\r\n  top: 45%;\r\n  left: 35px;\r\n  z-index: 2;\r\n  cursor: pointer;\n}\r\n\r\n/* Modal Content (Image) */\n.modal-content[data-v-5e8280ea] {\r\n  margin: auto;\r\n  display: block;\r\n  width: 80%;\r\n  max-width: 700px;\n}\r\n\r\n/* Caption of Modal Image (Image Text) - Same Width as the Image */\n#caption[data-v-5e8280ea] {\r\n  margin: auto;\r\n  display: block;\r\n  width: 80%;\r\n  max-width: 700px;\r\n  text-align: center;\r\n  color: #ccc;\r\n  padding: 10px 0;\r\n  height: 150px;\n}\r\n\r\n/* Add Animation - Zoom in the Modal */\n.modal-content[data-v-5e8280ea],\r\n#caption[data-v-5e8280ea] {\r\n  -webkit-animation-name: zoom-data-v-5e8280ea;\r\n          animation-name: zoom-data-v-5e8280ea;\r\n  -webkit-animation-duration: 0.6s;\r\n          animation-duration: 0.6s;\n}\n@-webkit-keyframes zoom-data-v-5e8280ea {\nfrom {\r\n    -webkit-transform: scale(0);\r\n            transform: scale(0);\n}\nto {\r\n    -webkit-transform: scale(1);\r\n            transform: scale(1);\n}\n}\n@keyframes zoom-data-v-5e8280ea {\nfrom {\r\n    -webkit-transform: scale(0);\r\n            transform: scale(0);\n}\nto {\r\n    -webkit-transform: scale(1);\r\n            transform: scale(1);\n}\n}\r\n\r\n/* The Close Button */\n.close[data-v-5e8280ea] {\r\n  position: absolute;\r\n  top: 15px;\r\n  right: 35px;\r\n  color: #f1f1f1;\r\n  font-size: 40px;\r\n  font-weight: bold;\r\n  transition: 0.3s;\n}\n.close[data-v-5e8280ea]:hover,\r\n.close[data-v-5e8280ea]:focus {\r\n  color: #bbb;\r\n  text-decoration: none;\r\n  cursor: pointer;\n}\r\n\r\n/* 100% Image Width on Smaller Screens */\n@media only screen and (max-width: 700px) {\n.modal-content[data-v-5e8280ea] {\r\n    width: 100%;\n}\n.modal .prev[data-v-5e8280ea] {\r\n    top: 30%;\n}\n.modal .next[data-v-5e8280ea] {\r\n    top: 30%;\n}\n}\r\n", ""]);
 
 // exports
 
@@ -57774,13 +57775,7 @@ var render = function() {
           { staticClass: "my-0" },
           [
             _vm.post.user.user_type == 0
-              ? [
-                  _vm._v(
-                    "\r\n          " +
-                      _vm._s(_vm.post.user.name.trim()) +
-                      "\r\n        "
-                  )
-                ]
+              ? [_vm._v(_vm._s(_vm.post.user.name.trim()))]
               : [_c("strong", [_vm._v("County Government")])],
             _vm._v(" "),
             _c(
@@ -57789,7 +57784,7 @@ var render = function() {
                 staticClass: "text-secondary font-weight-light my-0 mb-2",
                 staticStyle: { "font-size": "14px" }
               },
-              [_vm._v("\r\n        " + _vm._s(_vm.postedOn) + "\r\n        ")]
+              [_vm._v(_vm._s(_vm.postedOn))]
             ),
             _vm._v(" "),
             _vm.isadmin && !_vm.iscomment
@@ -57798,7 +57793,7 @@ var render = function() {
                     ? _c(
                         "span",
                         { staticClass: "badge badge-danger float-right" },
-                        [_vm._v("\r\n                NEW\r\n            ")]
+                        [_vm._v("NEW")]
                       )
                     : _vm._e(),
                   _vm._v(" "),
@@ -57815,11 +57810,7 @@ var render = function() {
                             }
                           }
                         },
-                        [
-                          _vm._v(
-                            "\r\n              Mark As Read\r\n            "
-                          )
-                        ]
+                        [_vm._v("Mark As Read")]
                       )
                     : _vm._e()
                 ]
@@ -57864,62 +57855,74 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass: "modal",
-            class: { "d-block": _vm.showModal, "d-none": !_vm.showModal },
-            attrs: { id: "myModal" }
-          },
-          [
-            _c(
-              "span",
+        _vm.showModal
+          ? _c(
+              "div",
               {
-                staticClass: "close",
-                on: {
-                  click: function($event) {
-                    _vm.showModal = false
-                  }
-                }
+                staticClass: "modal",
+                class: { "d-block": _vm.showModal, "d-none": !_vm.showModal },
+                attrs: { id: "myModal" }
               },
-              [_vm._v("×")]
-            ),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                staticClass: "next",
-                on: {
-                  click: function($event) {
-                    return _vm.displayNextImage()
+              [
+                _c(
+                  "span",
+                  {
+                    staticClass: "close",
+                    on: {
+                      click: function($event) {
+                        _vm.showModal = false
+                      }
+                    }
+                  },
+                  [_vm._v("×")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    staticClass: "next",
+                    on: {
+                      click: function($event) {
+                        return _vm.displayNextImage()
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fas fa-angle-right fa-3x text-white"
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "span",
+                  {
+                    staticClass: "prev",
+                    on: {
+                      click: function($event) {
+                        return _vm.displayPrevImage()
+                      }
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "fas fa-angle-left fa-3x text-white"
+                    })
+                  ]
+                ),
+                _vm._v(" "),
+                _c("img", {
+                  ref: "img01",
+                  staticClass: "modal-content",
+                  attrs: {
+                    src: "/images/thumbnails/" + _vm.currentModalImageUrl
                   }
-                }
-              },
-              [_c("i", { staticClass: "fas fa-angle-right fa-3x text-white" })]
-            ),
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                staticClass: "prev",
-                on: {
-                  click: function($event) {
-                    return _vm.displayPrevImage()
-                  }
-                }
-              },
-              [_c("i", { staticClass: "fas fa-angle-left fa-3x text-white" })]
-            ),
-            _vm._v(" "),
-            _c("img", {
-              ref: "img01",
-              staticClass: "modal-content",
-              attrs: { src: "/images/thumbnails/" + _vm.currentModalImageUrl }
-            }),
-            _vm._v(" "),
-            _c("div", { attrs: { id: "caption" } })
-          ]
-        ),
+                }),
+                _vm._v(" "),
+                _c("div", { attrs: { id: "caption" } })
+              ]
+            )
+          : _vm._e(),
         _vm._v(" "),
         _c("div", { staticClass: "media-footer mt-2" }, [
           _c("div", { staticClass: "row" }, [
@@ -57946,9 +57949,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\r\n                        " +
-                                    _vm._s(_vm.post.comments_count) +
-                                    " Comments \r\n                      "
+                                  _vm._s(_vm.post.comments_count) + " Comments"
                                 )
                               ]
                             )
@@ -57964,9 +57965,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\r\n                        " +
-                                    _vm._s(_vm.post.comments_count) +
-                                    " Comments \r\n                      "
+                                  _vm._s(_vm.post.comments_count) + " Comments"
                                 )
                               ]
                             )
@@ -57985,9 +57984,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\r\n                     " +
-                                    _vm._s(_vm.post.comments_count) +
-                                    " Comments \r\n                  "
+                                  _vm._s(_vm.post.comments_count) + " Comments"
                                 )
                               ]
                             )
@@ -58001,9 +57998,7 @@ var render = function() {
                               },
                               [
                                 _vm._v(
-                                  "\r\n                     " +
-                                    _vm._s(_vm.post.comments_count) +
-                                    " Comments \r\n                  "
+                                  _vm._s(_vm.post.comments_count) + " Comments"
                                 )
                               ]
                             )
@@ -58036,9 +58031,7 @@ var render = function() {
                           }),
                           _vm._v(" "),
                           _c("span", [
-                            _vm._v(
-                              " " + _vm._s(_vm.myPost.likes_count) + " Likes "
-                            )
+                            _vm._v(_vm._s(_vm.myPost.likes_count) + " Likes")
                           ])
                         ]
                       )
@@ -58061,9 +58054,7 @@ var render = function() {
                           }),
                           _vm._v(" "),
                           _c("span", { staticClass: "text-secondary" }, [
-                            _vm._v(
-                              " " + _vm._s(_vm.myPost.likes_count) + " Likes "
-                            )
+                            _vm._v(_vm._s(_vm.myPost.likes_count) + " Likes")
                           ])
                         ]
                       )
@@ -58139,7 +58130,7 @@ var staticRenderFns = [
       }),
       _vm._v(" "),
       _c("span", {
-        staticClass: "spinner-grow spinner-grow ",
+        staticClass: "spinner-grow spinner-grow",
         attrs: { role: "status", "aria-hidden": "true" }
       })
     ])

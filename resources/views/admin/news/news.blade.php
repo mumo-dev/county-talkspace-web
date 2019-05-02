@@ -41,10 +41,10 @@
         </div>
 
         <div class="mt-3">
-         {{-- {{ $news->links()}} --}}
+         {{ $news->links()}}
         </div>
 
-        {{-- past events --}}
+        
 
       </div>
     </div>

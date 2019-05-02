@@ -27,6 +27,9 @@ Route::get('/isliked/{id}', 'LikeController@isLiked');
 Route::get('/polls', 'PollsController@displayPolls')->name('polls')->middleware(['auth','user']);
 Route::post('/vote', 'VoteController@addVote')->middleware(['user']);
 
+Route::get('/news', 'NewsController@showNews')->name('news')->middleware(['auth','user']);
+Route::get('/news/{id}', 'NewsController@showNewsDetails')->name('news.show')->middleware(['auth','user']);
+
 
 
 Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
