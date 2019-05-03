@@ -1,6 +1,6 @@
 <template>
   <div>
-    <li class="media" @click.prevent="displayPostDetails" style="cursor:pointer">
+    <li class="media" @click="displayPostDetails" style="cursor:pointer">
       <img :src="user_icon" class="mr-3 rounded-circle" alt="user photo" width="50px" height="50px">
       <div class="media-body">
         <h5 class="my-0">

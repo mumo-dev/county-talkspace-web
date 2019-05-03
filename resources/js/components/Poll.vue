@@ -32,6 +32,7 @@
 
         <p  class="text-secondary mt-1 ml-1" v-else>
           Final Results: {{currentPoll.votes_count}} votes 
+          -- Posted On : {{ currentPoll.created_at}}
         </p>
       </div>
     </template>

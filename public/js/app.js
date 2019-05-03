@@ -2453,6 +2453,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['poll', 'isadmin'],
@@ -57722,7 +57723,9 @@ var render = function() {
                       _vm._v(
                         "\n        Final Results: " +
                           _vm._s(_vm.currentPoll.votes_count) +
-                          " votes \n      "
+                          " votes \n        -- Posted On : " +
+                          _vm._s(_vm.currentPoll.created_at) +
+                          "\n      "
                       )
                     ])
               ],
@@ -57796,12 +57799,7 @@ var render = function() {
       {
         staticClass: "media",
         staticStyle: { cursor: "pointer" },
-        on: {
-          click: function($event) {
-            $event.preventDefault()
-            return _vm.displayPostDetails($event)
-          }
-        }
+        on: { click: _vm.displayPostDetails }
       },
       [
         _c("img", {

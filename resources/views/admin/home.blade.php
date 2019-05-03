@@ -67,7 +67,7 @@
             aria-labelledby="profile-tab">
 
             {{-- <app-admin-posts v-bind:tag="'enquiry'"></app-admin-posts> --}}
-             <app-admin-posts v-bind:tag="'complain'" v-bind:isadmin="'true'"></app-admin-posts>
+             <app-admin-posts v-bind:tag="'enquiry'" v-bind:isadmin="'true'"></app-admin-posts>
         </div>
         <div
             class="tab-pane fade mt-5 col-md-8"
@@ -75,7 +75,7 @@
             role="tabpanel"
             aria-labelledby="contact-tab">
 
-             <app-admin-posts v-bind:tag="'enquiry'" v-bind:isadmin="'true'"></app-admin-posts>
+             <app-admin-posts v-bind:tag="'complain'" v-bind:isadmin="'true'"></app-admin-posts>
             {{-- <app-admin-posts v-bind:tag="'complain'"></app-admin-posts> --}}
         </div>
     </div>

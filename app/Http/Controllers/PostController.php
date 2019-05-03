@@ -69,7 +69,10 @@ class PostController extends Controller
     public function getPostsByTag(Request $request, $tag)
     {
         $posts = Post::withCount(['comments','likes'])
-                ->with(['user','images'])->where('tag', $tag)->latest()->paginate(50);
+                ->with(['user','images'])->where('tag', $tag)
+                ->orderBy('read','asc')
+                ->latest()
+                ->paginate(50);
         return response()->json([$posts], 200);
     }
 
