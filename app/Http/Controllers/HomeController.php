@@ -45,28 +45,31 @@ class HomeController extends Controller
     public function updateProfile(Request $request)
     {
         $user = User::find($request->id);
-        $photoUrl = $request->photo_url;
-        if($photoUrl != null){
-            //delete the file
-            unlink(public_path('/images/thumbnails/'). $photoUrl);
-            unlink(public_path('/images/'). $photoUrl);
-        }
+   
+        if($request->hasFile('image')){
+
+            if($user->photo_url != null){
+                //delete the file
+                unlink(public_path('/images/thumbnails/'). $photoUrl);
+                unlink(public_path('/images/'). $photoUrl);
+            }
+            
+            $image  = $request->file('image');
+            $imagename = uniqid(). '.' . $image->getClientOriginalExtension();
+            $destinationPath = public_path('/images/thumbnails');
+            $img = Image::make($image->getRealPath());
+            $img->resize(100, 100, function($constraint){
+                $constraint->aspectRatio();
+            })->save($destinationPath.'/'.$imagename);
+
         
-        $image  = $request->file('image');
-        $imagename = uniqid(). '.' . $image->getClientOriginalExtension();
-        $destinationPath = public_path('/images/thumbnails');
-        $img = Image::make($image->getRealPath());
-        $img->resize(100, 100, function($constraint){
-            $constraint->aspectRatio();
-        })->save($destinationPath.'/'.$imagename);
+            $destinationPath = public_path('/images');
+            $image->move($destinationPath, $imagename);
 
-
-        $destinationPath = public_path('/images');
-        $image->move($destinationPath, $imagename);
-
+            $user->photo_url = $imagename;
+        }
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->photo_url = $imagename;
         $user->save();
 
         return response()->json([

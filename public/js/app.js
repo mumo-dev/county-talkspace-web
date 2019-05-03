@@ -2705,6 +2705,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["post", "iscomment", "isadmin"],
@@ -3048,7 +3056,6 @@ __webpack_require__.r(__webpack_exports__);
       data.append('image', this.file);
       data.append('name', this.user.name);
       data.append('email', this.user.email);
-      data.append('photo_url', this.user.photo_url);
       data.append('id', this.user.id);
       data.append('authId', this.currentuserid);
       /*
@@ -57777,7 +57784,16 @@ var render = function() {
           { staticClass: "my-0" },
           [
             _vm.post.user.user_type == 0
-              ? [_vm._v(_vm._s(_vm.post.user.name.trim()))]
+              ? [
+                  _c(
+                    "a",
+                    {
+                      staticStyle: { color: "black" },
+                      attrs: { href: "/user/profile/" + _vm.post.user.id }
+                    },
+                    [_vm._v(_vm._s(_vm.post.user.name.trim()))]
+                  )
+                ]
               : [_c("strong", [_vm._v("County Government")])],
             _vm._v(" "),
             _c(
@@ -57821,7 +57837,19 @@ var render = function() {
           2
         ),
         _vm._v(" "),
-        _c("p", [_vm._v(_vm._s(_vm.post.message.trim()))]),
+        _c("p", { staticClass: "mb-0" }, [
+          _vm._v(_vm._s(_vm.post.message.trim()) + "\n        "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "span",
+            {
+              staticClass: "badge badge-secondary",
+              staticStyle: { "font-size": "14px" }
+            },
+            [_vm._v(" " + _vm._s(_vm.post.tag) + " ")]
+          )
+        ]),
         _vm._v(" "),
         _vm.post.images.length > 0
           ? _c("div", { staticClass: "row" }, [

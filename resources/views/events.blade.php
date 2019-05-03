@@ -11,7 +11,7 @@
                 <li class="breadcrumb-item active"></li>
     </ol>
     <div class="row">
-        <div class="col-md-9">
+        <div class="col-md-8">
             
 
 
@@ -140,11 +140,15 @@
            
 
           </div>
-        <div class="col-md-3" style="margin-top:45px;">
+        <div class="col-md-4" style="margin-top:45px;">
             <div class="card">
               <div class="card-body">
-                   <a href="#upcomingEvents" class="text-info">Upcoming Events</a> <br>
-                   <a href="#pastEvents" class="text-info">Past Events</a>
+                <ul>
+                    <li><a href="#upcomingEvents" class="text-info">Upcoming Events</a> </li>
+                
+                    <li> <a href="#pastEvents" class="text-info">Past Events</a></li>
+                </ul>
+            
               </div>
             </div>
              

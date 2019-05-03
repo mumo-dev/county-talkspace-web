@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center my-2">
         @if($user != null)
         <div class="col-md-4">
             <app-profile v-bind:userdetails="{{$user}}" v-bind:currentuserid="{{ Auth::id() }}"></app-profile>

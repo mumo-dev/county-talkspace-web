@@ -138,13 +138,13 @@ export default {
       data.append('image', this.file);
       data.append('name', this.user.name);
       data.append('email', this.user.email);
-      data.append('photo_url', this.user.photo_url);
       data.append('id', this.user.id);
       data.append('authId', this.currentuserid);
 
         /*
           Make the request to the POST /single-file URL
         */
+    
       this.submitting = true;
       axios.post('/user/profile/update',data,
               {

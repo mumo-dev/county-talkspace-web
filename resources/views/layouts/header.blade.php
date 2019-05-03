@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-md navbar-dark navbar-laravel bg-primary">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/home') }}">
                 <img src="/images/logo.png" width="30" height="30" class="d-inline-block align-top rounded-circle" alt="">
                     {{ config('app.name', 'Laravel') }}
                 </a>
@@ -67,7 +67,7 @@
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{-- {{ Auth::user()->name }}  --}}
-                                   <i class="fas fa-user-circle"></i>
+                                   <i class="fas fa-user-circle"></i>Account
                                     <span class="caret"></span>
                                 </a>
 
