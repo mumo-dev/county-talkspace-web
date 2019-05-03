@@ -12,6 +12,7 @@ Route::post('/user/profile/update', 'HomeController@updateProfile')->name('updat
 Route::post('/posts', 'PostController@store');
 Route::get('/posts', 'PostController@index');
 Route::get('/posts/{tag}', 'PostController@getPostsByTag');
+Route::get('/posts/user/{id}', 'PostController@getPostsByUser');
 
 Route::post('/markpostasread/{id}', 'PostController@markPostAsRead');
 

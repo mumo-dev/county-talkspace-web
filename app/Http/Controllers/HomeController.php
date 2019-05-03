@@ -39,6 +39,8 @@ class HomeController extends Controller
         if($user->user_type > 0){
             $user = null;
         }
+       
+
         return view('profile', compact('user'));
     }
 

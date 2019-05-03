@@ -2316,8 +2316,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['id'],
+  props: ['user'],
   data: function data() {
     return {
       files: [],
@@ -2341,7 +2342,7 @@ __webpack_require__.r(__webpack_exports__);
       var data = new FormData();
       data.append('message', this.post);
       data.append('tag', this.tag);
-      data.append('userId', this.id);
+      data.append('userId', this.user.id);
 
       if (this.uploadFileArray) {
         for (var i = 0; i < this.uploadFileArray.length; i++) {
@@ -2712,7 +2713,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["post", "iscomment", "isadmin"],
@@ -2748,6 +2748,21 @@ __webpack_require__.r(__webpack_exports__);
         return "/images/thumbnails/" + this.post.user.photo_url;
       } else {
         return "/images/user.png";
+      }
+    },
+    commentUrl: function commentUrl() {
+      if (this.isadmin) {
+        if (this.iscomment) {
+          return '/admin/comments/' + this.post.id;
+        } else {
+          return '/admin/posts/' + this.post.id + '/comments';
+        }
+      } else {
+        if (this.iscomment) {
+          return '/comments/' + this.post.id;
+        } else {
+          return '/posts/' + this.post.id + '/comments';
+        }
       }
     },
     imagesUrls: function imagesUrls() {
@@ -2805,6 +2820,9 @@ __webpack_require__.r(__webpack_exports__);
         _this3.postIsLiked = true;
         _this3.myPost.likes_count++;
       });
+    },
+    displayPostDetails: function displayPostDetails() {
+      window.location.href = this.commentUrl;
     },
     displayModal: function displayModal(index) {
       //displayModal
@@ -2877,7 +2895,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["isadmin"],
+  props: ["isadmin", 'user'],
   components: {
     "app-post": _Post_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
@@ -2887,7 +2905,13 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    this.fetchPosts();
+    var url = '/posts';
+
+    if (this.user) {
+      url = '/posts/user/' + this.user.id;
+    }
+
+    this.fetchPosts(url);
   },
   computed: {
     posts: function posts() {
@@ -2895,12 +2919,12 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    fetchPosts: function fetchPosts() {
+    fetchPosts: function fetchPosts(url) {
       var _this = this;
 
-      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      var page = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
       this.loading = true;
-      axios.get("/posts").then(function (result) {
+      axios.get(url).then(function (result) {
         var data = result.data[0].data;
 
         _this.$store.commit("loadPosts", data);
@@ -57325,7 +57349,18 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _vm._m(0),
+    _c("div", { staticClass: "col-2" }, [
+      _c("img", {
+        staticClass: "rounded-circle",
+        attrs: {
+          src: _vm.user.photo_url
+            ? "/images/thumbnails/" + _vm.user.photo_url
+            : "/images/user.png",
+          width: "50px",
+          height: "50px"
+        }
+      })
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "col-10 " }, [
       _c("div", { staticClass: "form-group m-0 p-0" }, [
@@ -57500,7 +57535,7 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "mt-1" }, [
-        _vm._m(1),
+        _vm._m(0),
         _vm._v(" "),
         _c("input", {
           ref: "file",
@@ -57547,17 +57582,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2" }, [
-      _c("img", {
-        staticClass: "rounded-circle",
-        attrs: { src: "/images/user.png", width: "50px", height: "50px" }
-      })
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -57767,335 +57791,356 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("li", { staticClass: "media" }, [
-      _c("img", {
-        staticClass: "mr-3 rounded-circle",
-        attrs: {
-          src: _vm.user_icon,
-          alt: "user photo",
-          width: "50px",
-          height: "50px"
+    _c(
+      "li",
+      {
+        staticClass: "media",
+        staticStyle: { cursor: "pointer" },
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            return _vm.displayPostDetails($event)
+          }
         }
-      }),
-      _vm._v(" "),
-      _c("div", { staticClass: "media-body" }, [
-        _c(
-          "h5",
-          { staticClass: "my-0" },
-          [
-            _vm.post.user.user_type == 0
-              ? [
-                  _c(
-                    "a",
-                    {
-                      staticStyle: { color: "black" },
-                      attrs: { href: "/user/profile/" + _vm.post.user.id }
-                    },
-                    [_vm._v(_vm._s(_vm.post.user.name.trim()))]
-                  )
-                ]
-              : [_c("strong", [_vm._v("County Government")])],
-            _vm._v(" "),
-            _c(
-              "span",
-              {
-                staticClass: "text-secondary font-weight-light my-0 mb-2",
-                staticStyle: { "font-size": "14px" }
-              },
-              [_vm._v(_vm._s(_vm.postedOn))]
-            ),
-            _vm._v(" "),
-            _vm.isadmin && !_vm.iscomment
-              ? [
-                  !_vm.myPost.read
-                    ? _c(
-                        "span",
-                        { staticClass: "badge badge-danger float-right" },
-                        [_vm._v("NEW")]
-                      )
-                    : _vm._e(),
-                  _vm._v(" "),
-                  !_vm.myPost.read
-                    ? _c(
-                        "button",
-                        {
-                          staticClass:
-                            "btn btn-sm py-0 btn-info float-right mr-1",
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.markPostAsRead($event)
-                            }
-                          }
-                        },
-                        [_vm._v("Mark As Read")]
-                      )
-                    : _vm._e()
-                ]
-              : _vm._e()
-          ],
-          2
-        ),
+      },
+      [
+        _c("img", {
+          staticClass: "mr-3 rounded-circle",
+          attrs: {
+            src: _vm.user_icon,
+            alt: "user photo",
+            width: "50px",
+            height: "50px"
+          }
+        }),
         _vm._v(" "),
-        _c("p", { staticClass: "mb-0" }, [
-          _vm._v(_vm._s(_vm.post.message.trim()) + "\n        "),
-          _c("br"),
-          _vm._v(" "),
+        _c("div", { staticClass: "media-body" }, [
           _c(
-            "span",
-            {
-              staticClass: "badge badge-secondary",
-              staticStyle: { "font-size": "14px" }
-            },
-            [_vm._v(" " + _vm._s(_vm.post.tag) + " ")]
-          )
-        ]),
-        _vm._v(" "),
-        _vm.post.images.length > 0
-          ? _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-12" }, [
-                _c(
-                  "div",
-                  { staticClass: "photos-wrapper" },
-                  _vm._l(_vm.imagesUrls, function(imageUrl, index) {
-                    return _c(
-                      "div",
+            "h5",
+            { staticClass: "my-0" },
+            [
+              _vm.post.user.user_type == 0
+                ? [
+                    _c(
+                      "a",
                       {
-                        key: index,
-                        staticClass: "p-1",
-                        class: _vm.imageClasses
+                        staticStyle: { color: "black" },
+                        attrs: { href: "/user/profile/" + _vm.post.user.id }
                       },
-                      [
-                        _c("img", {
-                          staticClass: "myImg",
-                          attrs: { src: "/images/thumbnails/" + imageUrl },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.displayModal(index)
-                            }
-                          }
-                        })
-                      ]
+                      [_vm._v(_vm._s(_vm.post.user.name.trim()))]
                     )
-                  }),
-                  0
-                )
-              ])
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.showModal
-          ? _c(
-              "div",
-              {
-                staticClass: "modal",
-                class: { "d-block": _vm.showModal, "d-none": !_vm.showModal },
-                attrs: { id: "myModal" }
-              },
-              [
-                _c(
-                  "span",
-                  {
-                    staticClass: "close",
-                    on: {
-                      click: function($event) {
-                        _vm.showModal = false
-                      }
-                    }
-                  },
-                  [_vm._v("×")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "next",
-                    on: {
-                      click: function($event) {
-                        return _vm.displayNextImage()
-                      }
-                    }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "fas fa-angle-right fa-3x text-white"
-                    })
                   ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass: "prev",
-                    on: {
-                      click: function($event) {
-                        return _vm.displayPrevImage()
-                      }
-                    }
-                  },
-                  [
-                    _c("i", {
-                      staticClass: "fas fa-angle-left fa-3x text-white"
-                    })
+                : [_c("strong", [_vm._v("County Government")])],
+              _vm._v(" "),
+              _c(
+                "span",
+                {
+                  staticClass: "text-secondary font-weight-light my-0 mb-2",
+                  staticStyle: { "font-size": "14px" }
+                },
+                [_vm._v(_vm._s(_vm.postedOn))]
+              ),
+              _vm._v(" "),
+              _vm.isadmin && !_vm.iscomment
+                ? [
+                    !_vm.myPost.read
+                      ? _c(
+                          "span",
+                          { staticClass: "badge badge-danger float-right" },
+                          [_vm._v("NEW")]
+                        )
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.myPost.read
+                      ? _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-sm py-0 btn-info float-right mr-1",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.markPostAsRead($event)
+                              }
+                            }
+                          },
+                          [_vm._v("Mark As Read")]
+                        )
+                      : _vm._e()
                   ]
-                ),
-                _vm._v(" "),
-                _c("img", {
-                  ref: "img01",
-                  staticClass: "modal-content",
-                  attrs: {
-                    src: "/images/thumbnails/" + _vm.currentModalImageUrl
-                  }
-                }),
-                _vm._v(" "),
-                _c("div", { attrs: { id: "caption" } })
-              ]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _c("div", { staticClass: "media-footer mt-2" }, [
-          _c("div", { staticClass: "row" }, [
-            _c(
-              "div",
-              { staticClass: "col-6 post-btns mr-md-20" },
-              [
-                _c("i", {
-                  staticClass: "far fa-comment-alt text-primary mr-1"
-                }),
-                _vm._v(" "),
-                !_vm.iscomment
-                  ? [
-                      _vm.isadmin
-                        ? [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "text-secondary",
-                                attrs: {
-                                  href:
-                                    "/admin/posts/" + _vm.post.id + "/comments"
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(_vm.post.comments_count) + " Comments"
-                                )
-                              ]
-                            )
-                          ]
-                        : [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "text-secondary",
-                                attrs: {
-                                  href: "/posts/" + _vm.post.id + "/comments"
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(_vm.post.comments_count) + " Comments"
-                                )
-                              ]
-                            )
-                          ]
-                    ]
-                  : [
-                      _vm.isadmin
-                        ? [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "text-secondary",
-                                attrs: {
-                                  href: "/admin/comments/" + _vm.post.id
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(_vm.post.comments_count) + " Comments"
-                                )
-                              ]
-                            )
-                          ]
-                        : [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "text-secondary",
-                                attrs: { href: "/comments/" + _vm.post.id }
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(_vm.post.comments_count) + " Comments"
-                                )
-                              ]
-                            )
-                          ]
-                    ]
-              ],
-              2
-            ),
+                : _vm._e()
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c("p", { staticClass: "mb-0" }, [
+            _vm._v(_vm._s(_vm.post.message.trim()) + "\n        "),
+            _c("br"),
             _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-6 text-center post-btns" },
-              [
-                _vm.postIsLiked
-                  ? [
-                      _c(
-                        "a",
+            !_vm.iscomment
+              ? _c(
+                  "span",
+                  {
+                    staticClass: "badge badge-secondary",
+                    staticStyle: { "font-size": "14px" }
+                  },
+                  [_vm._v(" " + _vm._s(_vm.post.tag) + " ")]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _vm.post.images.length > 0
+            ? _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12" }, [
+                  _c(
+                    "div",
+                    { staticClass: "photos-wrapper" },
+                    _vm._l(_vm.imagesUrls, function(imageUrl, index) {
+                      return _c(
+                        "div",
                         {
-                          attrs: { href: "#" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.unlikePost($event)
-                            }
-                          }
+                          key: index,
+                          staticClass: "p-1",
+                          class: _vm.imageClasses
                         },
                         [
-                          _c("i", {
-                            staticClass: "fas fa-heart mr-1 text-danger"
-                          }),
-                          _vm._v(" "),
-                          _c("span", [
-                            _vm._v(_vm._s(_vm.myPost.likes_count) + " Likes")
-                          ])
-                        ]
-                      )
-                    ]
-                  : [
-                      _c(
-                        "a",
-                        {
-                          attrs: { href: "#" },
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              return _vm.likePost($event)
+                          _c("img", {
+                            staticClass: "myImg",
+                            attrs: { src: "/images/thumbnails/" + imageUrl },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.displayModal(index)
+                              }
                             }
-                          }
-                        },
-                        [
-                          _c("i", {
-                            staticClass: "far fa-heart mr-1 text-primary"
-                          }),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "text-secondary" }, [
-                            _vm._v(_vm._s(_vm.myPost.likes_count) + " Likes")
-                          ])
+                          })
                         ]
                       )
+                    }),
+                    0
+                  )
+                ])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.showModal
+            ? _c(
+                "div",
+                {
+                  staticClass: "modal",
+                  class: { "d-block": _vm.showModal, "d-none": !_vm.showModal },
+                  attrs: { id: "myModal" }
+                },
+                [
+                  _c(
+                    "span",
+                    {
+                      staticClass: "close",
+                      on: {
+                        click: function($event) {
+                          _vm.showModal = false
+                        }
+                      }
+                    },
+                    [_vm._v("×")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "next",
+                      on: {
+                        click: function($event) {
+                          return _vm.displayNextImage()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fas fa-angle-right fa-3x text-white"
+                      })
                     ]
-              ],
-              2
-            )
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "span",
+                    {
+                      staticClass: "prev",
+                      on: {
+                        click: function($event) {
+                          return _vm.displayPrevImage()
+                        }
+                      }
+                    },
+                    [
+                      _c("i", {
+                        staticClass: "fas fa-angle-left fa-3x text-white"
+                      })
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("img", {
+                    ref: "img01",
+                    staticClass: "modal-content",
+                    attrs: {
+                      src: "/images/thumbnails/" + _vm.currentModalImageUrl
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { attrs: { id: "caption" } })
+                ]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _c("div", { staticClass: "media-footer mt-2" }, [
+            _c("div", { staticClass: "row" }, [
+              _c(
+                "div",
+                { staticClass: "col-6 post-btns mr-md-20" },
+                [
+                  _c("i", {
+                    staticClass: "far fa-comment-alt text-primary mr-1"
+                  }),
+                  _vm._v(" "),
+                  !_vm.iscomment
+                    ? [
+                        _vm.isadmin
+                          ? [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "text-secondary",
+                                  attrs: {
+                                    href:
+                                      "/admin/posts/" +
+                                      _vm.post.id +
+                                      "/comments"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.post.comments_count) +
+                                      " Comments"
+                                  )
+                                ]
+                              )
+                            ]
+                          : [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "text-secondary",
+                                  attrs: {
+                                    href: "/posts/" + _vm.post.id + "/comments"
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.post.comments_count) +
+                                      " Comments"
+                                  )
+                                ]
+                              )
+                            ]
+                      ]
+                    : [
+                        _vm.isadmin
+                          ? [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "text-secondary",
+                                  attrs: {
+                                    href: "/admin/comments/" + _vm.post.id
+                                  }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.post.comments_count) +
+                                      " Comments"
+                                  )
+                                ]
+                              )
+                            ]
+                          : [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "text-secondary",
+                                  attrs: { href: "/comments/" + _vm.post.id }
+                                },
+                                [
+                                  _vm._v(
+                                    _vm._s(_vm.post.comments_count) +
+                                      " Comments"
+                                  )
+                                ]
+                              )
+                            ]
+                      ]
+                ],
+                2
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-6 text-center post-btns" },
+                [
+                  _vm.postIsLiked
+                    ? [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.unlikePost($event)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "fas fa-heart mr-1 text-danger"
+                            }),
+                            _vm._v(" "),
+                            _c("span", [
+                              _vm._v(_vm._s(_vm.myPost.likes_count) + " Likes")
+                            ])
+                          ]
+                        )
+                      ]
+                    : [
+                        _c(
+                          "a",
+                          {
+                            attrs: { href: "#" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.likePost($event)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", {
+                              staticClass: "far fa-heart mr-1 text-primary"
+                            }),
+                            _vm._v(" "),
+                            _c("span", { staticClass: "text-secondary" }, [
+                              _vm._v(_vm._s(_vm.myPost.likes_count) + " Likes")
+                            ])
+                          ]
+                        )
+                      ]
+                ],
+                2
+              )
+            ])
           ])
         ])
-      ])
-    ]),
+      ]
+    ),
     _vm._v(" "),
     _c("hr")
   ])

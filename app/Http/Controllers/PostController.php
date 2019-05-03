@@ -80,4 +80,13 @@ class PostController extends Controller
         $post->save();
         return response()->json([], 200);
     }
+
+    public function getPostsByUser($id)
+    {
+        $posts = Post::withCount(['comments','likes'])
+                        ->with(['user','images'])
+                        ->where('user_id', $id)
+                        ->latest()->paginate(50);
+        return response()->json([$posts], 200);
+    }
 }

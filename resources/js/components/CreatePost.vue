@@ -10,7 +10,8 @@
       </div>
     </div>
     <div class="col-2">
-      <img src="/images/user.png" class="rounded-circle" width="50px" height="50px"/>
+      <img :src="user.photo_url? '/images/thumbnails/'+ user.photo_url : '/images/user.png'" 
+        class="rounded-circle" width="50px" height="50px"/>
     </div>
 
     <div class="col-10 ">
@@ -80,7 +81,7 @@
 
 export default {
 
-  props:['id'],
+  props:['user'],
 
   data(){
     return {
@@ -107,7 +108,7 @@ export default {
        
         data.append('message', this.post );
         data.append('tag', this.tag);
-        data.append('userId', this.id);
+        data.append('userId', this.user.id);
 
         if(this.uploadFileArray){
            for(let i=0; i<this.uploadFileArray.length;i++){

@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10 col-lg-8">
-            <app-create-post v-bind:id="{{Auth::id()}}"></app-create-post>
+            <app-create-post v-bind:user="{{Auth::user()}}"></app-create-post>
         </div>
     </div>
 

@@ -21,7 +21,7 @@
 <script>
 import Post from "./Post.vue";
 export default {
-  props: ["isadmin"],
+  props: ["isadmin", 'user'],
   components: {
     "app-post": Post
   },
@@ -33,7 +33,11 @@ export default {
   },
 
   mounted() {
-    this.fetchPosts();
+    let url = '/posts'
+    if(this.user) {
+      url = '/posts/user/'+ this.user.id;
+    }
+    this.fetchPosts(url);
   },
 
   computed: {
@@ -43,10 +47,10 @@ export default {
   },
 
   methods: {
-    fetchPosts(page = 1) {
+    fetchPosts(url,page = 1) {
       this.loading = true;
       axios
-        .get("/posts")
+        .get(url)
         .then(result => {
           let data = result.data[0].data;
           this.$store.commit("loadPosts", data);

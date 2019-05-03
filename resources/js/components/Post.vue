@@ -1,6 +1,6 @@
 <template>
   <div>
-    <li class="media">
+    <li class="media" @click.prevent="displayPostDetails" style="cursor:pointer">
       <img :src="user_icon" class="mr-3 rounded-circle" alt="user photo" width="50px" height="50px">
       <div class="media-body">
         <h5 class="my-0">
@@ -12,7 +12,6 @@
           <template v-else>
             <strong>County Government</strong>
           </template>
-
           <span
             class="text-secondary font-weight-light my-0 mb-2"
             style="font-size:14px;"
@@ -29,7 +28,7 @@
         </h5>
         <p class="mb-0">{{post.message.trim()}}
           <br>
-          <span class="badge badge-secondary" style="font-size:14px"> {{ post.tag}} </span>
+          <span class="badge badge-secondary" style="font-size:14px" v-if="!iscomment"> {{ post.tag}} </span>
         </p>
        
 
@@ -187,6 +186,22 @@ export default {
       }
     },
 
+    commentUrl() {
+      if(this.isadmin) {
+        if(this.iscomment){
+          return '/admin/comments/'+ this.post.id
+        }else {
+          return '/admin/posts/'+ this.post.id+'/comments'
+        }
+      }else {
+        if(this.iscomment){
+          return '/comments/'+ this.post.id
+        }else {
+          return '/posts/'+ this.post.id+'/comments'
+        }
+      }
+    },
+
     imagesUrls() {
       if (this.post.images) {
         return this.post.images.map(image => image.name);
@@ -235,6 +250,10 @@ export default {
 
         this.myPost.likes_count++;
       });
+    },
+
+    displayPostDetails() {
+        window.location.href = this.commentUrl;
     },
 
     displayModal(index) {

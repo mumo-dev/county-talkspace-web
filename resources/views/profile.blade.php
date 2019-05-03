@@ -9,7 +9,10 @@
 
         <div class="col-md-8">
             <div class="card">
-                <div class="card-body"></div>
+                <div class="card-header bg-white">{{ $user->name}} Posts</div>
+                <div class="card-body">
+                    <app-posts v-bind:user="{{$user}}"></app-posts>
+                </div>
             </div>
         </div>
         @else
