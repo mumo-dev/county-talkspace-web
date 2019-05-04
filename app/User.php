@@ -55,4 +55,9 @@ class User extends Authenticatable
                             ->first();
         return (bool) $has_voted;
     }
+
+    public function services()
+    {
+        return $this->hasMany(Service::class);
+    }
 }

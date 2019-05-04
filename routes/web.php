@@ -32,6 +32,10 @@ Route::get('/news', 'NewsController@showNews')->name('news')->middleware(['auth'
 Route::get('/news/{id}', 'NewsController@showNewsDetails')->name('news.show')->middleware(['auth','user']);
 Route::get('/events', 'EventController@showEvents')->name('events');
 
+Route::get('/services', 'ServiceController@index')->name('services');
+Route::get('/services/create', 'ServiceController@create')->name('services.create');
+Route::post('/services', 'ServiceController@store')->name('service.store');
+
 
 
 Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
