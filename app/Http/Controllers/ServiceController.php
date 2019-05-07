@@ -42,4 +42,11 @@ class ServiceController extends Controller
         ]);
 
     }
+
+
+    public function fetchAllByUserServices($userId)
+    {
+        $services = Service::where('user_id', $userId)->latest()->paginate(30);
+        return response()->json($services, 200);
+    }
 }

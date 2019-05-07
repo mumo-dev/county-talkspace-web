@@ -13,21 +13,8 @@
            
         </ol>
 
-        @if (session('message'))
-          <div class="alert alert-success" role="alert">
-              {{ session('message') }}
-          </div>
-        @endif
-
-        <a class="btn btn-sm btn-outline-secondary mb-2" href="{{ route('services.create')}}">Request For Service</a>
-
-
-
-         
-     
-
-
-           
+        {{-- <a class="btn btn-sm btn-outline-secondary mb-2" href="{{ route('services.create')}}">Request For Service</a> --}}
+        <app-services v-bind:id="{{Auth::id()}}"></app-services>
       </div>
     </div>
 </div>

@@ -20,9 +20,9 @@
           </div>
          @endif
 
-          <a class="btn btn-sm btn-outline-secondary mb-2" href="{{ route('services')}}">All Services Requested</a>
+        <a class="btn btn-sm btn-outline-secondary mb-2" href="{{ route('services')}}">All Services Requested</a>
 
-        <app-create-service></app-create-service>
+        
            
       </div>
     </div>

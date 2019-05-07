@@ -35,6 +35,7 @@ Route::get('/events', 'EventController@showEvents')->name('events');
 Route::get('/services', 'ServiceController@index')->name('services');
 Route::get('/services/create', 'ServiceController@create')->name('services.create');
 Route::post('/services', 'ServiceController@store')->name('service.store');
+Route::get('/services/user/{userId}', 'ServiceController@fetchAllByUserServices');
 
 
 
