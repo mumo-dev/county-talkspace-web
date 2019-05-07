@@ -41,11 +41,12 @@
 
             .left {
                 background-color:white;
-                
+           
             }
 
             .right {
                 background-image: linear-gradient(to bottom right,#00d1b2, #006d5d);
+                opacity:0.8;
                 
             }
 

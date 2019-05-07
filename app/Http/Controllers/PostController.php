@@ -40,10 +40,7 @@ class PostController extends Controller
                 $destinationPath = public_path('/images');
                 $image->move($destinationPath, $imagename); 
 
-                // PostImage::create([
-                //     'post_id'=> $post->id,
-                //     'name'=>$imagename
-                // ]);
+            
                 $postImage = new PostImage();
                 $postImage->name = $imagename;
                 $post->images()->save($postImage);
