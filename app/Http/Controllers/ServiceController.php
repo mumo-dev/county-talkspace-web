@@ -43,7 +43,7 @@ class ServiceController extends Controller
 
     public function show(Service $service)
     {
-        # code...
+        return view('services.show', compact('service'));
     }
 
 

@@ -128,7 +128,7 @@
                 <div class="side right">
 
                     <div class="welcome">
-                   
+                        
                         <h1> Welcome to County TalkSpace</h1>
                         @if (Route::has('login'))
                             

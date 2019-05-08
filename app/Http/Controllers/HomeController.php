@@ -47,6 +47,8 @@ class HomeController extends Controller
     public function updateProfile(Request $request)
     {
         $user = User::find($request->id);
+
+        $photoUrl = $user->photo_url;
    
         if($request->hasFile('image')){
 

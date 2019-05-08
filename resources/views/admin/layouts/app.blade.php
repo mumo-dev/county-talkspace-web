@@ -107,22 +107,14 @@
             <span>Posts</span>
           </a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-fw fa-folder"></i>
-            <span>Pages</span>
-          </a>
-          <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-            <h6 class="dropdown-header">Login Screens:</h6>
-            <a class="dropdown-item" href="login.html">Login</a>
-            <a class="dropdown-item" href="register.html">Register</a>
-            <a class="dropdown-item" href="forgot-password.html">Forgot Password</a>
-            <div class="dropdown-divider"></div>
-            <h6 class="dropdown-header">Other Pages:</h6>
-            <a class="dropdown-item" href="404.html">404 Page</a>
-            <a class="dropdown-item active" href="blank.html">Blank Page</a>
-          </div>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('admin.polls')}}">
+
+            <i class="fab  fa-fw fa-servicestack"></i>
+            <span>Services </span></a>
         </li>
+        
         <li class="nav-item">
           <a class="nav-link" href="{{ route('admin.polls')}}">
             <i class="fas fa-fw fa-poll"></i>
@@ -131,13 +123,13 @@
 
          <li class="nav-item">
           <a class="nav-link" href="{{ route('admin.events')}}">
-            <i class="fas fa-fw fa-poll"></i>
+            <i class="far fa-fw fa-calendar-alt"></i>
             <span>Events </span></a>
         </li>
 
         <li class="nav-item">
           <a class="nav-link" href="{{ route('admin.news')}}">
-            <i class="fas fa-fw fa-poll"></i>
+             <i class="fas fa-fw fa-blog"></i>
             <span>News </span></a>
         </li>
 {{--         
