@@ -2669,7 +2669,10 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     timeRemaining: function timeRemaining() {
-      return moment__WEBPACK_IMPORTED_MODULE_0___default()(this.poll.expiry_date).diff(moment__WEBPACK_IMPORTED_MODULE_0___default()(), 'hours');
+      var hours = moment__WEBPACK_IMPORTED_MODULE_0___default()(this.poll.expiry_date).diff(moment__WEBPACK_IMPORTED_MODULE_0___default()(), 'hours');
+      var totalMinutes = moment__WEBPACK_IMPORTED_MODULE_0___default()(this.poll.expiry_date).diff(moment__WEBPACK_IMPORTED_MODULE_0___default()(), 'minutes');
+      var minutes = totalMinutes - hours * 60;
+      return "".concat(hours, " hours, ").concat(minutes, " minutes left");
     },
     pollIsValid: function pollIsValid() {
       return moment__WEBPACK_IMPORTED_MODULE_0___default()(this.poll.expiry_date).diff(moment__WEBPACK_IMPORTED_MODULE_0___default()()) > 0;
@@ -58267,8 +58270,7 @@ var render = function() {
                   _vm._v(
                     _vm._s(_vm.currentPoll.votes_count) +
                       " votes - " +
-                      _vm._s(_vm.timeRemaining) +
-                      " hours left"
+                      _vm._s(_vm.timeRemaining)
                   )
                 ])
               ],
@@ -58318,7 +58320,7 @@ var render = function() {
                           _vm._s(_vm.currentPoll.votes_count) +
                           " votes - " +
                           _vm._s(_vm.timeRemaining) +
-                          " hours left\n\n      "
+                          " \n\n      "
                       )
                     ])
                   : _c("p", { staticClass: "text-secondary mt-1 ml-1" }, [

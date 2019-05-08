@@ -11,7 +11,7 @@
               {{choice.value}}
             </button>
         </div>
-        <p  class="text-secondary mt-1 ml-1">{{currentPoll.votes_count}} votes - {{ timeRemaining }} hours left</p>
+        <p  class="text-secondary mt-1 ml-1">{{currentPoll.votes_count}} votes - {{ timeRemaining }}</p>
       </div>
     </template>
     <template v-else>
@@ -26,7 +26,7 @@
             </button>
         </div>
         <p  class="text-secondary mt-1 ml-1" v-if="pollIsValid">
-          {{currentPoll.votes_count}} votes - {{ timeRemaining }} hours left
+          {{currentPoll.votes_count}} votes - {{ timeRemaining }} 
  
         </p>
 
@@ -56,7 +56,10 @@ export default {
 
   computed: {
     timeRemaining() {
-      return moment(this.poll.expiry_date).diff(moment(), 'hours');
+      const hours = moment(this.poll.expiry_date).diff(moment(), 'hours');
+      const totalMinutes = moment(this.poll.expiry_date).diff(moment(), 'minutes');
+      const minutes = totalMinutes - (hours * 60);
+      return  `${hours} hours, ${ minutes} minutes left`;
     },
     pollIsValid() {
        return moment(this.poll.expiry_date).diff(moment()) > 0;
