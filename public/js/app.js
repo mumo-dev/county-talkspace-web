@@ -2561,6 +2561,10 @@ __webpack_require__.r(__webpack_exports__);
           location: '',
           phone: ''
         };
+        console.log(result);
+
+        _this.$emit('addservice', result.data.data);
+
         _this.file = '';
         _this.imgSrc = '';
       }).catch(function (err) {
@@ -3395,6 +3399,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -3419,7 +3425,7 @@ __webpack_require__.r(__webpack_exports__);
 
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
       this.loading = true;
-      var url = "http://localhost:8000/services/user/".concat(this.id, "?page=").concat(page);
+      var url = "/services/user/".concat(this.id, "?page=").concat(page);
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.get(url).then(function (_ref) {
         var data = _ref.data;
         _this.loading = false;
@@ -3431,6 +3437,9 @@ __webpack_require__.r(__webpack_exports__);
     },
     formatDate: function formatDate(date) {
       return moment__WEBPACK_IMPORTED_MODULE_2___default()(date).format('LLL');
+    },
+    addService: function addService(service) {
+      this.services.unshift(service);
     }
   }
 });
@@ -59100,7 +59109,8 @@ var render = function() {
             value: _vm.showCreate,
             expression: "showCreate"
           }
-        ]
+        ],
+        on: { addservice: _vm.addService }
       }),
       _vm._v(" "),
       _c("h5", { staticClass: " p-2 text-primary" }, [

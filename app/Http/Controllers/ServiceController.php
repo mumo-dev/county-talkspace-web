@@ -18,10 +18,7 @@ class ServiceController extends Controller
         return view('services.index');
     }
 
-    public function create()
-    {
-        return view('services.create');
-    }
+   
 
     public function store(ServiceRequest $request)
     {
@@ -35,12 +32,18 @@ class ServiceController extends Controller
             $data['image_url'] = $imagename;
         }
         
-        auth()->user()->services()->create($data);
+        $service = auth()->user()->services()->create($data);
 
         return response()->json([
-            'message'=>'Service request successful'
+            'message'=>'Service request successful',
+            'data'=>$service
         ]);
 
+    }
+
+    public function show(Service $service)
+    {
+        # code...
     }
 
 

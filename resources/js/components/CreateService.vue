@@ -166,6 +166,11 @@
               phone:''
             }
 
+
+            console.log(result);
+
+            this.$emit('addservice', result.data.data);
+
             this.file=''
             this.imgSrc =''
 

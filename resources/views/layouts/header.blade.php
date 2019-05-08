@@ -50,7 +50,7 @@
 
                             <li class="nav-item">
                                
-                                <a class="nav-link" href="{{ route('services.create') }}">
+                                <a class="nav-link" href="{{ route('services') }}">
                                 <i class="fab fa-servicestack"></i>
                                 {{ __('Services') }}
                                 </a>

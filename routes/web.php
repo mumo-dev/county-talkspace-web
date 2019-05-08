@@ -33,7 +33,7 @@ Route::get('/news/{id}', 'NewsController@showNewsDetails')->name('news.show')->m
 Route::get('/events', 'EventController@showEvents')->name('events');
 
 Route::get('/services', 'ServiceController@index')->name('services');
-Route::get('/services/create', 'ServiceController@create')->name('services.create');
+Route::get('/services/{service}', 'ServiceController@show');
 Route::post('/services', 'ServiceController@store')->name('service.store');
 Route::get('/services/user/{userId}', 'ServiceController@fetchAllByUserServices');
 

@@ -4,7 +4,9 @@
       {{  showCreate? 'Close': 'Request For Service'}}
       
       </a>
-    <app-create-service v-show="showCreate"></app-create-service>
+    <app-create-service v-show="showCreate"
+      v-on:addservice ="addService"
+    ></app-create-service>
 
     <h5 class=" p-2 text-primary"> All Services You have Requested</h5>
 
@@ -65,7 +67,7 @@ import moment from 'moment'
       fetchServices(page=1){
         this.loading = true;
 
-        const url = `http://localhost:8000/services/user/${this.id}?page=${page}`
+        const url = `/services/user/${this.id}?page=${page}`
 
         axios.get(url)
         .then(({data})=> {
@@ -83,6 +85,10 @@ import moment from 'moment'
 
       formatDate(date) {
         return moment(date).format('LLL')
+      },
+
+      addService(service) {
+        this.services.unshift(service);
       }
     }
   }
