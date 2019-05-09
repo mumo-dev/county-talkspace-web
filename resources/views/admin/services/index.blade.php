@@ -18,17 +18,15 @@
               <div class="card-body">
                 <span class="" style="font-size:16px;color:#006d5d">
                   <span class="font-weight-bold text-uppercase"> {{ $service->user->name }}  -  {{ $service->phone }} </span> from {{ $service->location }} </span>
-                <br>
-                <span>
-                  requested for 
-                 {{ $service->type }} services at 
-                 {{ $service->created_at->toDayDateTimeString() }}
-
-                 @if($service->status == 0 ) 
-                    <span class="badge badge-danger p-2"> NEW</span>
+                
+                  @if($service->status == 0 ) 
+                    <span class="badge badge-danger p-2 float-right"> NEW</span>
                  @endif
-
-                </span>
+                <p class="m-0">
+                  requested for 
+                 {{ $service->type }} services on 
+                 {{ $service->created_at->toDayDateTimeString() }}
+                </p>
               </div>
           </div>
         </a>
