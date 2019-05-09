@@ -17,7 +17,6 @@ class CreateCommentsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('user_id');
             $table->text('message');
-            $table->boolean('read')->default(0);
             $table->integer('commentable_id');
             $table->string('commentable_type');
             $table->timestamps();
