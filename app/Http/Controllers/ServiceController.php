@@ -64,7 +64,7 @@ class ServiceController extends Controller
 
     public function adminShow($id)
     {
-        $service = Service::findOrFail($id);
+        $service = Service::with('user')->findOrFail($id);
         if($service->status == 0){
             $service->status = 1;
             $service->save();

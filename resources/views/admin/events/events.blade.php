@@ -31,7 +31,7 @@
                         {{ $event->name }}
                     </div>   
                     <div  class="col-sm-3">
-                        <i class="fa fa-clock-o mx-2 text-info"></i> {{ $event->location }}
+                         <i class=" text-info mx-2 fas fa-map-marker-alt"></i> {{ $event->location }}
                     </div>
                     <div class="col-sm-4">
                         <i class="fa fa-calendar mx-2 text-info"></i>
@@ -62,7 +62,7 @@
                         {{ $event->name }}
                     </div>   
                     <div  class="col-sm-3">
-                        <i class="fa fa-clock-o mx-2 text-info"></i> {{ $event->location }}
+                       <i class=" text-info mx-2 fas fa-map-marker-alt"></i> {{ $event->location }}
                     </div>
                     <div class="col-sm-4">
                         <i class="fa fa-calendar mx-2 text-info"></i>

@@ -25,7 +25,8 @@
               <div class="d-flex">
                 <div  class="mr-5">
                  <span class="text-primary text-uppercase " style="font-weight:500"> Location:</span> 
-                 <i class="fa fa-clock-o mx-2 text-info"></i> {{ $event->location }}
+                  <i class=" text-info mx-2 fas fa-map-marker-alt"></i> {{ $event->location }}
+                
                 </div>
                 <div class="">
                   <span class="text-primary text-uppercase " style="font-weight:500"> Date: </span> 

@@ -1,0 +1,58 @@
+@extends('admin.layouts.app')
+@section('content')
+<div class="container-fluid">
+
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="{{ route('admin.home') }}">Dashboard</a>
+        </li>
+        <li class="breadcrumb-item active">Services</li>
+    </ol>
+
+
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+          <div class="card">
+          <div class="card-header bg-white"> <h4 class="m-0 p-0"> Request for {{ $service->type}} Service </h4></div>
+          <div class="card-body">
+
+              <table>
+                  <tr>
+                    <td> <span class="text-primary text-uppercase " style="font-weight:500"> Requested By:</span> </td>
+                    <td> <i class="text-info fas mx-2 fa-user"></i></i> {{ $service->user->name }}</td>
+                    <td class="text-white">spc</td>
+                    <td> <span class="text-primary text-uppercase " style="font-weight:500">Phone: </span> </td>
+                    <td> <i class=" text-info fas fa-phone mx-2"></i></i> {{ $service->phone}} </td>
+                      
+                  </tr>
+
+                  <tr>
+                    <td> <span class="text-primary text-uppercase " style="font-weight:500"> Location:</span> </td>
+                    <td> <i class=" text-info mx-2 fas fa-map-marker-alt"></i> {{ $service->location }}</td>
+                    <td class="text-white">spc</td>
+                    <td> <span class="text-primary text-uppercase " style="font-weight:500">Request Date: </span> </td>
+                    <td> <i class="fa fa-calendar mx-2 text-info"></i> {{ $service->created_at->toDayDateTimeString()}} </td>
+                      
+                  </tr>
+                  
+              </table>
+              
+            <div class="mt-2">
+              <span class="text-primary text-uppercase " style="font-weight:500">Description:</span> <br>
+              <p> {{ $service->description}}</p>
+              @if($service->image_url != null)
+                <img src="{{ '/images/'.$service->image_url  }}" />
+              @endif
+            </div>
+            
+            {{-- <p>
+              <span  class="text-primary text-uppercase " style="font-weight:500">Guests:</span> 
+              {{ $event->guests}}
+            </p> --}}
+
+          </div>
+      </div>
+    </div>
+  
+</div>
+@endsection
