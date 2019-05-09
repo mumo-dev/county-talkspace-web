@@ -109,7 +109,7 @@
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin.polls')}}">
+          <a class="nav-link" href="{{ route('admin.services')}}">
 
             <i class="fab  fa-fw fa-servicestack"></i>
             <span>Services </span></a>

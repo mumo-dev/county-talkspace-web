@@ -3403,7 +3403,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 
@@ -59098,7 +59097,7 @@ var render = function() {
           _vm._v(
             "\n    " +
               _vm._s(_vm.showCreate ? "Close" : "Request For Service") +
-              "\n    \n    "
+              "\n  "
           )
         ]
       ),

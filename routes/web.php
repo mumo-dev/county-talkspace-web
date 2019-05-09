@@ -70,4 +70,8 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
     Route::post('/news/delete', 'NewsController@delete')->name('admin.news.delete');
     Route::post('/news/update', 'NewsController@update')->name('admin.news.update');
 
+
+    Route::get('/services', 'ServiceController@adminIndex')->name('admin.services');
+    Route::get('/services/{id}', 'ServiceController@adminShow')->name('admin.service.show');
+
 });

@@ -52,4 +52,24 @@ class ServiceController extends Controller
         $services = Service::where('user_id', $userId)->latest()->paginate(30);
         return response()->json($services, 200);
     }
+
+    // Admin methodss;;;
+
+
+    public function adminIndex()
+    {
+        $services = Service::with('user')->latest()->paginate(20);
+        return view('admin.services.index', compact('services'));
+    }
+
+    public function adminShow($id)
+    {
+        $service = Service::findOrFail($id);
+        if($service->status == 0){
+            $service->status = 1;
+            $service->save();
+        }
+
+        return view('admin.services.show', compact('service'));
+    }
 }
