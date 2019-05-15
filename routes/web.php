@@ -37,6 +37,8 @@ Route::get('/services/{service}', 'ServiceController@show');
 Route::post('/services', 'ServiceController@store')->name('service.store');
 Route::get('/services/user/{userId}', 'ServiceController@fetchAllByUserServices');
 
+Route::post('/services/comment', 'ServiceController@storeComment');
+Route::get('/services/comments/{id}', 'ServiceController@fetchComments');
 
 
 Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use  App\Http\Requests\ServiceRequest;
 use App\Service;
+use App\Comment;
 
 class ServiceController extends Controller
 {
@@ -53,6 +54,28 @@ class ServiceController extends Controller
         return response()->json($services, 200);
     }
 
+    public function storeComment(Request $request)
+    {
+        $message = $request->comment;
+        $serviceId = $request->serviceId;
+
+        $service = Service::find($serviceId);
+
+        $comment = new Comment();
+        $comment->message = $message;
+        $comment->user_id = auth()->user()->id;
+
+        $comment =$service->comments()->save($comment);
+
+        return response()->json($comment);
+    }
+
+    public function fetchComments($id)
+    {
+        $comments = Service::find($id)->comments()->with('user')->get();
+        return response()->json($comments);
+    }
+
     // Admin methodss;;;
 
 
@@ -72,4 +95,6 @@ class ServiceController extends Controller
 
         return view('admin.services.show', compact('service'));
     }
+
+
 }

@@ -42,6 +42,9 @@ Vue.component('app-polls', require('./components/Polls.vue').default);
 Vue.component('app-comments', require('./components/Comments.vue').default);
 Vue.component('app-services', require('./components/Services.vue').default);
 
+Vue.component('create-service-comment', require('./components/CreateServiceComment.vue').default);
+
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

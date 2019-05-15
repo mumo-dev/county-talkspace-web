@@ -6,7 +6,7 @@
         <h5 class="my-0">
           <template v-if="post.user.user_type == 0">
             
-            <a :href="'/user/profile/'+ post.user.id" style="color:black">{{post.user.name.trim()}}</a>
+              <a :href="'/user/profile/'+ post.user.id" style="color:black">{{post.user.name.trim()}}</a>
             
             </template>
           <template v-else>
@@ -253,7 +253,7 @@ export default {
     },
 
     displayPostDetails() {
-        window.location.href = this.commentUrl;
+        // window.location.href = this.commentUrl;
     },
 
     displayModal(index) {

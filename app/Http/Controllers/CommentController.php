@@ -148,7 +148,7 @@ class CommentController extends Controller
        }
       
         $comments = $post->comments()->withCount(['likes'])
-                    ->with(['user', 'images','comments'])->latest()->get();
+                    ->with(['user', 'images','comments'])->get();
         $comments = $comments->map(function ($item, $key) {
             // $count = $item->comments()->get()->count();
 

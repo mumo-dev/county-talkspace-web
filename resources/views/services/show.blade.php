@@ -41,6 +41,12 @@
                     </p>
                   </div>
                 </div>
+                <hr>
+                <div style="margin-left:60px">
+                    
+                    <create-service-comment :id="{{$service->id}}" :user="{{Auth::user()}}"></create-service-comment>
+                </div>
+               
             </div>
         </div>
            

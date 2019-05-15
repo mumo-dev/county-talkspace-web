@@ -72,10 +72,10 @@
               @endif
             </div>
             
-            {{-- <p>
-              <span  class="text-primary text-uppercase " style="font-weight:500">Guests:</span> 
-              {{ $event->guests}}
-            </p> --}}
+             <hr>
+              <div style="">
+                <create-service-comment :id="{{$service->id}}" :user="{{Auth::user()}}"></create-service-comment>
+              </div>
 
           </div>
       </div>
