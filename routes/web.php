@@ -47,6 +47,7 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
 
     Route::get('comments/{id}', 'CommentController@displayAdminComments');
 
+    Route::get('/logs', 'AdminController@getLogs')->name('admin.logs');
     Route::get('/accounts', 'AdminController@getAccounts')->name('admin.accounts');
     Route::get('/accounts/create', 'AdminController@createAccount')->name('admin.account.create');
     Route::post('/accounts', 'AdminController@storeAccount')->name('admin.newaccount');

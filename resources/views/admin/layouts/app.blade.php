@@ -85,8 +85,10 @@
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-            <a class="dropdown-item" href="#">Settings</a>
-            <a class="dropdown-item" href="#">Activity Log</a>
+          
+            @if(Auth::user()->user_type == 2)
+              <a class="dropdown-item" href="{{ route('admin.logs')}}">Activity Log</a>
+            @endif
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
           </div>
@@ -132,18 +134,14 @@
              <i class="fas fa-fw fa-blog"></i>
             <span>News </span></a>
         </li>
-{{--         
-        <li class="nav-item">
-          <a class="nav-link" href="tables.html">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Tables</span></a>
-        </li> --}}
 
-        <li class="nav-item">
-          <a class="nav-link" href="{{ route('admin.accounts')}}">
-            <i class="fas fa-fw fa-table"></i>
-            <span>Manager Accounts</span></a>
-        </li>
+        @if(Auth::user()->user_type == 2 )
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.accounts')}}">
+              <i class="fas fa-fw fa-table"></i>
+              <span>Manager Accounts</span></a>
+          </li>
+        @endif
       </ul>
 
       <div id="content-wrapper">

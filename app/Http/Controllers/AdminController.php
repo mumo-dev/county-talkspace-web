@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use App\Audit;
 
 class AdminController extends Controller
 {
     
     public function __construct()
     {   
-        // $this->middleware('admin');
+        $this->middleware(['auth','super-admin']);
     }
     
     public function getAccounts()
@@ -49,5 +50,11 @@ class AdminController extends Controller
         ]);
 
         return redirect()->route('admin.accounts')->with('message', 'Account created successfully');
+    }
+
+    public function getLogs()
+    {
+        $logs = Audit::latest()->paginate(50);
+        return view('admin.logs',compact('logs'));
     }
 }
