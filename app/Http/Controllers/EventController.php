@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Event;
+use App\Audit;
 
 class EventController extends Controller
 {
@@ -70,6 +71,13 @@ class EventController extends Controller
         $event->guests = $request->guests;
         $event->save();
 
+         //store audit record
+         Audit::create([
+            'user_id'=>auth()->user()->id,
+            'type'=>'Event',
+            'action' =>'update'
+        ]);
+
         return redirect()->route('admin.event.show', $event->id)
                         ->withMessage('Event updated successfully');
     }
@@ -92,6 +100,13 @@ class EventController extends Controller
             'guests' => $request->guests
         ]);
 
+         //store audit record
+         Audit::create([
+            'user_id'=>auth()->user()->id,
+            'type'=>'Event',
+            'action' =>'create'
+        ]);
+
         return redirect()->route('admin.events')->withMessage('Event created successfully');
        
     }
@@ -101,6 +116,13 @@ class EventController extends Controller
       
         $event = Event::find($request->id);
         $event->delete();
+
+         //store audit record
+         Audit::create([
+            'user_id'=>auth()->user()->id,
+            'type'=>'Event',
+            'action' =>'create'
+        ]);
 
         return redirect()->route('admin.events')
                         ->withMessage('Event deleted successfully');

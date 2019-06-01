@@ -61,6 +61,13 @@ class NewsController extends Controller
                 'description' => $request->description
             ]);
         }
+
+         //store audit record
+         Audit::create([
+            'user_id'=>auth()->user()->id,
+            'type'=>'News',
+            'action' =>'create'
+        ]);
         
 
         return redirect()->route('admin.news')->withMessage('The news have been published successfully');
@@ -97,6 +104,13 @@ class NewsController extends Controller
             $news->description = $request->description;
             $news->save();
         }
+
+         //store audit record
+         Audit::create([
+            'user_id'=>auth()->user()->id,
+            'type'=>'News',
+            'action' =>'update'
+        ]);
         
         return redirect()->route('admin.news.show', $news->id)->withMessage('The news have been updated successfully');
 
@@ -107,6 +121,13 @@ class NewsController extends Controller
       
         $news = News::find($request->id);
         $news->delete();
+
+         //store audit record
+         Audit::create([
+            'user_id'=>auth()->user()->id,
+            'type'=>'News',
+            'action' =>'delete'
+        ]);
 
         return redirect()->route('admin.news')
                         ->withMessage('News Item deleted successfully');

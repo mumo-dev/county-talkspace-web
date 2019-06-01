@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Choice;
 use App\Poll;
 use App\Vote;
+use App\Audit;
 
 class PollsController extends Controller
 {
@@ -55,6 +56,13 @@ class PollsController extends Controller
         $poll = Poll::create([
             'question'=>$question,
             'expiry_date' => $expiry_date
+        ]);
+
+        //store audit record
+        Audit::create([
+            'user_id'=>auth()->user()->id,
+            'type'=>'Poll',
+            'action' =>'create'
         ]);
 
         foreach($choices as $choice){
