@@ -66,6 +66,27 @@
 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                  
+                                   <i class="fas fa-globe"></i>Notifications
+                                    <span class="badge badge-secondary">
+                                        {{ count(auth()->user()->unreadNotifications)}}
+                                    </span>
+                                </a>
+
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                   @forelse (auth()->user()->unreadNotifications as $notification)
+                                        <a class="dropdown-item" href="#">{{ $notification->data['user']['name']}} commented on your post</a>
+                                   @empty
+                                        <a class="dropdown-item" href="#">No unread notifications</a>
+                                   @endforelse
+
+                                </div>
+                            </li>
+
+
+
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{-- {{ Auth::user()->name }}  --}}
                                    <i class="fas fa-user-circle"></i>Account
                                     <span class="caret"></span>

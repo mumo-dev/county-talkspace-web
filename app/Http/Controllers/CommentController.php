@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Comment;
+use App\Notifications\RepliedToPost;
 use Image;
 use App\Image as CommentImage;
 
@@ -130,6 +131,11 @@ class CommentController extends Controller
  
         $commentAdded = $comment::withCount(['comments','likes'])
                         ->with(['images','user'])->where('id',$comment->id)->get();
+
+        if(!$request->has('is_comment')){
+            $post->user->notify(new RepliedToPost($post));
+        }
+        
         return response()->json([
             'comment'=>$commentAdded
         ],200);
