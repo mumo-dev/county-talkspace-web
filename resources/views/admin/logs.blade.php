@@ -10,10 +10,8 @@
     </ol>
 
 
-    <div class="card mt-3">
-      <div class="card-body">
 
-        <ul class="list-group">
+    <ul class="list-group mt-3">
 
           @foreach ($logs as $log)
               <li class="list-group-item list-group-item-action">
@@ -26,10 +24,5 @@
         <div class="mt-3">
          {{ $logs->links()}}
         </div>
-      </div>
-    </div>
-
-
-    
 </div>
 @endsection
