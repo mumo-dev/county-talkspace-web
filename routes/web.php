@@ -43,6 +43,7 @@ Route::get('/services/comments/{id}', 'ServiceController@fetchComments');
 
 Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
     Route::get('/home', 'HomeController@adminHome')->name('admin.home');
+    Route::get('/reports', 'HomeController@reports')->name('admin.reports');
     Route::get('/posts/{id}/comments/', 'CommentController@adminPostComments');
 
     Route::get('comments/{id}', 'CommentController@displayAdminComments');

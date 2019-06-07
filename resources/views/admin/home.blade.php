@@ -23,8 +23,7 @@
                 role="tab"
                 aria-controls="home"
                 aria-selected="true"
-                >Opinions</a
-            >
+                >Opinions <span class="badge badge-danger rounded-circle p-1">{{ $opinionCount }}</span></a>
         </li>
         <li class="nav-item">
             <a
@@ -35,7 +34,7 @@
                 role="tab"
                 aria-controls="profile"
                 aria-selected="false"
-                >Enquiries</a
+                >Enquiries  <span class="badge badge-danger rounded-circle p-1">{{ $enquiryCount }}</span></a
             >
         </li>
         <li class="nav-item">
@@ -47,7 +46,7 @@
                 role="tab"
                 aria-controls="contact"
                 aria-selected="false"
-                >Complains</a
+                >Complains <span class="badge badge-danger rounded-circle p-1">{{ $complainsCount }}</span></a
             >
         </li>
     </ul>

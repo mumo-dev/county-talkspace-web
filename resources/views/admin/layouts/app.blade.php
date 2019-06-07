@@ -141,6 +141,12 @@
               <i class="fas fa-fw fa-table"></i>
               <span>Manager Accounts</span></a>
           </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ route('admin.reports')}}">
+              <i class="fas fa-fw fa-chart-area"></i>
+              <span>Reports</span></a>
+          </li>
         @endif
       </ul>
 

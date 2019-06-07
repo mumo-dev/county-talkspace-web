@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Post;
 use Image;
 
 class HomeController extends Controller
@@ -31,7 +32,16 @@ class HomeController extends Controller
     // 
     public function adminHome()
     {
-        return view('admin.home');
+        $opinionCount = Post::where('tag','opinion')->where('read', 0)->get()->count();
+        $enquiryCount = Post::where('tag','enquiry')->where('read', 0)->get()->count();
+        $complainsCount = Post::where('tag','complain')->where('read', 0)->get()->count();
+        return view('admin.home', compact('opinionCount','complainsCount','enquiryCount'));
+    }
+
+
+    public function reports()
+    {
+        return view('admin.reports');
     }
 
     public function showProfile(User $user)
