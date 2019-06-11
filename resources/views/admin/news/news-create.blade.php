@@ -35,9 +35,6 @@
                             @endif
                         </div>
 
-                        
-                        
-                       
 
                         <div class="form-group">
                             <label for="description" class=" col-form-label">{{ __('Description') }}</label>

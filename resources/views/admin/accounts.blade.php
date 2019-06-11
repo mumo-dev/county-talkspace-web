@@ -39,8 +39,8 @@
               <td>{{$user->name}}</td>
               <td>{{$user->email}}</td>
               <td>
-                  <button class="btn btn-danger"
-                  data-toggle="modal" data-target="#deleteUserModal"
+                  <button class="btn btn-danger btn-sm" onclick="updateDataModel('{{ $user->id}}')"
+                   data-toggle="modal" data-target="#deleteUserModal"
                   >Delete</button>
               </td>
             </tr>
@@ -67,8 +67,8 @@
             </button>
           </div>
           <form method="post" action="{{ route('admin.account.delete')}}">
-          @csrf
-           <input type="hidden" name="userId" value="{{$user->id}}"/>
+            @csrf
+               <input type="hidden" name="userId" id="userId"/> 
 
             <div class="modal-body">
                 Once deleted. You won't be able to recover this account.<br>
@@ -84,6 +84,14 @@
         </div>
       </div>
     </div>
+
+
+    <script>
+      function updateDataModel(id) {
+        // alert(id);
+        $('#userId').val(id);
+      }
+    </script>
     
 </div>
 @endsection
