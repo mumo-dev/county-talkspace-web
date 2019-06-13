@@ -13,7 +13,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    
+
     <!-- Bootstrap core CSS-->
     <link href="/css/app.css" rel="stylesheet">
 
@@ -22,7 +22,7 @@
 
     <!-- Page level plugin CSS-->
     <!-- <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"> -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" 
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
     <!-- Styles -->
     <!-- Custom styles for this template-->
@@ -42,7 +42,7 @@
       </button>
 
       <!-- Navbar Search -->
-      
+
        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
@@ -52,20 +52,27 @@
             </button>
           </div>
         </div>
-       </form>  
+       </form>
 
       <!-- Navbar -->
       <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown no-arrow mx-1">
           <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-bell fa-fw"></i>
-            <span class="badge badge-danger">9+</span>
+
+                @if(count(auth()->user()->unreadNotifications) > 0)
+                <span class="badge badge-danger"> {{ count(auth()->user()->unreadNotifications)}} </span>
+                @endif
+
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
+                @forelse (auth()->user()->unreadNotifications as $notification)
+                    <a class="dropdown-item" href="#">{{ $notification->data['user']['name']}}
+                         requested for {{$notification->data['service']['type']}} service</a>
+                @empty
+                    <a class="dropdown-item" href="#">No unread notifications</a>
+                @endforelse
+
           </div>
         </li>
         <li class="nav-item dropdown no-arrow mx-1">
@@ -74,10 +81,10 @@
             <span class="badge badge-danger">7</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
+            {{-- <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a> --}}
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
+            <a class="dropdown-item" href="#">No messages</a>
           </div>
         </li>
         <li class="nav-item dropdown no-arrow">
@@ -85,7 +92,7 @@
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-          
+
             @if(Auth::user()->user_type == 2)
               <a class="dropdown-item" href="{{ route('admin.logs')}}">Activity Log</a>
             @endif
@@ -116,7 +123,7 @@
             <i class="fab  fa-fw fa-servicestack"></i>
             <span>Services </span></a>
         </li>
-        
+
         <li class="nav-item">
           <a class="nav-link" href="{{ route('admin.polls')}}">
             <i class="fas fa-fw fa-poll"></i>
@@ -190,7 +197,7 @@
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             {{-- <a class="btn btn-primary" href="login.html">Logout</a> --}}
-         
+
 
             <a class="btn btn-primary" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
@@ -219,7 +226,7 @@
     <!-- Custom scripts for all pages-->
     <script src="/admin/js/sb-admin.min.js"></script>
     <script src="/js/moment.min.js"></script>
-   
+
     <script src="/js/tempusdominus-bootstrap-4.min.js"></script>
 
 

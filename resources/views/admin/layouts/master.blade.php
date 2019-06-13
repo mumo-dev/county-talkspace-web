@@ -13,16 +13,20 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    
+
     <!-- Bootstrap core CSS-->
     <link href="/css/app.css" rel="stylesheet">
 
     <!-- Styles -->
     <!-- Custom styles for this template-->
     <link href="/admin/css/sb-admin.css" rel="stylesheet">
-    
 
-     <!-- Bootstrap 3.3.7 -->
+     <!-- <link href="vendor/datatables/dataTables.bootstrap4.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+     integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+
+<!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="/bower_components/font-awesome/css/font-awesome.min.css">
@@ -60,6 +64,10 @@
             font-size:16px!important;
         }
 
+        .font-normal-12 {
+            font-size:12px!important;
+        }
+
     </style>
   </head>
 
@@ -74,7 +82,7 @@
       </button>
 
       <!-- Navbar Search -->
-      
+
        <form class="d-none d-md-inline-block form-inline ml-auto mr-0 mr-md-3 my-2 my-md-0">
         <div class="input-group">
           <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
@@ -84,14 +92,14 @@
             </button>
           </div>
         </div>
-       </form>  
+       </form>
 
       <!-- Navbar -->
       <ul class="navbar-nav ml-auto ml-md-0">
         <li class="nav-item dropdown no-arrow mx-1">
           <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-bell fa-fw"></i>
-            <span class="badge badge-danger">9+</span>
+            <span class="badge badge-danger font-normal-12">9+</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
             <a class="dropdown-item" href="#">Action</a>
@@ -103,7 +111,7 @@
         <li class="nav-item dropdown no-arrow mx-1">
           <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-envelope fa-fw"></i>
-            <span class="badge badge-danger">7</span>
+            <span class="badge badge-danger font-normal-12">7</span>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
             <a class="dropdown-item" href="#">Action</a>
@@ -117,7 +125,7 @@
             <i class="fas fa-user-circle fa-fw"></i>
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-          
+
             @if(Auth::user()->user_type == 2)
               <a class="dropdown-item" href="{{ route('admin.logs')}}">Activity Log</a>
             @endif
@@ -148,7 +156,7 @@
             <i class="fab  fa-fw fa-servicestack"></i>
             <span class="font-normal">Services </span></a>
         </li>
-        
+
         <li class="nav-item">
           <a class="nav-link" href="{{ route('admin.polls')}}">
             <i class="fas fa-fw fa-poll"></i>
@@ -222,7 +230,7 @@
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             {{-- <a class="btn btn-primary" href="login.html">Logout</a> --}}
-         
+
 
             <a class="btn btn-primary" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
@@ -250,7 +258,7 @@
 
     <!-- Custom scripts for all pages-->
     <script src="/admin/js/sb-admin.min.js"></script>
-  
+
     <!-- jQuery 3 -->
 <script src="/bower_components/jquery/dist/jquery.min.js"></script>
 <!-- jQuery UI 1.11.4 -->

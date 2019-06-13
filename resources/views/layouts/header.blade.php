@@ -30,7 +30,7 @@
 
 
                             <li class="nav-item">
-                               
+
                                 <a class="nav-link" href="{{ route('news') }}">
                                  <i class="fas fa-blog"></i>
                                 {{ __('News') }}
@@ -38,18 +38,18 @@
                             </li>
 
                             <li class="nav-item">
-                               
+
                                 <a class="nav-link" href="{{ route('events') }}">
                                  <i class="far fa-calendar-alt"></i>
                                 {{ __('Events') }}
                                 </a>
                             </li>
 
-                            
-                           
+
+
 
                             <li class="nav-item">
-                               
+
                                 <a class="nav-link" href="{{ route('services') }}">
                                 <i class="fab fa-servicestack"></i>
                                 {{ __('Services') }}
@@ -57,7 +57,7 @@
                             </li>
 
                              <li class="nav-item">
-                               
+
                                 <a class="nav-link" href="{{ route('polls') }}">
                                  <i class="fas fa-poll"></i>
                                 {{ __('Polls') }}
@@ -66,10 +66,12 @@
 
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                  
+
                                    <i class="fas fa-globe"></i>Notifications
                                     <span class="badge badge-secondary">
-                                        {{ count(auth()->user()->unreadNotifications)}}
+                                        @if(count(auth()->user()->unreadNotifications) > 0)
+                                          {{ count(auth()->user()->unreadNotifications)}}
+                                        @endif
                                     </span>
                                 </a>
 

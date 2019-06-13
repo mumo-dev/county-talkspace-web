@@ -1,4 +1,5 @@
-@extends('admin.layouts.app') @section('content')
+@extends('admin.layouts.app')
+@section('content')
 <div class="container">
     <!-- Breadcrumbs-->
     <ol class="breadcrumb">
@@ -12,7 +13,7 @@
 
     <!-- <app-create-post v-bind:id="{{Auth::id()}}"></app-create-post> -->
 
-    
+
     <ul class="nav nav-tabs " id="myTab" role="tablist"  >
         <li class="nav-item">
             <a
@@ -79,7 +80,7 @@
         </div>
     </div>
 
-{{--   
+{{--
     <app-posts v-bind:tag="'complains'" v-bind:isadmin="'true'"></app-posts> --}}
 
 </div>

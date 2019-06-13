@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Notifications\ServiceRequested;
 use  App\Http\Requests\ServiceRequest;
 use App\Service;
+use App\User;
 use App\Comment;
 
 class ServiceController extends Controller
@@ -19,7 +21,7 @@ class ServiceController extends Controller
         return view('services.index');
     }
 
-   
+
 
     public function store(ServiceRequest $request)
     {
@@ -29,11 +31,18 @@ class ServiceController extends Controller
             $image = $request->file('image');
             $imagename = uniqid(). '.' . $image->getClientOriginalExtension();
             $destinationPath = public_path('/images');
-            $image->move($destinationPath, $imagename); 
+            $image->move($destinationPath, $imagename);
             $data['image_url'] = $imagename;
         }
-        
+
         $service = auth()->user()->services()->create($data);
+
+        $admins = User::where('user_type','!=',0)->get();
+
+        //notify all admins of service request
+        foreach($admins as $admin){
+            $admin->notify(new ServiceRequested($service));
+        }
 
         return response()->json([
             'message'=>'Service request successful',
