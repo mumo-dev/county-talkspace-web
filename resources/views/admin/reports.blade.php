@@ -10,7 +10,7 @@
     <div class="row">
       <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="info-box">
-          <span class="info-box-icon bg-aqua"><i class="ion ion-ios-gear-outline"></i></span>
+          <span class="info-box-icon bg-aqua"><i class="ion ion-ios-people"></i></span>
 
           <div class="info-box-content">
             <span class="info-box-text">Total Users</span>
@@ -23,7 +23,7 @@
       <!-- /.col -->
       <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="info-box">
-          <span class="info-box-icon bg-red"><i class="fa fa-google-plus"></i></span>
+          <span class="info-box-icon bg-red"><i class="fa fa-user-plus"></i></span>
 
           <div class="info-box-content">
             <span class="info-box-text">New Users</span>
@@ -40,7 +40,7 @@
 
       <div class="col-md-4 col-sm-6 col-xs-12">
         <div class="info-box">
-          <span class="info-box-icon bg-green"><i class="ion ion-ios-cart-outline"></i></span>
+          <span class="info-box-icon bg-green"><i class="ion ion-ios-people"></i></span>
 
           <div class="info-box-content">
             <span class="info-box-text">Active Users</span>
@@ -61,7 +61,7 @@
          <div class="col-md-4">
             <!-- Info Boxes Style 2 -->
             <div class="info-box bg-yellow">
-              <span class="info-box-icon"><i class="ion ion-ios-pricetag-outline"></i></span>
+              <span class="info-box-icon"><i class="ion ion-ios-chatboxes"></i></span>
 
               <div class="info-box-content">
                 <span class="info-box-text">Total Posts - All </span>
@@ -80,7 +80,7 @@
             <!-- /.info-box -->
           <div class="col-md-4">
             <div class="info-box bg-green">
-              <span class="info-box-icon"><i class="ion ion-ios-heart-outline"></i></span>
+              <span class="info-box-icon"><i class="ion ion-ios-chatboxes"></i></span>
 
               <div class="info-box-content">
                 <span class="info-box-text">Total Posts - This Month </span>
@@ -99,7 +99,7 @@
             <!-- /.info-box -->
           <div class="col-md-4">
             <div class="info-box bg-red">
-              <span class="info-box-icon"><i class="ion ion-ios-cloud-download-outline"></i></span>
+              <span class="info-box-icon"><i class="ion ion-ios-chatboxes"></i></span>
 
               <div class="info-box-content">
                 <span class="info-box-text">Total Posts - Today</span>
@@ -179,7 +179,7 @@
             <p>Total Polls</p>
           </div>
           <div class="icon">
-            <i class="ion ion-bag"></i>
+            <i class="ion ion-ios-stats"></i>
           </div>
             <a href="#" class="small-box-footer">{{$poll_perc}}% of users participate<i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -196,7 +196,7 @@
             <p>Service Requests</p>
           </div>
           <div class="icon">
-            <i class="ion ion-person-add"></i>
+            <i class="ion ion-person-adds"></i>
           </div>
         <a href="#" class="small-box-footer">{{$amb_perc}}%-Ambulance | {{$fire_perc}}%-Firefighting <i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -211,7 +211,7 @@
             <p> Events Posted</p>
           </div>
           <div class="icon">
-            <i class="ion ion-pie-graph"></i>
+            <i class="ion ion-pie-graphs"></i>
           </div>
           <a href="#" class="small-box-footer"><span class="visibility:hidden">More info</span> <i class="fa fa-arrow-circle-right"></i></a>
         </div>
@@ -227,7 +227,7 @@
             <p>News Posts</p>
           </div>
           <div class="icon">
-            <i class="ion ion-pie-graph"></i>
+            <i class="ion ion-keypad"></i>
           </div>
           <a href="#" class="small-box-footer"><span class="visibility:hidden">More info</span> <i class="fa fa-arrow-circle-right"></i></a>
         </div>
