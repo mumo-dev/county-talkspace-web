@@ -48,64 +48,79 @@ class HomeController extends Controller
     {
         $users = User::where('user_type',0)->get();
         $total_user = count($users);
-
-        $new_users = User::where('user_type', 0)->whereMonth('created_at', '=', date('m'))->get();
-        $new_user_count = count($new_users);
-
-        $total_posts = Post::all()->count();
-        $total_posts_month = Post::whereMonth('created_at', '=', date('m'))->get()->count();
-        $total_posts_today = Post::whereDay('created_at', '=', date('d'))->get()->count();
-
-        $opinion = Post::where('tag','opinion')->get()->count();
-        $complains = Post::where('tag','complain')->get()->count();
-        $enquiry = Post::where('tag','enquiry')->get()->count();
-
-
-        $opinionCount = round($opinion / $total_posts * 100);
-
-        $complainCount = round($complains / $total_posts * 100);
-
-        $enquiryCount = round($enquiry / $total_posts * 100);
-
-
-        $last_month = Post::whereMonth('created_at', '=', date('m')-1)->get()->count();
-        $current_month = Post::whereMonth('created_at', '=', date('m'))->get()->count();
-        if($last_month > 0){
-            $posts_increase = round($current_month / $last_month * 100);
-        }else {
-            $posts_increase = 100;
-        }
-
-        $yesterday = Post::whereDay('created_at', '=', date('d')-1)->get()->count();
-        $today = Post::whereDay('created_at', '=', date('d'))->get()->count();
-        if($yesterday > 0){
-            $posts_increase_tday = round($today / $yesterday * 100);
-        }else {
-            $posts_increase_tday = 100;
-        }
-
-        $poll_participate = Vote::select('user_id')->distinct()->get()->count();
-
-        $poll_perc = round($poll_participate / $total_user * 100);
-
-
-        $polls = Poll::all()->count();
-
-        $services = Service::all()->count();
-        $ambulances = Service::where('type','ambulance')->get()->count();
-        $fire = Service::where('type','firefighting')->get()->count();
-
-        $amb_perc = round($ambulances / $services * 100);
-        $fire_perc = round($fire / $services * 100);
-
-        $events = Event::all()->count();
-        $news = News::all()->count();
-
-        return view('admin.reports', compact('total_user','new_user_count','total_posts','total_posts_month',
-                'total_posts_today','opinionCount','complainCount','enquiryCount', 'polls','services',
-                'events','news','posts_increase','posts_increase_tday','poll_perc','amb_perc','fire_perc'));
+        return view('admin.reports', compact('total_user'));
     }
 
+
+    public function getReports(Request $request)
+    {
+        $startDate = $request->query('start');
+        $endDate = $request->query('end');
+        $from = date($startDate);
+        $to = date($endDate);
+
+        $new_users = User::where('user_type', 0)->whereBetween('created_at', [$from, $to])->get()->count();
+        $total_posts = Post::whereBetween('created_at', [$from, $to])->get()->count();
+
+        $opinion = Post::where('tag','opinion')->whereBetween('created_at', [$from, $to])->get()->count();
+        $complains = Post::where('tag','complain')->whereBetween('created_at', [$from, $to])->get()->count();
+        $enquiry = Post::where('tag','enquiry')->whereBetween('created_at', [$from, $to])->get()->count();
+
+        if($total_posts == 0){
+            $opinionCount = 0;
+            $complainCount = 0;
+            $enquiryCount = 0;
+        }else {
+            $opinionCount = round($opinion / $total_posts * 100);
+
+            $complainCount = round($complains / $total_posts * 100);
+
+            $enquiryCount = round($enquiry / $total_posts * 100);
+        }
+
+        //here
+        $poll_participate = Vote::select('user_id')->whereBetween('created_at', [$from, $to])->distinct()->get()->count();
+        $total_users = User::whereDay('created_at', '<=', $to)->where('user_type',0)->get()->count();
+        if($total_users > 0){
+          $poll_perc = round($poll_participate / $total_users * 100);
+        }
+        else {
+            $poll_perc = 0;
+        }
+
+
+        $polls = Poll::whereBetween('created_at', [$from, $to])->get()->count();
+
+        $services = Service::whereBetween('created_at', [$from, $to])->get()->count();
+        $ambulances = Service::where('type','ambulance')->whereBetween('created_at', [$from, $to])->get()->count();
+        $fire = Service::where('type','firefighting')->whereBetween('created_at', [$from, $to])->get()->count();
+
+        if($services > 0){
+            $amb_perc = round($ambulances / $services * 100);
+            $fire_perc = round($fire / $services * 100);
+        }else {
+            $amb_perc = 0;
+            $fire_perc = 0;
+        }
+
+        $events = Event::whereBetween('created_at', [$from, $to])->get()->count();
+        $news = News::whereBetween('created_at', [$from, $to])->get()->count();
+
+        return response()->json([
+            'users'=> $new_users,
+            'posts'=> $total_posts,
+            'opinion' => $opinionCount,
+            'complain' => $complainCount,
+            'enquiry' => $enquiryCount,
+            'pollPartcipants' => $poll_participate,
+            'polls'=>$polls,
+            'services'=>$services,
+            'events' => $events,
+            'news'=>$news,
+            'ambulance_perc'=>$amb_perc,
+            'fire_perc'=>$fire_perc
+        ]);
+    }
     public function showProfile(User $user)
     {
         if($user->user_type > 0){

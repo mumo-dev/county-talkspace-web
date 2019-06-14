@@ -40,6 +40,7 @@ Route::get('/services/user/{userId}', 'ServiceController@fetchAllByUserServices'
 Route::post('/services/comment', 'ServiceController@storeComment');
 Route::get('/services/comments/{id}', 'ServiceController@fetchComments');
 
+Route::get('/allreports', 'HomeController@getReports');
 
 Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
     Route::get('/home', 'HomeController@adminHome')->name('admin.home');
@@ -53,7 +54,7 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
     Route::get('/accounts/create', 'AdminController@createAccount')->name('admin.account.create');
     Route::post('/accounts', 'AdminController@storeAccount')->name('admin.newaccount');
     Route::post('/accounts/delete', 'AdminController@deleteAccount')->name('admin.account.delete');
-  
+
 
     Route::get('/polls', 'PollsController@index')->name('admin.polls');
     Route::post('/polls/create', 'PollsController@store');

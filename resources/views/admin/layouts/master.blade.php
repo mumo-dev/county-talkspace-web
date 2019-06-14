@@ -48,6 +48,7 @@
   <!-- bootstrap wysihtml5 - text editor -->
   <link rel="stylesheet" href="/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
+
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -67,6 +68,92 @@
         .font-normal-12 {
             font-size:12px!important;
         }
+
+        .lds-roller {
+            display: inline-block;
+            position: relative;
+            width: 64px;
+            height: 64px;
+            }
+            .lds-roller div {
+            animation: lds-roller 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            transform-origin: 32px 32px;
+            }
+            .lds-roller div:after {
+            content: " ";
+            display: block;
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #337ab7;
+            margin: -3px 0 0 -3px;
+            }
+            .lds-roller div:nth-child(1) {
+            animation-delay: -0.036s;
+            }
+            .lds-roller div:nth-child(1):after {
+            top: 50px;
+            left: 50px;
+            }
+            .lds-roller div:nth-child(2) {
+            animation-delay: -0.072s;
+            }
+            .lds-roller div:nth-child(2):after {
+            top: 54px;
+            left: 45px;
+            }
+            .lds-roller div:nth-child(3) {
+            animation-delay: -0.108s;
+            }
+            .lds-roller div:nth-child(3):after {
+            top: 57px;
+            left: 39px;
+            }
+            .lds-roller div:nth-child(4) {
+            animation-delay: -0.144s;
+            }
+            .lds-roller div:nth-child(4):after {
+            top: 58px;
+            left: 32px;
+            }
+            .lds-roller div:nth-child(5) {
+            animation-delay: -0.18s;
+            }
+            .lds-roller div:nth-child(5):after {
+            top: 57px;
+            left: 25px;
+            }
+            .lds-roller div:nth-child(6) {
+            animation-delay: -0.216s;
+            }
+            .lds-roller div:nth-child(6):after {
+            top: 54px;
+            left: 19px;
+            }
+            .lds-roller div:nth-child(7) {
+            animation-delay: -0.252s;
+            }
+            .lds-roller div:nth-child(7):after {
+            top: 50px;
+            left: 14px;
+            }
+            .lds-roller div:nth-child(8) {
+            animation-delay: -0.288s;
+            }
+            .lds-roller div:nth-child(8):after {
+            top: 45px;
+            left: 10px;
+            }
+            @keyframes lds-roller {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+            }
+
 
     </style>
   </head>
@@ -299,6 +386,65 @@
 <!-- AdminLTE for demo purposes -->
 <script src="/dist/js/demo.js"></script>
 
-  </body>
+<script>
+    var start = moment().subtract(1, 'month');
+    var end = moment();
+
+    function cb(start, end) {
+
+        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+
+        $('#header').html('Reports for Dates '+ start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+
+        var startDate =  start.format('YYYY-MM-DD');
+        var endDate = end.format("YYYY-MM-DD");
+
+        $('#loading').addClass('d-block');
+        $('#loading').removeClass('d-none');
+        $.get('/allreports', {'start':startDate, 'end':endDate}, function(response) {
+            // alert("success");
+            $('#loading').removeClass('d-block');
+            $('#loading').addClass('d-none');
+
+            $('#user_count').text(response.users);
+            $('#total_posts').text(response.posts);
+            $('#opinion').val(response.opinion);
+            $('#complain').val(response.complain);
+            $('#enquiry').val(response.enquiry);
+
+            $('#polls').text(response.polls);
+            $('#poll_perc').text(response.pollPartcipants);
+            $('#services').text(response.services);
+            $('#amb_perc').text(response.ambulance_perc);
+            $('#fire_perc').text(response.fire_perc);
+
+            $('#events').text(response.events);
+            $('#news').text(response.news);
+
+
+           console.log(response);
+        });
+    }
+
+    $('#reportrange').daterangepicker({
+        "showDropdowns": true,
+        startDate: start,
+        endDate: end,
+        maxDate:end,
+        ranges: {
+           'Today': [moment(), moment()],
+           'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+           'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+           'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+           'This Month': [moment().startOf('month'), moment().endOf('month')],
+           'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        }
+    }, cb);
+
+    cb(start, end);
+
+</script>
+
+ </body>
 
 </html>
