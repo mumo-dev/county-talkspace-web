@@ -396,8 +396,15 @@
 
         $('#header').html('Reports for Dates '+ start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
 
-        var startDate =  start.format('YYYY-MM-DD');
-        var endDate = end.format("YYYY-MM-DD");
+
+        var startDate =  start.format('YYYY-MM-DD 00:00:00');
+        var endDate = end.format("YYYY-MM-DD 23:59:59");
+
+        // if(startDate == moment.format('YYYY-MM-DD')) {
+        //     endDate = end.add(1, 'days').format('YYYY-MM-DD 00:00:00')
+        // }
+
+        // alert(startDate)
 
         $('#loading').addClass('d-block');
         $('#loading').removeClass('d-none');

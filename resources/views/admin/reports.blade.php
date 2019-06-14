@@ -2,7 +2,7 @@
 @section('content')
 
 <div class="container">
-    <h3 id="header" class="m-0 text-info text-center text-uppercase"></h3>
+    <h3 id="header" class="m-0  text-center text-uppercase" style="color:#00a65a"></h3>
     <hr class="mt-0">
     <div class="row">
       <div class="col-sm-6">
@@ -152,7 +152,7 @@
     </div> --}}
 
     {{-- <hr> --}}
-    <h4 class="text-center text-info text-uppercase" style="font-weight:">Post Category Percentages and Response Rates</h4>
+    <h4 class="text-center text-uppercase" style="color:#00a65a">Post Category Percentages and Response Rates</h4>
     <hr>
     <!-- /.row -->
     <!-- Main row -->
