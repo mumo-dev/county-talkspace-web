@@ -12,7 +12,7 @@
     </ol>
     <div class="row">
         <div class="col-md-8">
-            
+
 
 
 
@@ -29,23 +29,25 @@
                         <div class="mr-5">
                             <span
                                 class="text-primary text-uppercase "
-                                style="font-weight:500"
+                                style="font-weight:500;margin-right:15px;"
                             >
                                 Location:</span
                             >
                             <i class="fa fa-clock-o mx-2 text-info"></i>
                             {{ $event->location }}
                         </div>
-                        <div class="">
-                            <span
-                                class="text-primary text-uppercase "
-                                style="font-weight:500"
-                            >
-                                Date:
-                            </span>
-                            <i class="fa fa-calendar mx-2 text-info"> </i
-                            >{{ \Carbon\Carbon::parse($event->start_time)->toDayDateTimeString()}}
-                        </div>
+
+                    </div>
+                    <div class="mt-1">
+                            <span class="text-primary text-uppercase " style="font-weight:500"> Start Date: </span>
+                             <i class="fa fa-calendar mx-2 text-info">
+                              </i> {{\Carbon\Carbon::parse($event->start_time)->toDayDateTimeString()}}
+                    </div>
+
+                    <div class="mt-1">
+                            <span class="text-primary text-uppercase " style="font-weight:500; margin-right:15px;"> End Date: </span>
+                             <i class="fa fa-calendar mx-2 text-info">
+                              </i> {{\Carbon\Carbon::parse($event->end_time)->toDayDateTimeString()}}
                     </div>
                     <div class="mt-2">
                         <span
@@ -89,23 +91,25 @@
                         <div class="mr-5">
                             <span
                                 class="text-primary text-uppercase "
-                                style="font-weight:500"
+                                style="font-weight:500;margin-right:15px;"
                             >
                                 Location:</span
                             >
                             <i class="fa fa-clock-o mx-2 text-info"></i>
                             {{ $event->location }}
                         </div>
-                        <div class="">
-                            <span
-                                class="text-primary text-uppercase "
-                                style="font-weight:500"
-                            >
-                                Date:
-                            </span>
-                            <i class="fa fa-calendar mx-2 text-info"> </i
-                            >{{ \Carbon\Carbon::parse($event->start_time)->toDayDateTimeString()}}
-                        </div>
+
+                    </div>
+                    <div class="mt-1">
+                            <span class="text-primary text-uppercase " style="font-weight:500"> Start Date: </span>
+                             <i class="fa fa-calendar mx-2 text-info">
+                              </i> {{\Carbon\Carbon::parse($event->start_time)->toDayDateTimeString()}}
+                    </div>
+
+                    <div class="mt-1">
+                            <span class="text-primary text-uppercase " style="font-weight:500; margin-right:15px;"> End Date: </span>
+                             <i class="fa fa-calendar mx-2 text-info">
+                              </i> {{\Carbon\Carbon::parse($event->end_time)->toDayDateTimeString()}}
                     </div>
                     <div class="mt-2">
                         <span
@@ -137,7 +141,7 @@
             </div>
 
 
-           
+
 
           </div>
         <div class="col-md-4" style="margin-top:45px;">
@@ -145,13 +149,13 @@
               <div class="card-body">
                 <ul>
                     <li><a href="#upcomingEvents" class="text-info">Upcoming Events</a> </li>
-                
+
                     <li> <a href="#pastEvents" class="text-info">Past Events</a></li>
                 </ul>
-            
+
               </div>
             </div>
-             
+
         </div>
     </div>
 </div>

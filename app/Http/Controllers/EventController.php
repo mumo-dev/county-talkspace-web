@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Event;
 use App\Audit;
+use Carbon\Carbon;
 
 class EventController extends Controller
 {
@@ -35,7 +36,7 @@ class EventController extends Controller
         $pastEvents = Event::where('start_time', '<', date('Y-m-d').' 00:00:00')
                         ->orderBy('created_at')
                         ->paginate(20);
-     
+
         return view('events', compact('upcomingEvents','pastEvents'));
     }
 
@@ -51,7 +52,7 @@ class EventController extends Controller
 
     public function create()
     {
-     
+
         return view('admin.events.events-create');
     }
 
@@ -60,12 +61,14 @@ class EventController extends Controller
         $this->validate($request, [
             'name'=>'required',
             'start_time'=>'required|date|after:today',
+            'end_time'=>'required|date|after:today',
             'location'=>'required',
             'description'=>'required',
         ]);
         $event = Event::find($request->id);
         $event->name = $request->name;
         $event->start_time = $request->start_time;
+        $event->end_time = $request->end_time;
         $event->location = $request->location;
         $event->description = $request->description;
         $event->guests = $request->guests;
@@ -92,9 +95,27 @@ class EventController extends Controller
             'description'=>'required',
         ]);
 
+        $startTime = $request->start_time;
+        $endTime  = $request->end_time;
+
+        $events = Event::where('location', $request->location)->get();
+        if($events != null){
+            foreach($events as $event){
+
+                if($startTime >= $event->start_time && $startTime <= $event->end_time){
+                    return redirect()->back()->withMessage('Another event has been scheduled at that location at that time');
+                }
+
+                if($startTime < $event->start_time && ($endTime > $event->start_time && $endTime < $event->end_time)){
+                    return redirect()->back()->withMessage('Another event has been scheduled at  that location at that time');
+                }
+            }
+        }
+
         Event::create([
             'name'=>$request->name,
             'start_time' => $request->start_time,
+            'end_time' => $request->end_time,
             'location' => $request->location,
             'description' => $request->description,
             'guests' => $request->guests
@@ -107,13 +128,13 @@ class EventController extends Controller
             'action' =>'create'
         ]);
 
-        return redirect()->route('admin.events')->withMessage('Event created successfully');
-       
+        return redirect()->route('admin.events')->withMessage('Event created successfully '. $day);
+
     }
 
     public function delete(Request $request)
     {
-      
+
         $event = Event::find($request->id);
         $event->delete();
 

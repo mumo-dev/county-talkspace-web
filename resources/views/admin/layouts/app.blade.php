@@ -240,6 +240,18 @@
         });
 
         $(function () {
+            $('#datetimepicker5').datetimepicker({
+              useCurrent:false,
+              format:'YYYY-MM-DD HH:mm:ss',
+              sideBySide: true
+            });
+        });
+
+        $('#datetimepicker4').on('change.datetimepicker', function(e){
+            $('#datetimepicker5').datetimepicker('minDate', e.date);
+        })
+
+        $(function () {
             $('#datetimepickereditevent').datetimepicker({
               format:'YYYY-MM-DD HH:mm:ss',
               sideBySide: true
