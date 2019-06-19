@@ -98,6 +98,7 @@
                                     @if(Auth::user()->user_type == 0)
                                         <a class="dropdown-item" href="{{ route('profile',Auth::id()) }}">Profile</a>
                                     @endif
+                                    <a class="dropdown-item" href="/onlinehelp">Online Help</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

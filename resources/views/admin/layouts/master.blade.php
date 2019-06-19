@@ -217,6 +217,7 @@
               <a class="dropdown-item" href="{{ route('admin.logs')}}">Activity Log</a>
             @endif
             <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/onlinehelp">Online Help</a>
             <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">Logout</a>
           </div>
         </li>

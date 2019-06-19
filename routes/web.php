@@ -4,6 +4,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/onlinehelp', function () {
+    return view('onlinehelp');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home')->middleware(['user']);
