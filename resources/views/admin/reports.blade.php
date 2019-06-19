@@ -180,7 +180,7 @@
                        data-fgColor="#39CCCC">
 
                 <div class="knob-label">Complains</div>
-                Response Rate - 20%
+                Response Rate - <span id="complain_rate"></span>%
               </div>
               <!-- ./col -->
               <div class="col-xs-4 text-center">
@@ -188,7 +188,7 @@
                        data-fgColor="#39CCCC">
 
               <div class="knob-label">Enquiries </div>
-              Response Rate - 20%
+              Response Rate - <span id="enquiry_rate"></span>%
               </div>
               <!-- ./col -->
             </div>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Post;
+use App\Comment;
 use App\Event;
 use App\News;
 use App\Service;
@@ -106,6 +107,45 @@ class HomeController extends Controller
         $events = Event::whereBetween('created_at', [$from, $to])->get()->count();
         $news = News::whereBetween('created_at', [$from, $to])->get()->count();
 
+
+        $complains = Post::whereBetween('created_at', [$from, $to])->where('tag', 'complain')->get();
+        $enquirys = Post::whereBetween('created_at', [$from, $to])->where('tag', 'enquiry')->get();
+
+        $admins = User::select('id')->where('user_type','>', 0)->get()->map(function($item){
+            return $item['id'];
+        });
+
+
+        $complainComments = 0;
+        $complains->map(function($complain) use ($admins, &$complainComments){
+            $count = $complain->comments()->whereIn('user_id', $admins)->get()->count();
+            if($count > 0){
+                $complainComments += 1;
+            }
+        });
+
+        $enquiryComments = 0;
+
+        $enquirys->map(function($enquiry) use ($admins,&$enquiryComments){
+            $count = $enquiry->comments()->whereIn('user_id', $admins)->get()->count();
+            if($count > 0){
+                $enquiryComments += 1;
+            }
+        });
+
+
+        if(count($complains)> 0){
+            $responseRateComplains = round($complainComments /count($complains) * 100);
+        }else {
+            $responseRateComplains = 0;
+        }
+
+        if(count($enquirys)> 0){
+            $responseRateEnquiries = round($enquiryComments/ count($enquirys) * 100);
+        }else {
+            $responseRateEnquiries = 0;
+        }
+
         return response()->json([
             'users'=> $new_users,
             'posts'=> $total_posts,
@@ -118,7 +158,9 @@ class HomeController extends Controller
             'events' => $events,
             'news'=>$news,
             'ambulance_perc'=>$amb_perc,
-            'fire_perc'=>$fire_perc
+            'fire_perc'=>$fire_perc,
+            'response_rate_complains' => $responseRateComplains,
+            'response_rate_enquiries' => $responseRateEnquiries
         ]);
     }
     public function showProfile(User $user)

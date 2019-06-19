@@ -429,6 +429,8 @@
             $('#events').text(response.events);
             $('#news').text(response.news);
 
+            $('#complain_rate').text(response.response_rate_complains);
+            $('#enquiry_rate').text(response.response_rate_enquiries);
 
            console.log(response);
         });
