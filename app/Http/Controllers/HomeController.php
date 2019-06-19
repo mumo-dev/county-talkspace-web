@@ -211,4 +211,79 @@ class HomeController extends Controller
 
 
     }
+
+
+
+
+    public function userStats()
+    {
+
+        return view('stats');
+    }
+
+
+    public function getStats()
+    {
+        $total_posts = Post::all()->count();
+        $opinion = Post::where('tag','opinion')->get();
+        $complains = Post::where('tag','complain')->get();
+        $enquirys = Post::where('tag','enquiry')->get();
+
+        if($total_posts == 0){
+            $opinionCount = 0;
+            $complainCount = 0;
+            $enquiryCount = 0;
+        }else {
+            $opinionCount = round(count($opinion) / $total_posts * 100);
+
+            $complainCount = round(count($complains) / $total_posts * 100);
+
+            $enquiryCount = round(count($enquirys) / $total_posts * 100);
+        }
+
+        $admins = User::select('id')->where('user_type','>', 0)->get()->map(function($item){
+            return $item['id'];
+        });
+
+
+        $complainComments = 0;
+        $complains->map(function($complain) use ($admins, &$complainComments){
+            $count = $complain->comments()->whereIn('user_id', $admins)->get()->count();
+            if($count > 0){
+                $complainComments += 1;
+            }
+        });
+
+        $enquiryComments = 0;
+
+        $enquirys->map(function($enquiry) use ($admins,&$enquiryComments){
+            $count = $enquiry->comments()->whereIn('user_id', $admins)->get()->count();
+            if($count > 0){
+                $enquiryComments += 1;
+            }
+        });
+
+
+        if(count($complains)> 0){
+            $responseRateComplains = round($complainComments /count($complains) * 100);
+        }else {
+            $responseRateComplains = 0;
+        }
+
+        if(count($enquirys)> 0){
+            $responseRateEnquiries = round($enquiryComments/ count($enquirys) * 100);
+        }else {
+            $responseRateEnquiries = 0;
+        }
+
+        return response()->json([
+            'opinions'=> $opinionCount,
+            'complains' => $complainCount,
+            'enquiries' => $enquiryCount,
+            'response_rate_complains' => $responseRateComplains,
+            'response_rate_enquiries' => $responseRateEnquiries
+        ]);
+
+
+    }
 }

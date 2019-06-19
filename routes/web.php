@@ -46,6 +46,10 @@ Route::get('/services/comments/{id}', 'ServiceController@fetchComments');
 
 Route::get('/allreports', 'HomeController@getReports');
 
+Route::get('/stats', 'HomeController@userStats');
+
+Route::get('/user-reports','HomeController@getStats');
+
 Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
     Route::get('/home', 'HomeController@adminHome')->name('admin.home');
     Route::get('/reports', 'HomeController@reports')->name('admin.reports');
