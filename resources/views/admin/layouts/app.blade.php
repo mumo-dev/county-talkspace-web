@@ -30,7 +30,7 @@
     <link href="/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet">
 
 
-   
+
 
   </head>
 
@@ -64,13 +64,14 @@
             <i class="fas fa-bell fa-fw"></i>
 
                 @if(count(auth()->user()->unreadNotifications) > 0)
-                <span class="badge badge-danger"> {{ count(auth()->user()->unreadNotifications)}} </span>
+                <span class="badge badge-danger ml-0"> {{ count(auth()->user()->unreadNotifications)}} </span>
                 @endif
 
           </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
                 @forelse (auth()->user()->unreadNotifications as $notification)
-                    <a class="dropdown-item" href="#">{{ $notification->data['user']['name']}}
+                    <a class="dropdown-item" href="/admin/services/{{$notification->data['service']['id']}}" onclick="markAsRead(event,'{{$notification->id}}','{{$notification->data['service']['id']}}')">
+                        <span class="text-info">{{ $notification->data['user']['name']}} </span>
                          requested for {{$notification->data['service']['type']}} service</a>
                 @empty
                     <a class="dropdown-item" href="#">No unread notifications</a>
@@ -81,13 +82,15 @@
         <li class="nav-item dropdown no-arrow mx-1">
           <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-envelope fa-fw"></i>
-            <span class="badge badge-danger">7</span>
-          </a>
+                 <span class="badge badge-danger ml-0">7</span>
+
+            </a>
           <div class="dropdown-menu dropdown-menu-right" aria-labelledby="messagesDropdown">
             {{-- <a class="dropdown-item" href="#">Action</a>
             <a class="dropdown-item" href="#">Another action</a> --}}
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">No messages</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">No messages</a>
+
           </div>
         </li>
         <li class="nav-item dropdown no-arrow">
@@ -261,6 +264,28 @@
               sideBySide: true
             });
         });
+
+
+        function markAsRead(event,id, serviceId){
+            // alert(serviceId)
+            event.preventDefault();
+            $.ajax({
+                url:'/admin/notifications/services',
+                type:'post',
+                data: {
+                    'id': id,
+                    '_token': '{{ csrf_token()}}'
+                },
+                success: function(data, textStatus, jQxhr){
+                    console.log(data)
+                },
+                error: function(jQxhr,textStatus, err){
+                    console.log(err)
+                },
+            });
+
+            window.location.href='/admin/services/'+serviceId
+        }
 
     </script>
 

@@ -46,6 +46,8 @@ Route::get('/services/comments/{id}', 'ServiceController@fetchComments');
 
 Route::get('/allreports', 'HomeController@getReports');
 
+Route::post('/notifications/posts','PostController@markAsRead');
+
 Route::get('/stats', 'HomeController@userStats');
 
 Route::get('/user-reports','HomeController@getStats');
@@ -85,6 +87,8 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
 
 
     Route::get('/services', 'ServiceController@adminIndex')->name('admin.services');
+    // /admin/notifications/services
+    Route::post('/notifications/services','ServiceController@markNotificationAsRead');
     Route::get('/services/{id}', 'ServiceController@adminShow')->name('admin.service.show');
 
 });

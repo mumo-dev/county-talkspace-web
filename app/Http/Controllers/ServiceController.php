@@ -8,6 +8,8 @@ use  App\Http\Requests\ServiceRequest;
 use App\Service;
 use App\User;
 use App\Comment;
+use Carbon\Carbon;
+use DB;
 
 class ServiceController extends Controller
 {
@@ -53,6 +55,10 @@ class ServiceController extends Controller
 
     public function show(Service $service)
     {
+        $userId = auth()->user()->id;
+        if( $userId != $service->user_id){
+            abort(404);
+        }
         return view('services.show', compact('service'));
     }
 
@@ -103,6 +109,40 @@ class ServiceController extends Controller
         }
 
         return view('admin.services.show', compact('service'));
+    }
+
+
+
+    public function markNotificationAsRead(Request $request)
+    {
+        $id = $request->id;
+
+        $my_notification = DB::table('notifications')->where('id', $id)->first();
+
+        $notifications = DB::table('notifications')
+                            ->where('type', 'App\Notifications\ServiceRequested')
+                            ->where('read_at', null)
+                            ->get();
+
+        // $current_noti = DB::table('notifications')->where('id', $id)->update(['read_at'=> Carbon::now()]);
+
+
+
+        foreach($notifications as $notification){
+            $notification_data = json_decode($notification->data);
+            $my_notification_data = json_decode($my_notification->data);
+            // dd($my_notification_data->service->id);
+            if($notification_data->service->id ==  $my_notification_data->service->id
+                && $notification_data->user->id == $my_notification_data->user->id){
+
+                DB::table('notifications')->where('id', $notification->id)->update(['read_at'=> Carbon::now()]);
+            }
+        }
+
+
+        return response()->json([
+            'message'=>'success'
+        ]);
     }
 
 

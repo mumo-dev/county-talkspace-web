@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use App\Post;
 use App\Image as PostImage;
 use Image;
+use DB;
+use Carbon\Carbon;
 
 class PostController extends Controller
 {
-   
+
     public function __construct()
     {
         $this->middleware(['auth']);
@@ -17,7 +19,7 @@ class PostController extends Controller
 
     public function store(Request $request)
     {
-    
+
         $post = Post::create([
             'message'=>$request->message,
             'tag'=>$request->tag,
@@ -36,11 +38,11 @@ class PostController extends Controller
                 $img->resize(300, 300, function($constraint){
                     $constraint->aspectRatio();
                 })->save($destinationPath.'/'.$imagename);
-        
-                $destinationPath = public_path('/images');
-                $image->move($destinationPath, $imagename); 
 
-            
+                $destinationPath = public_path('/images');
+                $image->move($destinationPath, $imagename);
+
+
                 $postImage = new PostImage();
                 $postImage->name = $imagename;
                 $post->images()->save($postImage);
@@ -88,5 +90,14 @@ class PostController extends Controller
                         ->where('user_id', $id)
                         ->latest()->paginate(50);
         return response()->json([$posts], 200);
+    }
+
+
+    public function markAsRead(Request $request)
+    {
+       DB::table('notifications')->where('id', $request->id)->update(['read_at'=> Carbon::now()]);
+       return response()->json([
+        'message'=>'success'
+       ]);
     }
 }

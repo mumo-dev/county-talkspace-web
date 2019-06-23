@@ -76,7 +76,7 @@
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
 
                                    <i class="fas fa-globe"></i>Notifications
-                                    <span class="badge badge-secondary">
+                                    <span class="badge badge-danger">
                                         @if(count(auth()->user()->unreadNotifications) > 0)
                                           {{ count(auth()->user()->unreadNotifications)}}
                                         @endif
@@ -85,7 +85,11 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                    @forelse (auth()->user()->unreadNotifications as $notification)
-                                        <a class="dropdown-item" href="#">{{ $notification->data['user']['name']}} commented on your post</a>
+                                <a class="dropdown-item" href="/posts/{{$notification->data['post']['id']}}/comments" onclick="markAsRead(event, '{{$notification->id}}','{{$notification->data['post']['id']}}')">
+                                   <span class="text-info">
+
+                                        {{ $notification->data['user']['id'] == 0 ? $notification->data['user']['name']: 'County Government'}} </span> commented on your post
+                                </a>
                                    @empty
                                         <a class="dropdown-item" href="#">No unread notifications</a>
                                    @endforelse
@@ -122,4 +126,5 @@
                     </ul>
                 </div>
             </div>
+
         </nav>

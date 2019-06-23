@@ -90,11 +90,26 @@
 
 
 
+    function markAsRead(event,id, postId){
 
+        event.preventDefault();
+        $.ajax({
+            url:'/notifications/posts',
+            type:'post',
+            data: {
+                'id': id,
+                '_token': '{{ csrf_token()}}'
+            },
+            success: function(data, textStatus, jQxhr){
+                console.log(data)
+            },
+            error: function(jQxhr,textStatus, err){
+                console.log(err)
+            },
+        });
 
-
-
-
+        window.location.href='/posts/'+postId+'/comments'
+    }
 </script>
 </body>
 </html>

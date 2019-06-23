@@ -128,7 +128,7 @@ class EventController extends Controller
             'action' =>'create'
         ]);
 
-        return redirect()->route('admin.events')->withMessage('Event created successfully '. $day);
+        return redirect()->route('admin.events')->withMessage('Event created successfully ');
 
     }
 
