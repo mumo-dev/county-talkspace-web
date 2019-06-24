@@ -27,7 +27,7 @@
                     </h3>
                 </div>
                    <div class="card-body">
-                        <table>
+                        <table class="table" style="width:auto">
                             <tbody>
                                 <tr>
                                     <th>Users</th>
@@ -87,25 +87,14 @@
 
 
                             </tbody>
-                        <tbody>
+                        </table>
+                        <hr class="m-0">
                    </div>
                </div>
            </div>
        </div>
     </div>
 
-    <script src="/js/app.js"></script>
 
-    <script src="/bower_components/moment/min/moment.min.js"></script>
-
-    <script>
-        window.onload = function(){
-
-            // var start = moment('{{$start}}');
-            // var end = moment('{{$end}}');
-            // $('#header').html();
-
-        }
-    </script>
 </body>
 </html>

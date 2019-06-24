@@ -258,12 +258,26 @@
             $('#datetimepicker5').datetimepicker('minDate', e.date);
         })
 
+
+
         $(function () {
-            $('#datetimepickereditevent').datetimepicker({
+            $('#datetimepickerediteventstart').datetimepicker({
               format:'YYYY-MM-DD HH:mm:ss',
               sideBySide: true
             });
         });
+
+        $(function () {
+            $('#datetimepickerediteventend').datetimepicker({
+              format:'YYYY-MM-DD HH:mm:ss',
+              sideBySide: true
+            });
+        });
+
+        // $('#datetimepickerediteventstart').on('change.datetimepicker', function(e){
+        //     $('#datetimepickerediteventend').datetimepicker('minDate', e.date);
+
+        // })
 
 
         function markAsRead(event,id, serviceId){

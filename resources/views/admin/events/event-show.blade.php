@@ -53,7 +53,9 @@
           </div>
 
           <div class="card-footer bg-white">
-            <a class="btn btn-success" href="{{ route('admin.event.edit', $event->id)}}">Edit</a>
+            @if($event->start_time > \Carbon\Carbon::now())
+                <a class="btn btn-success" href="{{ route('admin.event.edit', $event->id)}}">Edit</a>
+            @endif
             <button type="button" class="btn btn-danger float-right" data-toggle="modal" data-target="#deleteEventModal">
               Delete
           </button>

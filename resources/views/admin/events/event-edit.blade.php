@@ -14,8 +14,15 @@
 
 
     <div class="row justify-content-center">
-   
+
             <div class="col-md-8">
+
+                @if (session('message'))
+                    <div class="alert alert-danger" role="alert">
+                        {{ session('message') }}
+                    </div>
+                @endif
+
             <div class="card">
                 <div class="card-header bg-white">{{ __('EDIT THIS EVENT ') }}</div>
 
@@ -40,11 +47,11 @@
 
                         <div class="form-group">
 
-                            <div class="input-group date" id="datetimepickereditevent" data-target-input="nearest">
+                            <div class="input-group date" id="datetimepickerediteventstart" data-target-input="nearest">
                                 <input type="text" class="form-control datetimepicker-input
-                                    {{ $errors->has('start_time') ? ' is-invalid' : '' }}" data-target="#datetimepicker4"
+                                    {{ $errors->has('start_time') ? ' is-invalid' : '' }}" data-target="#datetimepickerediteventstart"
                                     name="start_time" value="{{ $event->start_time}}" required  autofocus/>
-                                <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                                <div class="input-group-append" data-target="#datetimepickerediteventstart" data-toggle="datetimepicker">
                                     <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                 </div>
                             </div>
@@ -52,6 +59,26 @@
                             @if ($errors->has('start_time'))
                                 <span class="invalid-feedback d-block" role="alert">
                                     <strong>{{ $errors->first('start_time') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+
+                        <label for="end_time" class=" col-form-label">{{ __('END (date and time)') }}</label>
+
+                        <div class="form-group">
+
+                            <div class="input-group date" id="datetimepickerediteventend" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input
+                                    {{ $errors->has('end_time') ? ' is-invalid' : '' }}" data-target="#datetimepickerediteventend"
+                                    name="end_time" value="{{ $event->end_time}}" required  autofocus/>
+                                <div class="input-group-append" data-target="#datetimepickerediteventend" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+
+                            @if ($errors->has('end_time'))
+                                <span class="invalid-feedback d-block" role="alert">
+                                    <strong>{{ $errors->first('end_time') }}</strong>
                                 </span>
                             @endif
                         </div>
@@ -68,7 +95,7 @@
                             @endif
                         </div>
 
-                        
+
                         <label for="description" class=" col-form-label">{{ __('Description') }}</label>
 
                         <div class="form-group">
@@ -85,7 +112,7 @@
                         <label for="guests" class=" col-form-label">{{ __('Guests (Optional)') }}</label>
 
                         <div class="form-group">
-                           <input id="guests" type="text" class="form-control{{ $errors->has('guests') ? ' is-invalid' : '' }}" 
+                           <input id="guests" type="text" class="form-control{{ $errors->has('guests') ? ' is-invalid' : '' }}"
                            name="guests" value="{{ $event->guests }}" placeholder="Guest 1, Guest 2, Guest 3"  autofocus>
 
                             @if ($errors->has('guests'))
@@ -94,24 +121,24 @@
                                 </span>
                             @endif
                         </div>
-                  
 
-                        
+
+
                         <div class="form-group">
-                           
+
                             <button type="submit" class="btn btn-primary">
                                 {{ __('UPDATE') }}
                             </button>
-                        
+
                         </div>
 
                     </form>
               </div>
-     
+
         </div>
-        
+
       </div>
-    </div>  
+    </div>
 </div>
 
 @endsection

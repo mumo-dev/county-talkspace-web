@@ -65,6 +65,24 @@ class EventController extends Controller
             'location'=>'required',
             'description'=>'required',
         ]);
+
+        // $startTime = $request->start_time;
+        // $endTime  = $request->end_time;
+
+        // $events = Event::where('location', $request->location)->get();
+        // if($events != null){
+        //     foreach($events as $event){
+
+        //         if($startTime >= $event->start_time && $startTime <= $event->end_time && $event->id !=){
+        //             return redirect()->back()->withMessage('Another event has been scheduled at that location at that time');
+        //         }
+
+        //         if($startTime < $event->start_time && ($endTime > $event->start_time && $endTime < $event->end_time)){
+        //             return redirect()->back()->withMessage('Another event has been scheduled at  that location at that time');
+        //         }
+        //     }
+        // }
+
         $event = Event::find($request->id);
         $event->name = $request->name;
         $event->start_time = $request->start_time;
@@ -91,6 +109,7 @@ class EventController extends Controller
         $this->validate($request, [
             'name'=>'required',
             'start_time'=>'required|date|after:today',
+            'end_time'=>'required|date|after:today',
             'location'=>'required',
             'description'=>'required',
         ]);
