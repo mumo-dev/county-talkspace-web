@@ -183,19 +183,27 @@
 
       <!-- Navbar -->
       <ul class="navbar-nav ml-auto ml-md-0">
-        <li class="nav-item dropdown no-arrow mx-1">
-          <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fas fa-bell fa-fw"></i>
-            <span class="badge badge-danger font-normal-12">9+</span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">Something else here</a>
-          </div>
-        </li>
-        <li class="nav-item dropdown no-arrow mx-1">
+            <li class="nav-item dropdown no-arrow mx-1">
+              <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-bell fa-fw"></i>
+
+                    @if(count(auth()->user()->unreadNotifications) > 0)
+                    <span class="badge badge-danger bg-danger ml-0 font-normal-12"> {{ count(auth()->user()->unreadNotifications)}} </span>
+                    @endif
+
+              </a>
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="alertsDropdown">
+                    @forelse (auth()->user()->unreadNotifications as $notification)
+                        <a class="dropdown-item" href="/admin/services/{{$notification->data['service']['id']}}" onclick="markAsRead(event,'{{$notification->id}}','{{$notification->data['service']['id']}}')">
+                            <span class="text-info">{{ $notification->data['user']['name']}} </span>
+                             requested for {{$notification->data['service']['type']}} service</a>
+                    @empty
+                        <a class="dropdown-item" href="#">No unread notifications</a>
+                    @endforelse
+
+              </div>
+            </li>
+        {{-- <li class="nav-item dropdown no-arrow mx-1">
           <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-envelope fa-fw"></i>
             <span class="badge badge-danger font-normal-12">7</span>
@@ -206,7 +214,7 @@
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="#">Something else here</a>
           </div>
-        </li>
+        </li> --}}
         <li class="nav-item dropdown no-arrow">
           <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-user-circle fa-fw"></i>
@@ -454,6 +462,30 @@
     }, cb);
 
     cb(start, end);
+
+
+
+
+    function markAsRead(event,id, serviceId){
+            // alert(serviceId)
+            event.preventDefault();
+            $.ajax({
+                url:'/admin/notifications/services',
+                type:'post',
+                data: {
+                    'id': id,
+                    '_token': '{{ csrf_token()}}'
+                },
+                success: function(data, textStatus, jQxhr){
+                    console.log(data)
+                },
+                error: function(jQxhr,textStatus, err){
+                    console.log(err)
+                },
+            });
+
+            window.location.href='/admin/services/'+serviceId
+    }
 
 </script>
 
