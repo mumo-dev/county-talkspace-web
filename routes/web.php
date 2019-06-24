@@ -91,4 +91,7 @@ Route::group(['prefix'=>'admin','middleware'=>['auth','admin'] ], function (){
     Route::post('/notifications/services','ServiceController@markNotificationAsRead');
     Route::get('/services/{id}', 'ServiceController@adminShow')->name('admin.service.show');
 
+
+    Route::get('/pdf/report', 'HomeController@getPDFReport');
+
 });

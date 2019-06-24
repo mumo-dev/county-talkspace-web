@@ -406,6 +406,8 @@
         // }
 
         // alert(startDate)
+        var url = `/admin/pdf/report?start=${startDate}&end=${endDate}`;
+        $('#pdfUrl').attr("href", url);
 
         $('#loading').addClass('d-block');
         $('#loading').removeClass('d-none');

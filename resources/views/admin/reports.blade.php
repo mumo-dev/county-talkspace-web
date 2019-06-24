@@ -2,7 +2,10 @@
 @section('content')
 
 <div class="container">
-    <h3 id="header" class="m-0  text-center text-uppercase" style="color:#00a65a"></h3>
+    <div class="d-flex">
+        <h3 id="header" class="m-0  text-center text-uppercase" style="color:#00a65a"></h3>
+
+    </div>
     <hr class="mt-0">
     <div class="row">
       <div class="col-sm-6">
@@ -13,8 +16,12 @@
                         <i class="fa fa-calendar"></i>&nbsp;
                         <span></span> <i class="fa fa-caret-down"></i>
                 </div>
-             </div>
+            </div>
+
       </div>
+      <div class="col-sm-6">
+            <a  href="#" id="pdfUrl" class="btn btn-info float-right mt-4 mr-3">DOWNLOAD REPORT</a>
+       </div>
   </div>
 
 

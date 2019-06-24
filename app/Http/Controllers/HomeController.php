@@ -12,6 +12,7 @@ use App\Service;
 use App\Poll;
 use App\Vote;
 use Image;
+use PDF;
 
 class HomeController extends Controller
 {
@@ -210,6 +211,127 @@ class HomeController extends Controller
         ], 200);
 
 
+    }
+
+
+    public function getPDFReport(Request $request)
+    {
+        $startDate = $request->query('start');
+        $endDate = $request->query('end');
+        $from = date($startDate);
+        $to = date($endDate);
+
+        $new_users = User::where('user_type', 0)->whereBetween('created_at', [$from, $to])->get()->count();
+        $total_posts = Post::whereBetween('created_at', [$from, $to])->get()->count();
+
+        $opinion = Post::where('tag','opinion')->whereBetween('created_at', [$from, $to])->get()->count();
+        $complains = Post::where('tag','complain')->whereBetween('created_at', [$from, $to])->get()->count();
+        $enquiry = Post::where('tag','enquiry')->whereBetween('created_at', [$from, $to])->get()->count();
+
+        if($total_posts == 0){
+            $opinionCount = 0;
+            $complainCount = 0;
+            $enquiryCount = 0;
+        }else {
+            $opinionCount = round($opinion / $total_posts * 100);
+
+            $complainCount = round($complains / $total_posts * 100);
+
+            $enquiryCount = round($enquiry / $total_posts * 100);
+        }
+
+        //here
+        $poll_participate = Vote::select('user_id')->whereBetween('created_at', [$from, $to])->distinct()->get()->count();
+        $total_users = User::whereDay('created_at', '<=', $to)->where('user_type',0)->get()->count();
+        if($total_users > 0){
+          $poll_perc = round($poll_participate / $total_users * 100);
+        }
+        else {
+            $poll_perc = 0;
+        }
+
+
+        $polls = Poll::whereBetween('created_at', [$from, $to])->get()->count();
+
+        $services = Service::whereBetween('created_at', [$from, $to])->get()->count();
+        $ambulances = Service::where('type','ambulance')->whereBetween('created_at', [$from, $to])->get()->count();
+        $fire = Service::where('type','firefighting')->whereBetween('created_at', [$from, $to])->get()->count();
+
+        if($services > 0){
+            $amb_perc = round($ambulances / $services * 100);
+            $fire_perc = round($fire / $services * 100);
+        }else {
+            $amb_perc = 0;
+            $fire_perc = 0;
+        }
+
+        $events = Event::whereBetween('created_at', [$from, $to])->get()->count();
+        $news = News::whereBetween('created_at', [$from, $to])->get()->count();
+
+
+        $complains = Post::whereBetween('created_at', [$from, $to])->where('tag', 'complain')->get();
+        $enquirys = Post::whereBetween('created_at', [$from, $to])->where('tag', 'enquiry')->get();
+
+        $admins = User::select('id')->where('user_type','>', 0)->get()->map(function($item){
+            return $item['id'];
+        });
+
+
+        $complainComments = 0;
+        $complains->map(function($complain) use ($admins, &$complainComments){
+            $count = $complain->comments()->whereIn('user_id', $admins)->get()->count();
+            if($count > 0){
+                $complainComments += 1;
+            }
+        });
+
+        $enquiryComments = 0;
+
+        $enquirys->map(function($enquiry) use ($admins,&$enquiryComments){
+            $count = $enquiry->comments()->whereIn('user_id', $admins)->get()->count();
+            if($count > 0){
+                $enquiryComments += 1;
+            }
+        });
+
+
+        if(count($complains)> 0){
+            $responseRateComplains = round($complainComments /count($complains) * 100);
+        }else {
+            $responseRateComplains = 0;
+        }
+
+        if(count($enquirys)> 0){
+            $responseRateEnquiries = round($enquiryComments/ count($enquirys) * 100);
+        }else {
+            $responseRateEnquiries = 0;
+        }
+
+
+        $data = [
+            'start'=>$startDate,
+            'end'=>$endDate,
+            'users'=> $new_users,
+            'total_users'=>$total_users,
+            'posts'=> $total_posts,
+            'opinion' => $opinionCount,
+            'complain' => $complainCount,
+            'enquiry' => $enquiryCount,
+            'pollPartcipants' => $poll_participate,
+            'polls'=>$polls,
+            'services'=>$services,
+            'events' => $events,
+            'news'=>$news,
+            'ambulance_perc'=>$amb_perc,
+            'fire_perc'=>$fire_perc,
+            'response_rate_complains' => $responseRateComplains,
+            'response_rate_enquiries' => $responseRateEnquiries
+        ];
+
+        $pdf = PDF::loadView('admin.pdf.report', $data);
+        return $pdf->download('reports.pdf');
+
+        // return view('admin.pdf.report')->with($data);
     }
 
 
