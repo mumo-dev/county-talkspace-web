@@ -15,16 +15,18 @@
 
 </head>
 <body>
-    <div class="container mt-5">
+    <div class="container mt-3">
        <div class="row justify-content-center">
            <div class="col-md-10">
+               <h5 class="text-center">County TalkSpace Application Reports</h5>
+               <hr class="m-0">
                <div class="card">
                     {{-- {{\Carbon\Carbon::parse($event->end_time)->toDayDateTimeString()}} --}}
                    <div class="card-header bg-white">
-                    <h3 class="m-0 text-info" id="header">
+                    <h5 class="m-0 text-info" id="header">
                             Reports for Dates  {{\Carbon\Carbon::parse($start)->toDayDateTimeString()}} -
                             {{\Carbon\Carbon::parse($end)->toDayDateTimeString()}}
-                    </h3>
+                    </h5>
                 </div>
                    <div class="card-body">
                         <table class="table" style="width:auto">

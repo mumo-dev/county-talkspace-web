@@ -329,9 +329,9 @@ class HomeController extends Controller
         ];
 
         $pdf = PDF::loadView('admin.pdf.report', $data);
-        return $pdf->download('reports.pdf');
+        // return $pdf->download('reports.pdf');
 
-        // return view('admin.pdf.report')->with($data);
+        return view('admin.pdf.report')->with($data);
     }
 
 
