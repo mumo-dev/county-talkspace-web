@@ -23,7 +23,7 @@
             <template v-else>
               <h5 class="my-0">County Government</h5>
             </template>
-          
+
             <span
             class="text-secondary font-weight-light my-0"
             style="font-size:14px;">
@@ -35,8 +35,8 @@
         </div>  -->
         <div style="width:40%" v-if="user.id ==comment.user.id"></div>
         <div class="message" :class="{sender: user.id ==comment.user.id, receiver: user.id != comment.user.id}">
-          
-          <p class="m-0 p-0"  style="font-size:16px;"> {{ comment.message}} 
+
+          <p class="m-0 p-0"  style="font-size:16px;"> {{ comment.message}}
            <br>
             <span
               class="text-secondary font-weight-light m-0 p-0"
@@ -61,11 +61,11 @@
         <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
         Sending...
     </button>
-   
-    
+
+
   </div>
-   
-  
+
+
 </template>
 
 <script>
@@ -89,10 +89,16 @@
         }
     },
 
-    
+
 
     created(){
       this.fetchComments();
+
+      Echo.private('chat')
+        .listen('MessageSent', (e) => {
+            console.log(e)
+            // this.comments.push(e.comment);
+        });
     },
 
     methods:{
@@ -124,18 +130,20 @@
             this.loading = false;
             const data = result.data;
             this.comments = data;
-            console.log(data)
+            // console.log(data)
           }).catch((err) => {
              this.loading = false;
              console.log(err)
           });
         },
 
+
+
         postedOn(date) {
           return moment(date).fromNow();
         }
     }
-    
+
   }
 </script>
 

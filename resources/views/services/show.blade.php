@@ -12,7 +12,7 @@
                 <a href="{{ route('services') }}">Services</a>
             </li>
             <li  class="breadcrumb-item active"> Details</li>
-            
+
         </ol>
 
           @if (session('message'))
@@ -24,8 +24,8 @@
         <div class="card">
             <div class="card-body">
                 <div class="media">
-                  <img 
-                  src="{{ Auth::user()->photo_url == null ? '/images/user.png' : '/images/thumbnails/'.Auth::user()->photo_url }}" 
+                  <img
+                  src="{{ Auth::user()->photo_url == null ? '/images/user.png' : '/images/thumbnails/'.Auth::user()->photo_url }}"
                   class="mr-3 rounded-circle" alt="user photo" width="50" height="50"/>
                   <div class="media-body">
                     <h5 class="my-0 text-black"> Request for {{ $service->type }} services </h5>
@@ -43,13 +43,13 @@
                 </div>
                 <hr>
                 <div style="margin-left:60px">
-                    
-                    <create-service-comment :id="{{$service->id}}" :user="{{Auth::user()}}"></create-service-comment>
+
+                    {{-- <create-service-comment :id="{{$service->id}}" :user="{{Auth::user()}}"></create-service-comment> --}}
                 </div>
-               
+
             </div>
         </div>
-           
+
       </div>
     </div>
 </div>

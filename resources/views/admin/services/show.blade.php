@@ -25,7 +25,7 @@
                     <td class="text-white">spc</td>
                     <td> <span class="text-primary text-uppercase " style="font-weight:500">Phone: </span> </td>
                     <td> <i class=" text-info fas fa-phone mx-2"></i> {{ $service->phone}} </td>
-                      
+
                   </tr>
 
                   <tr>
@@ -34,9 +34,9 @@
                     <td class="text-white">spc</td>
                     <td> <span class="text-primary text-uppercase " style="font-weight:500">Date: </span> </td>
                     <td> <i class="fa fa-calendar mx-2 text-info"></i> {{ $service->created_at->toDayDateTimeString()}} </td>
-                      
+
                   </tr>
-                  
+
               </table>
               </div>
 
@@ -49,7 +49,7 @@
                   </tr>
                   <tr>
                     <td> <span class="text-primary text-uppercase " style="font-weight:500">Phone: </span> </td>
-                    <td> {{ $service->phone}} </td>    
+                    <td> {{ $service->phone}} </td>
                   </tr>
 
                   <tr>
@@ -60,10 +60,10 @@
                     <td> <span class="text-primary text-uppercase " style="font-weight:500">Date: </span> </td>
                     <td> {{ $service->created_at->toDayDateTimeString()}} </td>
                   </tr>
-                  
+
               </table>
               </div>
-              
+
             <div class="mt-2">
               <span class="text-primary text-uppercase " style="font-weight:500">Description:</span> <br>
               <p> {{ $service->description}}</p>
@@ -71,15 +71,15 @@
                 <img src="{{ '/images/'.$service->image_url  }}" />
               @endif
             </div>
-            
+
              <hr>
               <div style="">
-                <create-service-comment :id="{{$service->id}}" :user="{{Auth::user()}}"></create-service-comment>
+                {{-- <create-service-comment :id="{{$service->id}}" :user="{{Auth::user()}}"></create-service-comment> --}}
               </div>
 
           </div>
       </div>
     </div>
-  
+
 </div>
 @endsection

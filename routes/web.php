@@ -6,7 +6,11 @@ Route::get('/', function () {
 
 Route::get('/onlinehelp', function () {
     return view('onlinehelp');
-});
+})->middleware('auth');
+
+Route::get('/admin/onlinehelp', function () {
+    return view('admin.onlinehelp');
+})->middleware('auth');
 
 Auth::routes();
 

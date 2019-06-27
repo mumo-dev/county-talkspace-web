@@ -23,7 +23,7 @@
 
             <div class="form-group row ml-0">
               <div class="col-11 ml-0 pl-0">
-                <label for="question">Choices:</label> 
+                <label for="question">Choices:</label>
                 <!-- <span class="float-right   text-success "  @click="noOfchoices++">
                   <i class="far fa-plus-square fa-2x"></i>
                 </span> -->
@@ -31,33 +31,32 @@
 
               <template v-for="choice in noOfchoices">
                     <div class="col-10 p-0 m-0" :key="choice">
-                        <input type="text" class="form-control mb-1" 
+                        <input type="text" class="form-control mb-1"
                         :placeholder= "'Choice '+ choice" v-model="choices[choice]">
                     </div>
-                    <div class="col-2  p-1 m-0" :key="'k'+choice" v-show="choice > 2" 
+                    <div class="col-2  p-1 m-0" :key="'k'+choice" v-show="choice > 2"
                       style="cursor:pointer">
                         <span class="float-left" @click="noOfchoices--">
                           <i class="far fa-times-circle fa-2x" style="color:#DCDCDC"></i>
                         </span>
                     </div>
-                  
+
               </template>
               <div class="w-100"></div>
               <p class="p-0 mb-0"> <a href="#" class="text-info" @click.prevent="noOfchoices++">Add More choices</a></p>
-              
+
             </div>
 
-            
+
               <div class="form-group d-flex pt-0">
                 <label class="m-2">Poll Length:</label>
                 <label class="m-2">Days:</label>
                 <div class="mt-1">
                   <select class="form-control-sm" v-model="days">
-                    <option value="0">0</option>  
                     <option v-for="i in 7" :key="i"> {{ i }}</option>
                   </select>
                 </div>
-                
+
                 <label class="m-2">Hours:</label>
                 <div class="mt-1">
                 <select class="form-control-sm" v-model="hours">
@@ -74,7 +73,7 @@
                   </select>
                 </div>
 
-                
+
               </div>
 
               <div class="form-group">
@@ -89,11 +88,11 @@
               </div>
 
         </div>
-    
+
     </div>
 
     </div>
- 
+
 
 </template>
 
@@ -116,7 +115,7 @@ export default {
         showCreateView: false
       }
     },
-     
+
     computed:{
         allFieldsValid() {
           if(!this.question){

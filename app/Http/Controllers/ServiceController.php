@@ -11,6 +11,8 @@ use App\Comment;
 use Carbon\Carbon;
 use DB;
 
+use App\Events\MessageSent;
+
 class ServiceController extends Controller
 {
     public function __construct()
@@ -80,7 +82,10 @@ class ServiceController extends Controller
         $comment->message = $message;
         $comment->user_id = auth()->user()->id;
 
+
         $comment =$service->comments()->save($comment);
+
+        broadcast(new MessageSent(auth()->user(), $comment))->toOthers();
 
         return response()->json($comment);
     }
